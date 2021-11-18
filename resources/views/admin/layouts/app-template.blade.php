@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Atelier Management</title>
+    <title>Lobby Management</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.6 -->
@@ -26,6 +26,7 @@
       apply the skin class to the body tag so the changes take effect.
       -->
     <link href="{{ asset("public/admin/bower_components/AdminLTE/dist/css/skins/_all-skins.min.css")}}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset("public/admin/bower_components/AdminLTE/plugins/timepicker/bootstrap-timepicker.css")}}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('public/admin/css/app-template.css') }}" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -46,6 +47,7 @@
     <script  src="{{ asset ("public/admin/bower_components/AdminLTE/plugins/input-mask/jquery.inputmask.extensions.js") }}" type="text/javascript" ></script>
     <script  src="{{ asset ("public/admin/bower_components/AdminLTE/plugins/daterangepicker/daterangepicker.js") }}" type="text/javascript" ></script>
     <script  src="{{ asset ("public/admin/bower_components/AdminLTE/plugins/datepicker/bootstrap-datepicker.js") }}" type="text/javascript" ></script>
+    <script  src="{{ asset ("public/admin/bower_components/AdminLTE/plugins/timepicker/bootstrap-timepicker.js") }}" type="text/javascript" ></script>
 
     <!-- AdminLTE App -->
     <script src="{{ asset ("public/admin/bower_components/AdminLTE/dist/js/app.min.js") }}" type="text/javascript"></script>

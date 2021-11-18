@@ -19,18 +19,34 @@
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu">
-        <li class="treeview {{(Request::segment(2) == 'event-days' || Request::segment(2) == 'blog')? 'active' : '' }}">
+        <li class="{{(Request::segment(2) == '') ? 'active' : '' }}">
+          <a href="{{ url('admin') }}"><i class="fa fa-link"></i> <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="treeview {{(Request::segment(2) == 'user') ? 'active' : '' }}">
+          <a href="#"><i class="fa fa-link"></i> <span>Quản lý user</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{(Request::segment(2) == 'user') ? 'active' : '' }}">
+              <a href="{{ url('admin/user') }}">Danh sách</a>
+            </li>
+          </ul>
+        </li>
+        <li class="treeview {{(Request::segment(2) == 'event-days' || Request::segment(2) == 'event-times') ? 'active' : '' }}">
           <a href="#"><i class="fa fa-link"></i> <span>Quản lý sự kiện</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="{{(Request::segment(2) == 'event-days')? 'active' : '' }}">
+            <li class="{{(Request::segment(2) == 'event-days') ? 'active' : '' }}">
               <a href="{{ url('admin/event-days') }}">Ngày sự kiện</a>
             </li>
-            <li class="{{(Request::segment(2) == 'blog')? 'active' : '' }}">
-              <a href="{{ url('admin/blog') }}">Danh sách</a>
+            <li class="{{(Request::segment(2) == 'event-times') ? 'active' : '' }}">
+              <a href="{{ url('admin/event-times') }}">Giờ sự kiện</a>
             </li>
           </ul>
         </li>

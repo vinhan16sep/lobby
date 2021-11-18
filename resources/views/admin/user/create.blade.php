@@ -10,7 +10,7 @@
                         <form class="form-horizontal" role="form" method="POST" action="{{ route('event-days.store') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <div class="form-group{{ $errors->has('event_date') ? ' has-error' : '' }}">
-                                <label for="event_date" class="col-md-4 control-label">Ngày sự kiện <span style="color:red;">*</span></label>
+                                <label for="event_date" class="col-md-4 control-label">Ngày sự kiện</label>
 
                                 <div class="col-md-6">
                                     <input type="text" class="form-control" name="event_date" placeholder="" id="event_date" value="{{ old('event_date') }}">
