@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
-use App\EventDays;
+use App\EventTimes;
 use Response;
 use Session;
 use File;
@@ -28,10 +28,11 @@ class EventTimesController extends Controller
      *
      */
     public function index(){
-        $eventTimes = DB::table('event_times')
-            ->select('*')
+        $eventTimes = EventTimes::with('eventDay')
             ->where('is_deleted', 0)
             ->paginate(10);
+//        echo '<pre>';
+//        print_r($eventTimes);die;
         return view('admin/event-times/index', ['eventTimes' => $eventTimes]);
     }
 
@@ -43,8 +44,7 @@ class EventTimesController extends Controller
         $eventDays = DB::table('event_days')
             ->select('*')
             ->where('is_deleted', 0)->get();
-//        echo '<pre>';
-//        print_r($eventDays);die;
+
         return view('admin/event-times/create', ['eventDays' => $eventDays]);
     }
 
@@ -56,12 +56,12 @@ class EventTimesController extends Controller
     public function store(Request $request){
         $this->validateInput($request);
 
-        $keys = ['event_date', 'is_active'];
+        $keys = ['event_day_id', 'start_time', 'end_time', 'is_active'];
         $input = $this->createQueryInput($keys, $request);
         $input['created_by'] = Auth::user()->id;
         $input['updated_by'] = Auth::user()->id;
 
-        EventDays::create($input);
+        EventTimes::create($input);
 
         return redirect()->intended('admin/event-times');
     }
@@ -171,7 +171,7 @@ class EventTimesController extends Controller
 
     private function validateInput($request) {
         $this->validate($request, [
-            'event_date_id' => 'required',
+            'event_day_id' => 'required',
             'start_time' => 'required',
             'end_time' => 'required',
         ]);

@@ -24,6 +24,7 @@
           <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
             <thead>
               <tr role="row">
+                <th>Ngày sự kiện</th>
                 <th>Giờ sự kiện</th>
                 <th>Sử dụng?</th>
                 <th>Hành động</th>
@@ -32,7 +33,8 @@
             <tbody>
             @foreach ($eventTimes as $item)
                 <tr role="row" class="odd">
-                  <td class="sorting_1">{{ $item->event_date }}</td>
+                  <td class="sorting_1">{{ $item->eventDay->event_date }}</td>
+                  <td class="sorting_1">{{ $item->start_time }} ~ {{ $item->end_time }}</td>
                   @if($item->is_active != 0)
                   <td class="hidden-xs"><span class="glyphicon glyphicon-ok"></span></td>
                   @else

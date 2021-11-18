@@ -9,18 +9,18 @@
                     <div class="panel-body">
                         <form class="form-horizontal" role="form" method="POST" action="{{ route('event-times.store') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
-                            <div class="form-group{{ $errors->has('event_date_id') ? ' has-error' : '' }}">
-                                <label for="event_date_id" class="col-md-4 control-label">Ngày sự kiện <span style="color:red;">*</span></label>
+                            <div class="form-group{{ $errors->has('event_day_id') ? ' has-error' : '' }}">
+                                <label for="event_day_id" class="col-md-4 control-label">Ngày sự kiện <span style="color:red;">*</span></label>
                                 <div class="col-md-6">
-                                    <select name="event_date_id"  class="form-control type">
+                                    <select name="event_day_id"  class="form-control type">
                                         <option value="">---------------------Chọn ngày sự kiện---------------------</option>
                                         @foreach($eventDays as $value)
-                                            <option value="{{ $value->id }}" {{ old('event_date_id') == $value->id ? 'selected' : '' }} >{{ $value->event_date }}</option>
+                                            <option value="{{ $value->id }}" {{ old('event_day_id') == $value->id ? 'selected' : '' }} >{{ $value->event_date }}</option>
                                         @endforeach
                                     </select>
-                                    @if ($errors->has('event_date_id'))
+                                    @if ($errors->has('event_day_id'))
                                         <span class="help-block">
-                                            <strong>{{ $errors->first('event_date_id') }}</strong>
+                                            <strong>{{ $errors->first('event_day_id') }}</strong>
                                         </span>
                                     @endif
                                 </div>
