@@ -1,0 +1,61 @@
+.dropdown{
+	&.dropdown-actions{
+		.btn{
+			&:hover{
+				i{
+					opacity: 1;
+				}
+			}
+			
+			i{
+				opacity: 0.5;
+			}
+		}
+	}
+}
+
+.dropdown,
+.btn-group{
+	.dropdown-menu{
+		padding: 0;
+		
+		background-color: var(--gray-1);
+		border: none;
+		
+        @include borderRadius();
+        
+        @include boxShadowDf();
+        
+		a{
+			&.dropdown-item{
+				padding: 0.5rem 1rem;
+
+				background-color: var(--gray-1);
+				
+				font-size: 0.875rem;
+				color: var(--text-paragraph);
+
+				@include borderRadius(0);
+
+				&:hover{
+					background-color: var(--btn-default-hover);
+					color: var(--text-paragraph);
+				}
+
+				&:first-child{
+					@include borderRadiusCustom(top, left);
+					@include borderRadiusCustom(top, right);
+				}
+
+				&:last-child {
+				    @include borderRadiusCustom(bottom, left);
+				    @include borderRadiusCustom(bottom, right);
+				}
+			}
+		}
+
+		.dropdown-divider{
+			margin: 0;
+		}
+	}
+}

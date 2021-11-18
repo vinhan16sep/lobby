@@ -1,0 +1,72 @@
+.datepicker{
+    table {
+        td,
+        th {
+            width: 36px;
+            height: 36px;
+
+            font-size: 0.875rem;
+        }
+
+        tr {
+            td {
+                &.day {
+                    &.today {
+                        background-color: var(--secondary);
+                        background-image: none;
+                        color: var(--white);
+
+                        &:hover {
+                            background-color: lighten($color-primary, 10%);
+                            color: var(--white);
+                        }
+                    }
+
+                    &.active {
+                        background-color: var(--primary);
+                        background-image: none;
+                        color: var(--white);
+
+                        &:hover {
+                            background-color: lighten($color-secondary, 10%);
+                            color: var(--white);
+                        }
+                    }
+                }
+
+                span{
+                    &.month{
+                        &.active{
+                            background-color: var(--primary);
+                            background-image: none;
+                            color: var(--white);
+
+                            &:hover {
+                                background-color: lighten($color-secondary, 10%);
+                                color: var(--white);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        thead {
+            tr {
+                th {
+                    font-weight: 500;
+                }
+            }
+        }
+
+        tbody {
+
+        }
+    }
+}
+
+.bootstrap-timepicker-widget{
+    &.dropdown-menu{
+        z-index: 1080 !important;
+    }
+}

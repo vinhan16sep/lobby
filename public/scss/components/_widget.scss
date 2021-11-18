@@ -1,0 +1,80 @@
+.widget{
+    background-color: var(--bg-bw);
+
+    @include borderRadius(0.25rem);
+
+    .widget-header{
+        padding: 1rem;
+
+        @include d-flex(row, space-between, center);
+
+        h6{
+            &.subtitle-md,
+            &.subtitle-sm {
+                color: var(--text-paragraph);
+            }
+        }
+
+        .btn{
+            padding: 0;
+            
+            opacity: 0.85;
+        }
+    }
+
+    .widget-body {
+        padding: 1rem;
+
+        .widget-info-group{
+            margin-bottom: 1rem;
+
+            &:last-child{
+                margin-bottom: 0;
+            }
+
+            label{
+                font-size: 0.75rem;
+
+                margin-bottom: 0.25rem;
+
+                color: var(--text-overline);
+
+                &.label-success{
+                    color: var(--success);
+                }
+
+                &.label-warning {
+                    color: var(--warning);
+                }
+            }
+
+            h5 {
+                font-weight: 400;
+
+                color: var(--text-paragraph);
+
+                a {
+                    color: var(--primary);
+                }
+            }
+
+            h6{
+                color: var(--text-paragraph);
+
+                a{
+                    color: var(--primary);
+                }
+            }
+
+            .progress{
+                height: 4px;
+
+                background-color: var(--gray-1);
+
+                .progress-bar{
+                    background-color: var(--success);
+                }
+            }
+        }
+    }
+}

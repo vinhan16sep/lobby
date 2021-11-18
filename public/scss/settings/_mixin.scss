@@ -1,0 +1,332 @@
+//
+//
+// MIXIN DISPLAY
+//
+
+//Display Flex
+@mixin d-flex($direction: row, $justify: center, $align: center){
+	display: flex;
+	
+	flex-direction: $direction;
+	justify-content: $justify;
+	align-items: $align;
+}
+
+//
+//
+// MIXIN TRANSFORM
+//
+
+//Rotate
+@mixin rotate($deg: 90deg){
+	-webkit-transform: rotate($deg);
+	-moz-transform: rotate($deg);
+	-ms-transform: rotate($deg);
+	-o-transform: rotate($deg);
+	transform: rotate($deg);
+}
+
+//Translate2d
+@mixin translate($x: -50%, $y: -50%){
+	-webkit-transform: translate($x, $y);
+	-moz-transform: translate($x, $y);
+	-ms-transform: translate($x, $y);
+	-o-transform: translate($x, $y);
+	transform: translate($x, $y);
+}
+
+@mixin translate3d($p, $x, $y, $z){
+	-webkit-transform: perspective($p) translate3d($x, $y, $z);
+	-moz-transform: perspective($p) translate3d($x, $y, $z);
+	-ms-transform: perspective($p) translate3d($x, $y, $z);
+	-o-transform: perspective($p) translate3d($x, $y, $z);
+	transform: perspective($p) translate3d($x, $y, $z);
+}
+
+//Scale
+@mixin scale($x: 1, $y: 1){
+	-webkit-transform: scale($x, $y);
+	-moz-transform: scale($x, $y);
+	-ms-transform: scale($x, $y);
+	-o-transform: scale($x, $y);
+	transform: scale($x, $y);
+}
+
+//
+//
+// MIXIN TRANSITION
+//
+
+@mixin transition($duration: 300ms){
+	-webkit-transition: all ease-in-out $duration;
+	-moz-transition: all ease-in-out $duration;
+	-ms-transition: all ease-in-out $duration;
+	-o-transition: all ease-in-out $duration;
+	transition: all ease-in-out $duration;
+}
+
+//
+//
+// MIXIN BORDER
+//
+
+//Set Border Radius
+@mixin borderRadius($radius: 0.5rem){
+	-webkit-border-radius: $radius;
+	-moz-border-radius: $radius;
+	border-radius: $radius;
+}
+
+@mixin borderRadiusCustom($axisY: top, $axisX: left, $radius: 0.5rem) {
+	border-#{$axisY}-#{$axisX}-radius: $radius;
+	-webkit-border-#{$axisY}-#{$axisX}-radius: $radius;
+	-moz-border-#{$axisY}-#{$axisX}-radius: $radius;
+	-o-border-#{$axisY}-#{$axisX}-radius: $radius
+}
+
+//
+//
+// MIXIN SHADOW
+//
+
+//Set Box Shadow
+@mixin boxShadow($x: 0, $y: 0, $blur: 1rem, $color: var(--black)){
+	-webkit-box-shadow: $x $y $blur $color;
+	-moz-box-shadow: $x $y $blur $color;
+	box-shadow: $x $y $blur $color;
+}
+
+@mixin boxShadowSm(){
+	-webkit-box-shadow: 0 0.125rem 0.25rem transparentize($color-black, 0.925);
+	-moz-box-shadow: 0 0.125rem 0.25rem transparentize($color-black, 0.925);
+	box-shadow: 0 0.125rem 0.25rem transparentize($color-black, 0.925);
+}
+
+@mixin boxShadowDf(){
+	-webkit-box-shadow: 0 0.5rem 1rem transparentize($color-black, 0.85);
+	-moz-box-shadow: 0 0.5rem 1rem transparentize($color-black, 0.85);
+	box-shadow: 0 0.5rem 1rem transparentize($color-black, 0.85);
+}
+
+@mixin boxShadowLg(){
+	-webkit-box-shadow: 0 1rem 3rem transparentize($color-black, 0.825);
+	-moz-box-shadow: 0 1rem 3rem transparentize($color-black, 0.825);
+	box-shadow: 0 1rem 3rem transparentize($color-black, 0.825);
+}
+
+//Set Text Shadow
+@mixin textShadow($x: 0, $y: 0, $blur: 1rem, $color: var(--black)){
+	text-shadow: $x $y $blur $color;
+}
+
+@mixin textShadowSm(){
+    text-shadow: 0 0.125rem 0.25rem transparentize($color-black, 0.925);
+}
+
+@mixin textShadowDf(){
+    text-shadow: 0 0.5rem 1rem transparentize($color-black, 0.85);
+}
+
+@mixin textShadowLg(){
+    text-shadow: 0 1rem 3rem transparentize($color-black, 0.825);
+}
+
+//
+//
+// BACKDROP FILTER
+//
+
+@mixin backdropFilter($blur: 0.2){
+	@supports (-webkit-backdrop-filter: blur($blur)) or (backdrop-filter: blur($blur)) {
+		-webkit-backdrop-filter: blur($blur);
+		backdrop-filter: blur($blur);
+	}
+}
+
+//
+//
+// GRADIENT BACKGROUND
+//
+@mixin gradientLinearBackground($direction, $colorStart, $colorEnd){
+	background-image: linear-gradient($direction, $colorStart, $colorEnd);
+	background-image: -moz-linear-gradient($direction, $colorStart, $colorEnd);
+	background-image: -webkit-linear-gradient($direction, $colorStart, $colorEnd);
+	background-image: -o-linear-gradient($direction, $colorStart, $colorEnd);
+}
+
+@mixin gradientRadialBackground($direction, $colorStart, $colorEnd){
+	background-image: radial-gradient($direction, $colorStart, $colorEnd);
+	background-image: -moz-radial-gradient($direction, $colorStart, $colorEnd);
+	background-image: -webkit-radial-gradient($direction, $colorStart, $colorEnd);
+	background-image: -o-radial-gradient($direction, $colorStart, $colorEnd);
+}
+
+//
+//
+// SET ANIMATION
+//
+@mixin animationBlink($duration: 500ms){
+    @keyframes animationBlink {
+        from{ opacity: 0.3; }
+        to{ opacity: 1; }
+    }
+    
+    -webkit-animation-name: animationBlink;
+    -moz-animation-name: animationBlink;
+    -o-animation-name: animationBlink;
+    animation-name: animationBlink;
+    
+    -webkit-animation-duration: $duration;
+    -moz-animation-duration: $duration;
+    -o-animation-duration: $duration;
+    animation-duration: $duration;
+    
+    -webkit-animation-iteration-count: infinite;
+    -moz-animation-iteration-count: infinite;
+    -o-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    
+    -webkit-animation-direction: alternate-reverse;
+    -moz-animation-direction: alternate-reverse;
+    -o-animation-direction: alternate-reverse;
+    animation-direction: alternate-reverse;
+}
+
+@mixin animationSpread($loop: infinite) {
+	@keyframes animationSpread {
+        from{ opacity: 1; @include scale(1, 1) }
+        to{ opacity: 0; @include scale(2, 2)}
+	}
+	
+	-webkit-animation-name: animationSpread;
+    -moz-animation-name: animationSpread;
+    -o-animation-name: animationSpread;
+    animation-name: animationSpread;
+    
+    -webkit-animation-duration: 1000ms;
+    -moz-animation-duration: 1000ms;
+    -o-animation-duration: 1000ms;
+    animation-duration: 1000ms;
+	
+	-webkit-animation-iteration-count: $loop;
+	-moz-animation-iteration-count: $loop;
+	-o-animation-iteration-count: $loop;
+	animation-iteration-count: $loop;
+    
+    -webkit-animation-direction: normal;
+    -moz-animation-direction: normal;
+    -o-animation-direction: normal;
+    animation-direction: normal;
+}
+
+@mixin animationBounce($duration: 500ms) {
+	@keyframes animationBounce {
+        0%{ @include scale(0, 0)}
+		75%{ @include scale(1.2, 1.2)}
+		90%{@include scale(0.9, 0.9)}
+		100%{@include scale(1, 1)}
+    }
+    
+    -webkit-animation-name: animationBounce;
+    -moz-animation-name: animationBounce;
+    -o-animation-name: animationBounce;
+    animation-name: animationBounce;
+    
+    -webkit-animation-duration: $duration;
+    -moz-animation-duration: $duration;
+    -o-animation-duration: $duration;
+    animation-duration: $duration;
+    
+    -webkit-animation-iteration-count: 1;
+    -moz-animation-iteration-count: 1;
+    -o-animation-iteration-count: 1;
+    animation-iteration-count: 1;
+    
+    -webkit-animation-direction: normal;
+    -moz-animation-direction: normal;
+    -o-animation-direction: normal;
+    animation-direction: normal;
+}
+
+//
+//
+// SET TEXT WRAPPER
+//
+
+@mixin textWrapper($width, $height, $row){
+	overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    width: $width;
+    height: $height;
+    -webkit-line-clamp: $row;
+	-webkit-box-orient: vertical;
+	
+	word-break: break-word;
+}
+
+//
+//
+// SET POSITION STICKY
+//
+
+@mixin positionSticky($direction: top, $top : 0, $zindex: 1){
+	position: sticky;
+	position: -webkit-sticky;
+	#{$direction}: $top;
+	z-index: $zindex;
+}
+
+@mixin overflow-x($size : 8px){
+	overflow-x: auto;
+
+	&::-webkit-scrollbar {
+		height: $size;
+
+	    background-color: transparent;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		height: $size;
+
+	    background-color: var(--gray-5);
+
+	    @include borderRadius($size / 2);
+	    @include transition(300ms);
+
+	    &:hover {
+	        background-color: var(--gray-6);
+
+	        cursor: pointer;
+
+	        @include transition(300ms);
+	    }
+	}
+}
+
+@mixin overflow-y($size : 8px) {
+	overflow-y: auto;
+
+    &::-webkit-scrollbar {
+        width: $size;
+
+        background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        width: $size;
+
+        background-color: var(--gray-5);
+
+        @include borderRadius($size / 2);
+        @include transition(300ms);
+
+        &:hover {
+            background-color: var(--gray-6);
+
+            cursor: pointer;
+
+            @include transition(300ms);
+        }
+    }
+}

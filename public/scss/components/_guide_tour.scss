@@ -1,0 +1,192 @@
+@import '../settings/var';
+@import '../settings/mixin';
+
+.guide-tour{
+	width: 100%;
+	height: 100vh;
+
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 2001;
+
+	.item-guide{
+		position: absolute;
+		z-index: 2;
+
+		&.item-guide-top{
+			@include translate(-50%, -26px);
+
+			.item-guide-wrapper{
+				&:before{
+					border-top: 10px solid var(--primary);
+					border-left: 16px solid transparent;
+					border-right: 16px solid transparent;
+	
+					top: 100%;
+					left: 50%;
+
+					@include translate(-50%, 0);
+				}
+			}
+		}
+
+		&.item-guide-bottom{
+			@include translate(-50%, 26px);
+
+			.item-guide-wrapper{
+				&:before{
+					border-bottom: 10px solid var(--primary);
+					border-left: 16px solid transparent;
+					border-right: 16px solid transparent;
+	
+					top: 0;
+					left: 50%;
+
+					@include translate(-50%, -100%);
+				}
+			}
+		}
+
+		&.item-guide-left{
+			@include translate(-10px, -50%);
+
+			.item-guide-wrapper{
+				&:before{
+					border-left: 10px solid var(--primary);
+					border-top: 16px solid transparent;
+					border-bottom: 16px solid transparent;
+	
+					top: 50%;
+					left: 100%;
+
+					@include translate(0, -50%);
+				}
+			}
+		}
+
+		&.item-guide-right{
+			@include translate(10px, -50%);
+
+			.item-guide-wrapper{
+				&:before{
+					border-right: 10px solid var(--primary);
+					border-top: 16px solid transparent;
+					border-bottom: 16px solid transparent;
+	
+					top: 50%;
+					left: 0;
+
+					@include translate(-100%, -50%);
+				}
+			}
+		}
+
+		.item-guide-wrapper{
+			position: relative;
+			z-index: 1;
+
+			&:before{
+				content: '';
+
+				width: 28px;
+				height: 28px;
+
+				position: absolute;
+				z-index: -1;
+			}
+
+			.arrow{
+				width: 20px;
+				height: 20px;
+
+				background-color: var(--primary);
+
+				@include borderRadius(0.25rem);
+
+				position: absolute;
+				top: 0;
+				left: 50%;
+			}
+
+			.item-guide-content{
+				min-width: 15rem;
+				max-width: 25rem;
+
+				padding: 1rem;
+
+				background-color: var(--primary);
+
+				@include borderRadius(0.5rem);
+
+				.guide-heading{
+					margin-bottom: 0.5rem;
+					
+					@include d-flex(row, space-between, flex-start);
+
+					.btn-close-guide{
+						padding: 0;
+
+						color: var(--white);
+					}
+				}
+
+				h6,
+				p{
+					color: var(--white);
+				}
+
+				p{
+					&:not(:last-child){
+						margin-bottom: 0.75rem;
+					}
+				}
+
+				.guide-trick{
+					&:not(:last-child){
+						margin-bottom: 1rem;
+					}
+
+					ul{
+						padding-left: 1.5rem;
+
+						li{
+							font-size: 0.875rem;
+							color: var(--white);
+						}
+					}
+				}
+
+				.guide-progress{
+					@include d-flex(row, space-between, center);
+
+					.progress-count{
+						font-family: 'Inter', sans-serif;
+						font-size: 0.875rem;
+
+						color: var(--white);
+					}
+
+					.progress-control{
+						.btn{
+							color: var(--white);
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+.guide-tour-backdrop{
+	width: 100%;
+	height: 100%;
+
+	background-color: rgba(0, 0, 0, 0.5);
+	backdrop-filter: blur(4px);
+
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 2000;
+}

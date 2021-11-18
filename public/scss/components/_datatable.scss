@@ -1,0 +1,81 @@
+.dataTables_wrapper{
+	font-family: var(--webfont);
+
+	.row{
+		.dataTables_length,
+		.dataTables_filter{
+			label{
+				font-size: 0.875rem;
+				color: var(--text-paragraph);
+			}
+		}
+	}
+
+	.datatable{
+		thead{
+			tr{
+				th{
+					font-size: 0.75rem;
+
+					color: var(--text-title);
+				}
+			}
+		}
+	
+		tbody{
+			tr{
+				td{
+					font-size: 0.875rem;
+
+					color: var(--text-paragraph);
+				}
+			}
+		}
+	}
+
+	.dataTables_info{
+		font-size: 0.75rem;
+
+		color: var(--text-overline);
+	}
+
+	.dataTables_paginate{
+		.pagination{
+			display: flex;
+
+			.page-item {
+				min-width: 28px;
+				height: 28px;
+		
+				margin: 0 0.25rem;
+				padding: 0;
+
+				&.next,
+				&.previous{
+					.page-link{
+						@include borderRadius(0.25rem);
+					}
+				}
+
+				&.active {
+					.page-link{
+						background-color: var(--primary);
+					color: var(--white);
+					}
+				}
+
+				.page-link{
+					font-size: 0.875rem;
+		
+					background-color: transparent;
+					color: var(--text-paragraph);
+
+					border: none;
+			
+					@include borderRadius(50%);
+					@include d-flex(row, center, center);
+				}
+			}
+		}
+	}
+}

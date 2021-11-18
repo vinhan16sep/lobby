@@ -1,0 +1,196 @@
+.notifications{
+    width: 100%;
+
+    .noti-item{
+        min-height: 50px;
+
+        padding: 0.5rem 1rem;
+
+        background-color: var(--bg-bw);
+        @include boxShadowDf();
+
+        @include borderRadius(0.5rem);
+
+        &.noti-full-action{
+            .noti-container{
+                .noti-content{
+                    width: calc(100% - 3rem);
+                }
+
+                .noti-quick-action{
+                    display: none;
+                }
+            }
+
+            .noti-actions{
+                height: 40px;
+    
+                padding: 0 0.5rem;
+    
+                @include d-flex(row, flex-end, center);
+            }
+        }
+
+        .noti-container{
+            @include d-flex(row, normal, center);
+
+            .noti-icon{
+                width: 32px;
+                height: 32px;
+    
+                margin-right: 1rem;
+
+                background-color: $color-gray;
+    
+                @include d-flex(row, center, center);
+                color: #fff;
+    
+                @include borderRadius(50%);
+                @include boxShadowSm();
+
+                &.noti-success{
+                    background-color: $color-success;
+                }
+
+                &.noti-warning{
+                    background-color: $color-secondary;
+                }
+
+                &.noti-danger{
+                    background-color: $color-danger;
+                }
+            }
+    
+            .noti-content{
+                width: calc(100% - 3rem - 50px);
+            }
+
+            .noti-quick-action{
+                width: 50px;
+            }
+        }
+
+        .noti-actions{
+            display: none;
+        }
+    }
+}
+
+// ITEM NOTIFICATION
+.notification {
+    width: 100%;
+    min-height: 3rem;
+
+    margin-bottom: 0.5rem;
+    padding: 0.75rem 1rem;
+
+    background-color: var(--bg-bw);
+
+    @include borderRadius(0.25rem);
+
+    @include d-flex(row, normal, center);
+
+    @include boxShadowDf();
+
+    &:last-of-type {
+        margin-bottom: 0;
+    }
+
+    &.notification-default {
+        background-color: $color-link;
+
+        .notification-icon {
+            .icon-circle {
+                i {
+                    color: $color-white;
+                }
+            }
+        }
+
+        .notification-content {
+            h6,
+            p {
+                color: $color-white;
+            }
+        }
+    }
+
+    &.notification-success{
+        background-color: lighten($color-success, 50%);
+
+        .notification-icon{
+            .icon-circle{
+                i{
+                    color: darken($color-success, 10%);
+                }
+            }
+        }
+
+        .notification-content{
+            h6,
+            p{
+                color: darken($color-success, 10%);
+            }
+        }
+    }
+
+    &.notification-warning {
+        background-color: lighten($color-warning, 50%);
+
+        .notification-icon {
+            .icon-circle {
+                i {
+                    color: darken($color-warning, 10%);
+                }
+            }
+        }
+
+        .notification-content {
+            h6,
+            p {
+                color: darken($color-warning, 10%);
+            }
+        }
+    }
+
+    &.notification-danger {
+        background-color: lighten($color-danger, 50%);
+
+        .notification-icon {
+            .icon-circle {
+                i {
+                    color: darken($color-danger, 10%);
+                }
+            }
+        }
+
+        .notification-content {
+            h6,
+            p {
+                color: darken($color-danger, 10%);
+            }
+        }
+    }
+
+    .notification-icon {
+        width: 42px;
+        height: 42px;
+
+        margin-right: 0.5rem;
+
+        .icon-circle {
+            width: 100%;
+            height: 100%;
+
+            @include d-flex(row, center, center);
+
+            i {
+                font-size: 2rem;
+            }
+        }
+    }
+
+    .notification-content {
+        width: calc(100% - 42px - 0.5rem);
+    }
+}

@@ -1,0 +1,52 @@
+.toast{
+    backdrop-filter: blur(0.25rem);
+    -webkit-backdrop-filter: blur(0.25rem);
+
+    .toast-header{
+        background-color: var(--bg-bw);
+
+        @include d-flex(row, space-between, center);
+
+        .toast-header-left{
+            .mask, h6, p{
+                display: inline-block;
+            }
+
+            .mask{
+                width: 20px;
+                height: 20px;
+
+                margin-right: 0.5rem;
+
+                vertical-align: middle;
+            }
+        }
+
+        .toast-header-right{
+            small{
+                color: var(--text-overline);
+
+                margin-right: 0.5rem;
+            }
+
+            .close{
+                color: var(--text-overline);
+
+                text-shadow: none;
+
+                &:hover{
+                    color: var(--text-paragraph);
+                }
+
+                &:focus{
+                    box-shadow: none;
+                    outline: none;
+                }
+            }
+        }
+    }
+
+    .toast-body{
+        background-color: var(--bg-bw);
+    }
+}

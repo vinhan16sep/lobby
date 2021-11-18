@@ -1,0 +1,173 @@
+.toolbar{
+    width: 100%;
+    height: 100%;
+    
+    &.toolbar-h{
+        @include d-flex(row, flex-start, center);
+        
+        fieldset{
+            padding-left: 0.5rem;
+            margin-left: 0.5rem;
+            
+            border-left: 1px solid mix($color-gray, #fff, 30%);
+            
+            &:last-of-type{
+                border-left: none;
+            }
+        }
+    }
+    
+    &.toolbar-v{
+        @include d-flex(column, flex-start, center);
+    
+        fieldset{
+            padding-bottom: 0.5rem;
+            margin-bottom: 0.5rem;
+        
+            border-bottom: 1px solid var(--border);
+        
+            &:last-of-type{
+                border-bottom: none;
+                padding-bottom: 0;
+                margin-bottom: 0;
+            }
+        }
+    }
+    
+    fieldset{
+        .btn{
+            &.btn-tools{
+                width: 60px;
+                height: 60px;
+    
+                position: relative;
+                
+                padding: 0;
+                
+                text-transform: none;
+                
+                color: var(--text-paragraph);
+                
+                @include borderRadius(0);
+                
+                &.btn-active{
+                    color: var(--primary);
+                }
+
+                i{
+                    &[class^="el"]{
+                        font-size: 1.25rem;
+                    }
+                }
+
+                .el-group{
+                    .el-sub{
+                        font-size: 75%;
+                    }
+                }
+                
+                span{
+                    &.btn-title{
+                        width: 100%;
+    
+                        font-size: 0.625rem;
+                        text-align: center;
+                        
+                        letter-spacing: 0.0125rem;
+    
+                        display: block;
+                    }
+                    
+                    &.badge{
+                        display: none;
+                    }
+                }
+            }
+            
+            &.btn-has-noti{
+                span{
+                    &.badge{
+                        width: 1rem;
+                        height: 1rem;
+    
+                        @include d-flex(row, center, center);
+
+                        font-size: 0.5rem;
+                        color: $color-white;
+                        
+                        @include borderRadius(50%);
+                        
+                        background-color: $color-danger;
+                        
+                        position: absolute;
+                        top: 8px;
+                        right: 8px;
+                        z-index: 1;
+                        
+                        @include animationBlink(500ms);
+                    }
+                }
+            }
+        }
+        
+        .dropdown{
+            .dropdown-menu{
+                &.dropdown-tools{
+                    .tools-group{
+                        display: block;
+                        
+                        .tools-group-header{
+                            height: 20px;
+    
+                            padding: 0 1rem;
+                            
+                            @include d-flex(row, space-between, center);
+
+                            p{
+                                &.p-overline{
+                                    color: var(--text-title);
+                                }
+                            }
+                        }
+                        
+                        .tools-group-body{
+                            padding: 0.5rem 1rem;
+                            
+                            @include d-flex(row, normal, normal);
+                            flex-wrap: wrap;
+                            -ms-flex-wrap: wrap;
+                            -webkit-flex-wrap: wrap;
+                            
+                            &.tools-group-body-sm{
+                                width: 160px;
+                            }
+    
+                            &.tools-group-body-md{
+                                width: 240px;
+                            }
+                            
+                            a{
+                                width: 32px;
+                                height: 32px;
+                                
+                                @include d-flex(column, center, center);
+
+                                > span{
+                                    width: 100%;
+
+                                    display: block;
+
+                                    font-size: 0.625rem;
+
+                                    text-align: center;
+
+                                    color: var(--text-paragraph);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,29 @@
+.pagination {
+    margin: 2rem auto 0;
+
+    display: none;
+
+    &.show {
+        @include d-flex(row, center, center);
+    }
+
+    .pagination-item {
+        min-width: 28px;
+        height: 28px;
+
+        margin: 0 0.25rem;
+        padding: 0;
+
+        font-size: 0.875rem;
+
+        color: var(--text-paragraph);
+
+        @include borderRadius(50%);
+        @include d-flex(row, center, center);
+
+        &.active {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+    }
+}

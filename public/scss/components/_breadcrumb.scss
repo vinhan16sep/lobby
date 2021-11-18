@@ -1,0 +1,49 @@
+.breadcrumb{
+	margin-bottom: 0;
+	padding: 0;
+	
+	background-color: transparent;
+
+	.breadcrumb-item{
+		font-size: 0.75rem;
+
+		text-transform: uppercase;
+
+		@include d-flex(row, flex-start, center);
+
+		&:first-of-type{
+			&:before{
+				display: none;
+			}
+		}
+
+		&:before{
+			font-family: 'els';
+			font-size: 0.75rem;
+			font-weight: 900;
+			content: '\e9c3';
+		}
+
+		&.breadcrumb-active{
+			a{
+				color: var(--text-paragraph);
+
+				&:hover{
+					cursor: default;
+				}
+			}
+		}
+
+		a{
+			max-width: 300px; 
+			
+			color: var(--link);
+
+			text-overflow: ellipsis;
+			overflow: hidden;
+			white-space: nowrap;
+
+			display: block;
+		}
+	}
+}

@@ -1,0 +1,67 @@
+.modal-open{
+    .modal{
+        overflow-x: hidden;
+        @include overflow-y();
+    }
+}
+
+.modal{
+    z-index: 1050;
+
+    .modal-dialog{
+        .modal-content{
+            background-color: var(--gray-1);
+            border-color: transparent;
+
+            @include borderRadius();
+
+            .modal-header{
+                border-bottom: none;
+                @include borderRadiusCustom(top, left);
+                @include borderRadiusCustom(top, right);
+
+                @include d-flex(row, space-between, center);
+
+                .modal-header-left{
+                    @include d-flex(row, flex-start, center);
+
+                    > * {
+                        margin-right: 0.5rem;
+                    }
+                }
+
+                .modal-header-right{
+                    @include d-flex(row, flex-end, center);
+
+                    > * {
+                        margin-left: 0.5rem;
+                    }
+                }
+            }
+
+            .modal-body{
+                &:first-child{
+                    @include borderRadiusCustom(top, left);
+                    @include borderRadiusCustom(top, right);
+                }
+
+                &:last-child{
+                    @include borderRadiusCustom(bottom, left);
+                    @include borderRadiusCustom(bottom, right);
+                }
+            }
+
+            .modal-footer{
+                border-top: none;
+                @include borderRadiusCustom(bottom, left);
+                @include borderRadiusCustom(bottom, right);
+
+                @include d-flex(row, space-between, center);
+            }
+        }
+    }
+}
+
+.modal-backdrop{
+    z-index: 1049;
+}
