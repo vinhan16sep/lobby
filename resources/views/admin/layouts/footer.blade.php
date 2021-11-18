@@ -5,5 +5,5 @@
       Anything you want
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2017 <a href="http://matocreative.vn/" target="_blank">Mato Creative</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2021 <a href="#" target="_blank">Noone</a>.</strong> All rights reserved.
   </footer>

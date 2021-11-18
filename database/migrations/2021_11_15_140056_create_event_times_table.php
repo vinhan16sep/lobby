@@ -16,8 +16,8 @@ class CreateEventTimesTable extends Migration
         Schema::create('event_times', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('event_day_id')->length(11)->unsigned(); 
-            $table->string('from');
-            $table->string('to');
+            $table->string('start_time');
+            $table->string('end_time');
             $table->timestamp('created_at')->useCurrent();
             $table->string('created_by');
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));

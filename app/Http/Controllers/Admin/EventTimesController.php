@@ -12,7 +12,7 @@ use Response;
 use Session;
 use File;
 
-class EventDaysController extends Controller
+class EventTimesController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -26,30 +26,32 @@ class EventDaysController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
      */
     public function index(){
-        $eventDays = DB::table('event_days')
+        $eventTimes = DB::table('event_times')
             ->select('*')
             ->where('is_deleted', 0)
             ->paginate(10);
-        return view('admin/event-days/index', ['eventDays' => $eventDays]);
+        return view('admin/event-times/index', ['eventTimes' => $eventTimes]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
      */
     public function create(){
-        return view('admin/event-days/create');
+        $eventDays = DB::table('event_days')
+            ->select('*')
+            ->where('is_deleted', 0)->get();
+//        echo '<pre>';
+//        print_r($eventDays);die;
+        return view('admin/event-times/create', ['eventDays' => $eventDays]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
         $this->validateInput($request);
@@ -61,7 +63,7 @@ class EventDaysController extends Controller
 
         EventDays::create($input);
 
-        return redirect()->intended('admin/event-days');
+        return redirect()->intended('admin/event-times');
     }
 
     /**
@@ -79,13 +81,12 @@ class EventDaysController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $detail = BlogCategory::where(['is_deleted' => 0, 'id' => $id])->first();
         
-        return view('admin.event-days.edit', ['detail' => $detail]);
+        return view('admin.event-times.edit', ['detail' => $detail]);
     }
 
     /**
@@ -93,7 +94,6 @@ class EventDaysController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
@@ -116,14 +116,13 @@ class EventDaysController extends Controller
             }
         }
         
-        return redirect()->intended('admin/event-days');
+        return redirect()->intended('admin/event-times');
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
@@ -133,18 +132,17 @@ class EventDaysController extends Controller
 
             if($destroy){
                 Session::flash('success', 'Xóa thành công!');
-                return redirect()->intended('admin/event-days');
+                return redirect()->intended('admin/event-times');
             }
         }
         Session::flash('error', 'Xóa thất bại do danh mục nay tồn tại bài viết!');
-        return redirect()->intended('admin/event-days');
+        return redirect()->intended('admin/event-times');
     }
 
     /**
      * Search state from database base on some specific constraints
      *
      * @param  \Illuminate\Http\Request  $request
-     *  @return \Illuminate\Http\Response
      */
     public function search(Request $request){
         $constraints = [
@@ -152,7 +150,7 @@ class EventDaysController extends Controller
         ];
         $categories = $this->doSearchingQuery($constraints);
 
-        return view('admin/event-days/index', ['categories' => $categories, 'searchingVals' => $constraints]);
+        return view('admin/event-times/index', ['categories' => $categories, 'searchingVals' => $constraints]);
     }
 
     private function doSearchingQuery($constraints){
@@ -173,7 +171,9 @@ class EventDaysController extends Controller
 
     private function validateInput($request) {
         $this->validate($request, [
-            'event_date' => 'required',
+            'event_date_id' => 'required',
+            'start_time' => 'required',
+            'end_time' => 'required',
         ]);
     }
 }

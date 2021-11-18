@@ -8,11 +8,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use App\EventDays;
+use App\Blog;
 use Response;
 use Session;
 use File;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
-class EventDaysController extends Controller
+class UserController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -26,30 +29,49 @@ class EventDaysController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
      */
     public function index(){
-        $eventDays = DB::table('event_days')
+        $users = DB::table('users')
             ->select('*')
-            ->where('is_deleted', 0)
             ->paginate(10);
-        return view('admin/event-days/index', ['eventDays' => $eventDays]);
+        return view('admin/user/index', ['users' => $users]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     */
+    public function import(){
+        return view('admin/user/import');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
      */
     public function create(){
-        return view('admin/event-days/create');
+        return view('admin/user/create');
+    }
+
+    /**
+     * @param  \Illuminate\Http\Request  $request
+     */
+    public function doImport(Request $request) {
+        if($request->hasFile('file')) {
+
+            $inputFileType = 'Xlsx';
+            $path = $request->file('file')->getRealPath();
+            $spreadsheet = IOFactory::load($path);
+            $data = $spreadsheet->getActiveSheet()->toArray();
+            echo '<pre>';
+            print_r($data);die;
+        }
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
         $this->validateInput($request);
@@ -61,7 +83,7 @@ class EventDaysController extends Controller
 
         EventDays::create($input);
 
-        return redirect()->intended('admin/event-days');
+        return redirect()->intended('admin/user');
     }
 
     /**
@@ -79,13 +101,12 @@ class EventDaysController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $detail = BlogCategory::where(['is_deleted' => 0, 'id' => $id])->first();
         
-        return view('admin.event-days.edit', ['detail' => $detail]);
+        return view('admin.user.edit', ['detail' => $detail]);
     }
 
     /**
@@ -93,7 +114,6 @@ class EventDaysController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
@@ -116,14 +136,13 @@ class EventDaysController extends Controller
             }
         }
         
-        return redirect()->intended('admin/event-days');
+        return redirect()->intended('admin/user');
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
@@ -133,18 +152,17 @@ class EventDaysController extends Controller
 
             if($destroy){
                 Session::flash('success', 'Xóa thành công!');
-                return redirect()->intended('admin/event-days');
+                return redirect()->intended('admin/user');
             }
         }
         Session::flash('error', 'Xóa thất bại do danh mục nay tồn tại bài viết!');
-        return redirect()->intended('admin/event-days');
+        return redirect()->intended('admin/user');
     }
 
     /**
      * Search state from database base on some specific constraints
      *
      * @param  \Illuminate\Http\Request  $request
-     *  @return \Illuminate\Http\Response
      */
     public function search(Request $request){
         $constraints = [
@@ -152,7 +170,7 @@ class EventDaysController extends Controller
         ];
         $categories = $this->doSearchingQuery($constraints);
 
-        return view('admin/event-days/index', ['categories' => $categories, 'searchingVals' => $constraints]);
+        return view('admin/user/index', ['categories' => $categories, 'searchingVals' => $constraints]);
     }
 
     private function doSearchingQuery($constraints){
