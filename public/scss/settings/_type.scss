@@ -1,0 +1,114 @@
+// WEBFONT INTER
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
+
+h1, h2, h3, h4, h5, h6, p{
+	margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6{
+	color: var(--text-title);
+}
+
+p{
+	color: var(--text-paragraph);
+}
+
+h1{
+	font-weight: 500;
+	font-size: 6rem;
+	
+	letter-spacing: -1.5 / 16 + rem;
+}
+
+h2{
+	font-weight: 500;
+	font-size: 3.75rem;
+	
+	letter-spacing: -0.5 / 16 + rem;
+}
+
+h3{
+	font-weight: 500;
+	font-size: 3rem;
+}
+
+h4{
+	font-weight: 500;
+	font-size: 2.125rem;
+	
+	letter-spacing: 0.25 / 16 + rem;
+}
+
+h5{
+	font-weight: 500;
+	font-size: 1.5rem;
+}
+
+h6{
+	font-weight: 500;
+	font-size: 1.25rem;
+	
+	letter-spacing: 0.15 / 16 + rem;
+	
+	&.subtitle-md{
+		font-size: 1rem;
+	}
+	
+	&.subtitle-sm{
+		font-size: 0.875rem;
+		
+		letter-spacing: 0.1 / 16 + rem;
+	}
+}
+
+p{
+	font-size: 1rem;
+	
+	letter-spacing: 0.5 / 16 + rem;
+	
+	&.p-sm{
+		font-size: 0.875rem;
+		
+		letter-spacing: 0.25 / 16 + rem;
+	}
+	
+	&.p-caption{
+		font-size: 0.75rem;
+		
+		letter-spacing: 0.4 / 16 + rem;
+	}
+	
+	&.p-overline{
+		font-size: 0.625rem;
+		text-transform: uppercase;
+		
+		letter-spacing: 1.5 / 16 + rem;
+	}
+}
+
+.p-sm{
+	font-size: 0.875rem;
+	
+	letter-spacing: 0.5 / 16 + rem;
+}
+
+.p-cap{
+	font-size: 0.75rem;
+	
+	letter-spacing: 0.5 / 16 + rem;
+}
+
+.p-overline{
+	font-size: 0.625rem;
+
+	color: var(--text-overline);
+	
+	text-transform: uppercase;
+	
+	letter-spacing: 1.5 / 16 + rem;
+}

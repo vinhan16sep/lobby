@@ -1,0 +1,64 @@
+.zyk-slider {
+    width: 100%;
+
+    position: relative;
+
+    .slider-inner {
+        width: 100%;
+
+        overflow: hidden;
+
+        position: relative;
+
+        .slider-item {
+            width: 100%;
+
+            display: none;
+
+            float: left;
+            margin-right: -100%;
+
+            position: relative;
+
+            // backface-visibility: hidden;
+            // -moz-backface-visibility: hidden;
+            // -webkit-backface-visibility: hidden;
+
+            @include transition(300ms);
+
+            &.active {
+                display: block;
+            }
+
+            &.slider-item-prepare {
+                display: block;
+
+                &.slider-item-prev {
+                    @include translate(-100%, 0);
+                }
+
+                &.slider-item-next {
+                    @include translate(100%, 0);
+                }
+            }
+
+            img {
+                width: 100%;
+
+                object-fit: cover;
+            }
+        }
+    }
+
+    .slider-controls {
+        .slider-control {
+            position: absolute;
+            top: 50%;
+            z-index: 1;
+
+            &.slider-control-next {
+                right: 0;
+            }
+        }
+    }
+}

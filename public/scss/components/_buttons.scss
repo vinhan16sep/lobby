@@ -1,0 +1,387 @@
+@use '../settings/var';
+
+$color-buttons: (
+	'success' : 								$color-success,
+	'warning' : 								$color-warning,
+	'danger' : 									$color-danger,
+	
+	'link' : 									$color-link,
+	
+	'light' : 									$color-white,
+	'dark' : 									$color-black,
+);
+
+//Gen buttons
+.btn{
+	font-weight: 500;
+	font-size: 0.875rem;
+
+	color: var(--text-paragraph);
+
+	span{
+		font-family: 'Inter', sans-serif;
+	}
+
+	&:hover{
+		color: var(--text-paragraph);
+	}
+	
+	&.focus,
+	&:focus{
+		outline: none;
+		box-shadow: none;
+	}
+
+	&.btn-lg{
+		font-size: 1.25rem;
+	}
+
+	&.btn-sm{
+		font-size: 0.75rem;
+
+		@include borderRadius(0.25rem);
+	}
+	
+	&.btn-default{
+		background-color: var(--btn-default);
+		color: var(--text-paragraph);
+
+		&:hover{
+			background-color: var(--btn-default-hover);
+		}
+	}
+
+	&.btn-outline-default{
+		border: 1px solid var(--text-paragraph);
+		color: var(--text-paragraph);
+
+		&:hover{
+			background-color: var(--btn-default-hover);
+			border-color: var(--btn-default-hover);
+		}
+	}
+
+	&.btn-dashed-default {
+	    border: 1px dashed var(--text-paragraph);
+	    color: var(--text-paragraph);
+
+	    &:hover {
+	        border-style: solid;
+	    }
+	}
+
+	&.btn-solid-link{
+		background-color: var(--link);
+		border: 1px solid var(--link);
+		color: $color-white;
+
+		&:hover{
+			background-color: lighten($color-link, 10%);
+
+			&:not(:disabled):active,
+			&:not(.disabled):active {
+			    background-color: var(--link);
+			    border-color: var(--link);
+			}
+		}
+	}
+
+	&.btn-primary{
+		background-color: var(--primary);
+		border: 1px solid var(--primary);
+		color: var(--white);
+
+		&:hover {
+		    background-color: var(--primary-alpha-90);
+		}
+
+		&:not(:disabled):active,
+		&:not(.disabled):active {
+		    background-color: var(--primary);
+		    border-color: var(--primary);
+		}
+	}
+
+	&.btn-secondary {
+	    background-color: var(--secondary);
+	    border: 1px solid var(--secondary);
+	    color: var(--white);
+
+	    &:hover {
+	        background-color: var(--secondary-alpha-90);
+	    }
+
+	    &:not(:disabled):active,
+	    &:not(.disabled):active {
+	        background-color: var(--secondary);
+	        border-color: var(--secondary);
+	    }
+	}
+
+	&.btn-outline-primary {
+	    background-color: var(--bg-bw);
+	    border: 1px solid var(--primary);
+	    color: var(--primary);
+
+	    &:hover {
+	        background-color: var(--primary);
+	        color: var(--white);
+	    }
+
+	    &:not(:disabled):active,
+	    &:not(.disabled):active {
+	        background-color: var(--primary);
+			border-color: var(--primary);
+			color: var(--white);
+	    }
+	}
+
+	&.btn-outline-secondary {
+	    background-color: var(--bg-bw);
+	    border: 1px solid var(--secondary);
+	    color: var(--secondary);
+
+	    &:hover {
+			background-color: var(--secondary);
+			color: var(--white);
+	    }
+
+	    &:not(:disabled):active,
+	    &:not(.disabled):active {
+	        background-color: var(--secondary);
+			border-color: var(--secondary);
+			color: var(--white);
+	    }
+	}
+
+	&.btn-dashed-primary {
+	    background-color: var(--bg-bw);
+	    border: 1px dashed var(--primary);
+	    color: var(--primary);
+
+	    &:hover {
+	        background-color: var(--primary);
+			color: var(--white);
+			
+			border-style: solid;
+	    }
+
+	    &:not(:disabled):active,
+	    &:not(.disabled):active {
+	        background-color: var(--primary);
+	        border-color: var(--primary);
+	        color: var(--white);
+	    }
+	}
+
+	&.btn-dashed-secondary {
+	    background-color: var(--bg-bw);
+	    border: 1px dashed var(--secondary);
+	    color: var(--secondary);
+
+	    &:hover {
+	        background-color: var(--secondary);
+			color: var(--white);
+			
+			border-style: solid;
+	    }
+
+	    &:not(:disabled):active,
+	    &:not(.disabled):active {
+	        background-color: var(--secondary);
+	        border-color: var(--secondary);
+	        color: var(--white);
+	    }
+	}
+
+	&.btn-primary-gradient,
+    &.btn-secondary-gradient{
+        color: var(--white);
+    }
+
+    &.btn-primary-gradient{
+        @include gradientLinearBackground(45deg, #F5C45B, #FFA800);
+    }
+
+    &.btn-secondary-gradient{
+        @include gradientLinearBackground(45deg, #5CB7B0, #36DAB1);
+    }
+
+	@each $key, $value in $color-buttons{
+		&.btn-#{$key}{
+			background-color: #{$value};
+			border: 1px solid #{$value};
+			color: var(--white);
+
+			&:hover{
+				background-color: lighten($value, 10%);
+			}
+
+			&:not(:disabled):active,
+			&:not(.disabled):active {
+				background-color: #{$value};
+				border-color: #{$value};
+			}
+
+			@if($key == 'light'){
+				color: var(--black);
+
+				&:hover{
+					background-color: darken($value, 10%);
+				}
+
+				&:active {
+					background-color: transparent;
+					border-color: transparent;
+				}
+			} @else if($key == 'link') {
+				background-color: transparent;
+				border-color: transparent;
+				color: #{$value};
+
+				font-weight: 500;
+
+				text-decoration: none;
+	
+				&:hover{
+					background-color: transparent;
+					text-decoration: none;
+				}
+
+				&:not(:disabled):active,
+				&:not(.disabled):active {
+				    background-color: transparent;
+				    border-color: transparent;
+				}
+			}
+		}
+		
+		&.btn-outline-#{$key}{
+			background-color: transparent;
+			border: 1px solid #{$value};
+			color: #{$value};
+
+			&:hover{
+				background-color: #{$value};
+				color: $color-white;
+			}
+
+			&:not(:disabled):active,
+			&:not(.disabled):active {
+				background-color: #{$value};
+				border-color: #{$value};
+			}
+
+			@if($key == 'light'){
+				&:hover{
+					color: $color-black;
+				}
+			} @else if($key == 'dark'){
+				&:hover{
+					color: $color-white;
+				}
+			}
+		}
+
+		&.btn-dashed-#{$key} {
+		    background-color: transparent;
+		    border: 1px dashed #{$value};
+		    color: #{$value};
+
+		    &:hover {
+		        background-color: #{$value};
+		        color: $color-white;
+		    }
+
+		    &:not(:disabled):active,
+		    &:not(.disabled):active {
+		        background-color: #{$value};
+		        border-color: #{$value};
+		    }
+
+		    @if($key=='light') {
+		        &:hover {
+		            color: $color-black;
+		        }
+		    }
+
+		    @else if($key=='dark') {
+		        &:hover {
+		            color: $color-white;
+		        }
+		    }
+		}
+	}
+
+	&.btn-rounded{
+		@include borderRadius(2rem);
+	}
+}
+
+.btn-switch{
+	width: 40px;
+	height: 22px;
+
+	background-color: var(--btn-default-hover);
+	border: 1px solid var(--btn-default);
+	@include borderRadius(10px);
+
+	position: relative;
+
+	&.btn-switch-sm{
+		width: 30px;
+		height: 17px;
+
+		.control{
+			width: 15px;
+			height: 15px;
+		}
+	}
+
+	&.active{
+		background-color: $color-success;
+
+		.control{
+			left: auto;
+			right: 0;
+
+			@include transition(300ms);
+		}
+	}
+
+	&:hover{
+		cursor: pointer;
+	}
+
+	.control{
+		width: 20px;
+		height: 20px;
+
+		background-color: $color-white;
+		@include borderRadius(50%);
+
+		position: absolute;
+		top: 50%;
+		left: 0;
+
+		@include translate(0, -50%);
+
+		@include transition(300ms);
+	}
+}
+
+.btn-group{
+	.btn{
+		@include borderRadius(0);
+
+		&:first-child{
+			@include borderRadiusCustom(top, left);
+			@include borderRadiusCustom(bottom, left);
+		}
+
+		&:last-child{
+			@include borderRadiusCustom(top, right);
+			@include borderRadiusCustom(bottom, right);
+		}
+	}
+}

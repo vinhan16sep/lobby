@@ -1,0 +1,68 @@
+@import '../settings/var';
+@import '../settings/mixin';
+
+html,
+body{
+	width: 100%;
+	height: 100vh;
+
+	overflow: hidden;
+}
+
+.page{
+	width: 100%;
+	height: 100%;
+
+	overflow: hidden;
+
+	.page-header{
+		height: 60px;
+
+		padding: 0 1.5rem;
+
+		background-color: var(--gray-1);
+
+		header{
+			height: 100%;
+
+			@include d-flex(row, flex-start, center);
+
+			.header-brand{
+				a{
+					height: 100%;
+
+					@include d-flex(row, center, center);
+				}
+			}
+
+			.header-user{
+				margin-left: auto;
+
+				.dropdown{
+					.btn{
+						.user-info{
+							@include d-flex(row, flex-start, center);
+
+							.img-mask{
+								width: 38px;
+								height: 38px;
+
+								margin-right: 0.5rem;
+
+								border: 1px solid var(--border);
+							}
+						}
+					}
+				}
+			}
+
+			.header-expand-control{
+				display: none;
+			}
+		}
+	}
+
+	.page-body{
+		height: calc(100% - 60px);
+	}
+}

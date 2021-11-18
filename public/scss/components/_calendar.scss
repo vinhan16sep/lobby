@@ -1,0 +1,342 @@
+.calendar {
+    width: 100%;
+    height: 100%;
+
+    background-color: var(--bg-bw);
+
+    padding: 0.5rem;
+
+    &.calendar-bordered {
+        .calendar-body {
+            .calendar-table {
+                .calendar-table-header {
+                    border-top: 1px solid var(--border);
+                    border-bottom: 2px solid var(--border);
+                }
+
+                .calendar-table-body {
+                    .calendar-table-row {
+                        border-bottom: 1px solid var(--border);
+
+                        &:last-child {
+                            border-bottom: none;
+                        }
+
+                        .calendar-table-col {
+                            border-right: 1px solid var(--border);
+
+                            &:last-child {
+                                border-right: none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .calendar-header {
+        height: 50px;
+
+        @include d-flex(row, space-between, center);
+
+        .calendar-header-controls {
+            @include d-flex(row, flex-start, center);
+
+            >* {
+                margin-right: 0.5rem;
+            }
+        }
+
+        .calendar-header-title {
+            margin: 0 auto;
+
+            @include d-flex(row, center, center);
+
+            h6 {
+                margin: 0 0.75rem;
+            }
+
+            .btn{
+                @include borderRadius(0);
+
+                &:first-child{
+                    @include borderRadiusCustom(top, left);
+                    @include borderRadiusCustom(bottom, left);
+                }
+
+                &:last-child {
+                    @include borderRadiusCustom(top, right);
+                    @include borderRadiusCustom(bottom, right);
+                }
+
+                &:not(:first-child){
+                    margin-left: -1px;
+                }
+            }
+
+            .dropdown {
+                margin-left: -1px;
+
+                .btn {
+                    @include borderRadius(0);
+                }
+
+                .dropdown-menu{
+                    .calendar-monthpicker-wrapper{
+                        .calendar-monthpicker-header{
+                            height: 40px;
+
+                            padding: 0 1rem;
+
+                            @include d-flex(row, space-between, center);
+                        }
+
+                        .calendar-monthpicker-body {
+                            min-width: 200px;
+
+                            padding: 0.5rem 1rem;
+
+                            @include d-flex(row, normal, normal);
+                            flex-wrap: wrap;
+
+                            .btn{
+                                max-width: 25%;
+                                flex: 1 0 25%;
+
+                                margin-top: -1px;
+                                margin-left: -1px;
+                                padding: 0.5rem 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .calendar-body {
+        height: calc(100% - 50px);
+
+        overflow-x: hidden;
+        overflow-y: auto;
+
+        &.calendar-body-week {
+            .calendar-table {
+                .calendar-table-row {
+                    .calendar-table-col {
+                        max-width: calc((100% - 3rem) / 7);
+
+                        &.calendar-table-col-hour {
+                            max-width: 3rem;
+
+                            font-size: 0.875rem;
+                        }
+                    }
+                }
+
+                .calendar-table-header {
+                    border-bottom: 1px solid var(--gray-1);
+                }
+
+                .calendar-table-body {
+                    .calendar-table-row {
+                        border-bottom: 1px solid var(--gray-1);
+
+                        &:last-of-type {
+                            border-bottom: none;
+                        }
+                    }
+                }
+            }
+        }
+
+        .calendar-table {
+            .calendar-table-row {
+                width: 100%;
+
+                @include d-flex(row, normal, center);
+                flex-wrap: wrap;
+
+                .calendar-table-col {
+                    max-width: calc(100% / 7);
+                    flex: 1 1 100%;
+
+                    span{
+                        color: var(--text-title);
+                    }
+                }
+            }
+
+            .calendar-table-header {
+                background-color: var(--bg-bw);
+
+                position: sticky;
+                position: -webkit-sticky;
+                top: 0;
+                z-index: 1;
+
+                .calendar-table-row {
+                    .calendar-table-col {
+                        padding: 1rem 0;
+
+                        font-weight: 500;
+
+                        @include d-flex(row, center, center);
+
+                        &.calendar-table-col-day {
+                            font-size: 0.75rem;
+                        }
+
+                        span {
+                            &.calendar-span-today {
+                                width: 2rem;
+                                height: 2rem;
+
+                                font-weight: 500;
+
+                                background-color: var(--primary);
+                                color: var(--white);
+
+                                @include borderRadius(50%);
+
+                                @include d-flex(row, center, center);
+                            }
+                        }
+                    }
+                }
+            }
+
+            .calendar-table-body {
+                .calendar-table-row {
+                    .calendar-table-col {
+                        &.calendar-table-col-faded {
+                            opacity: 0.5;
+                        }
+
+                        &.calendar-table-day-disabled {
+                            background-color: var(--gray-1);
+
+                            a {
+                                &:hover {
+                                    cursor: default;
+                                }
+                            }
+                        }
+
+                        a {
+                            width: 100%;
+                            height: 100%;
+
+                            padding: 0.5rem;
+
+                            color: var(--text-paragraph);
+
+                            position: relative;
+
+                            @include d-flex(column, space-between, center);
+
+                            &.calendar-table-day {
+                                &.calendar-table-today {
+                                    span {
+                                        &.day-text {
+                                            color: var(--white);
+
+                                            &:before {
+                                                background-color: var(--primary);
+                                            }
+                                        }
+
+                                        &.day-events {
+                                            i {
+                                                border-color: var(--secondary);
+                                                color: var(--secondary);
+
+                                                &:nth-child(odd) {
+                                                    background-color: var(--secondary);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                &.calendar-table-day-active{
+                                    background-color: transparentize($color-secondary, 0.9);
+                                }
+
+                                span {
+                                    &.day-text {
+                                        margin-top: 0.5rem;
+
+                                        position: relative;
+                                        z-index: 1;
+
+                                        &:before {
+                                            content: '';
+
+                                            width: 2rem;
+                                            height: 2rem;
+
+                                            background-color: transparent;
+
+                                            @include borderRadius(50%);
+
+                                            position: absolute;
+                                            top: 50%;
+                                            left: 50%;
+                                            z-index: -1;
+
+                                            @include translate(-50%, -50%);
+                                        }
+                                    }
+
+                                    &.day-events {
+                                        margin-top: 0.5rem;
+
+                                        @include d-flex(row, center, center);
+
+                                        i {
+                                            min-width: 1.5rem;
+
+                                            padding: 0.125rem 0.25rem;
+
+                                            font-size: 0.625rem;
+                                            font-style: normal;
+
+                                            text-align: center;
+
+                                            border: 1px solid var(--gray-3);
+
+                                            &:not(:first-child) {
+                                                margin-top: -1px;
+                                            }
+
+                                            &:first-child {
+                                                @include borderRadiusCustom(top, left, 0.5rem);
+                                                @include borderRadiusCustom(bottom, left, 0.5rem);
+                                            }
+
+                                            &:last-child {
+                                                @include translate(0, 1px);
+                                                
+                                                @include borderRadiusCustom(top, right, 0.5rem);
+                                                @include borderRadiusCustom(bottom, right, 0.5rem);
+                                            }
+
+                                            &:nth-child(odd) {
+                                                background-color: var(--gray-3);
+                                                color: var(--white);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .calendar-footer {}
+}

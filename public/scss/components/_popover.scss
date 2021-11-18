@@ -1,0 +1,46 @@
+.popover{
+    $direction: 'top', 'bottom', 'left', 'right';
+    
+    @each $value in $direction{
+        &.bs-popover-#{$value}{
+            > .arrow{
+                &:after{
+                    border-#{$value}-color: var(--bg-submain);
+                }
+            }
+        }
+    }
+
+    .popover-header{
+        background-color: var(--bg-bw);
+        color: var(--text-title);
+    }
+
+    .popover-body{
+        background-color: var(--gray-1);
+        color: var(--text-paragraph);
+    }
+
+    .arrow{
+        &:before{
+
+        }
+
+        &:after{
+            border-right-color: var(--bg-submain);
+        }
+        
+    }
+}
+
+.backdrop-popover{
+    width: 100%;
+    height: 100vh;
+
+    background-color: transparentize($color-black, 0.5);
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1059;
+}

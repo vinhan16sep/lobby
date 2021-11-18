@@ -1,0 +1,580 @@
+// FONT SIZE
+html,
+body{
+    font-family: var(--web-font);
+	font-size: 16px;
+
+    &.font-size-small{
+		font-size: 14px;
+	}
+
+	&.font-size-medium{
+		font-size: 18px;
+	}
+
+	&.font-size-max{
+		font-size: 20px;
+	}
+}
+
+.ratio-wrapper{
+    position: relative;
+
+    &.ratio-wrapper-16-9{
+        padding-top: calc(9 / 16 * 100%);
+    }
+
+    &.ratio-wrapper-1-1{
+        padding-top: calc(1 / 1 * 100%);
+    }
+
+    &.ratio-wrapper-4-3{
+        padding-top: calc(3 / 4 * 100%);
+    }
+
+    .img-mask{
+        width: 100%;
+        height: 100%;
+        
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+    }
+}
+
+//Mask
+.img-mask{
+    overflow: hidden;
+    
+    &.img-mask-circle{
+        @include borderRadius(50%);
+    }
+    
+    img{
+        width: 100%;
+        height: 100%;
+        
+        object-fit: cover;
+    }
+}
+
+a{
+    text-decoration: none;
+}
+
+// POPUP SHOWN
+.popup-shown{
+    .popup{
+        z-index: 1072;
+    }
+}
+
+// UNRESIZE TEXTAREA
+textarea{
+    resize: none;
+}
+
+// DISPLAY NO DATA
+p{
+    &.no-data{
+        width: 100%;
+
+        padding: 0.25rem;
+
+        display: block;
+
+        text-align: center;
+    }
+}
+
+// COMMON BACKGROUND TEXT COLOR
+$commonTypes: ('primary', 'secondary', 'success', 'warning', 'danger');
+
+@each $type in $commonTypes{
+    .bg-#{$type}{
+        background-color: var(--#{$type}) !important;
+    }
+
+    .text-#{$type}{
+        color: var(--#{$type}) !important;
+    }
+}
+
+// GUIDE
+.popup-guide{
+    padding: 1rem;
+
+    background-color: rgba(255,0,0,0.25);
+
+    position: absolute;
+    z-index: 1060;
+
+    .popup-guide-header,
+    .popup-guide-body,
+    .popup-guide-footer {
+        padding: 0.5rem 0.75rem;
+    }
+}
+
+// POPUP
+.popup{
+    &.popup-preview-image{
+        padding: 0;
+
+        z-index: 1070;
+
+        .popup-dialog{
+            .popup-content{
+                background-color: transparent;
+
+                .popup-header,
+                .popup-body{
+                    background-color: transparent;
+                }
+
+                .popup-header{
+                    .btn{
+                        color: var(--white);
+                    }
+                }
+
+                .popup-body{
+                    padding: 0;
+
+                    @include d-flex(column, center, center);
+
+                    &.popup-body-start{
+                        justify-content: flex-start;
+                    }
+
+                    img{
+                        width: auto;
+                        max-height: 100%;
+                    }
+                }
+
+                .popup-footer{
+                    .btn{
+                        &.btn-select-image{
+                            display: none;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &.popup-preview-files{
+        padding: 0;
+
+        .popup-dialog{
+            .popup-content{
+                .popup-body{
+                    .row{
+                        height: 100%;
+
+                        > div {
+                            height: 100%;
+
+                            border-right: 1px solid var(--border);
+
+                            &:last-child{
+                                border-right: none;
+                            }
+
+                            .preview-list{
+                                ul{
+                                    li{
+                                        a{
+                                            color: var(--text-subtitle);
+
+                                            &:hover,
+                                            &.active{
+                                                color: var(--primary);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            .preview-append{
+                                height: 100%;
+
+                                overflow-x: hidden;
+                                @include overflow-y();
+
+                                iframe{
+                                    width: 100%;
+                                    height: 100%;
+                                }
+
+                                img{
+                                    width: 100%;
+                                    height: 100%;
+
+                                    object-fit: contain;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .popup-dialog{
+        .popup-content{
+            .popup-body{
+                .popup-filters{
+                    background-color: var(--gray-1);
+
+                    @include positionSticky(top, -1.5rem, 10);
+
+                    .popup-filter-header{
+                        @include d-flex(row, space-between, center);
+
+                        > div {
+                            flex: 1 1 auto;
+
+                            &:not(:last-child){
+                                margin-right: 1.5rem;
+                            }
+                        }
+                    }
+
+                    .popup-filter-body{
+                        .filter-actions{
+                            padding: 0.75rem 0;
+
+                            @include d-flex(row, flex-end, center);
+
+                            > * {
+                                margin-left: 0.75rem;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// MODAL
+.modal{
+    .modal-dialog{
+        .modal-content{
+            .modal-loading{
+                width: 100%;
+                height: 100%;
+
+                background-color: var(--bg-bw-alpha-50);
+                backdrop-filter: blur(2px);
+
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                z-index: 100;
+
+                @include translate(-50%, -50%);
+
+                @include d-flex(column, center, center);
+
+                img{
+                    width: 40px;
+                }
+            }
+        }
+    }
+
+    &.modal-alert{
+        z-index: 1071;
+
+        &#alertSuccess{
+            .modal-dialog{
+                .modal-content{
+                    background-color: var(--success);
+
+                    .modal-body{
+                        .alert-actions{
+                            .btn{
+                                &.btn-confirm{
+                                    .btn-confirm-label{
+                                        color: var(--success);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        &#alertWarning{
+            .modal-dialog{
+                .modal-content{
+                    background-color: var(--warning);
+                }
+
+                .modal-body{
+                    .alert-actions{
+                        .btn{
+                            &.btn-confirm{
+                                .btn-confirm-label{
+                                    color: var(--warning);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        &#alertDanger{
+            .modal-dialog{
+                .modal-content{
+                    background-color: var(--danger);
+                }
+
+                .modal-body{
+                    .alert-actions{
+                        .btn{
+                            &.btn-confirm{
+                                .btn-confirm-label{
+                                    color: var(--danger);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        &#alertConfirm{
+            .modal-dialog{
+                .modal-content{
+                    background-color: var(--bg-bw);
+                }
+
+                .modal-body{
+                    .alert-content{
+                        h6{
+                            color: var(--text-subtitle);
+                        }
+
+                        p{
+                            color: var(--text-paragraph);
+                        }
+                    }
+                    .alert-actions{
+                        .btn{
+                            &.btn-deny{
+                                border-color: var(--border);
+
+                                .btn-deny-label{
+                                    color: var(--danger);
+                                }
+                            }
+
+                            &.btn-confirm{
+                                background-color: var(--success);
+
+                                &:hover{
+                                    background-color: lighten($color-success, 10%);
+                                }
+
+                                .btn-confirm-label{
+                                    color: var(--white);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        &#alertInfo{
+            .modal-dialog{
+                .modal-content{
+                    background-color: var(--link);
+                }
+
+                .modal-body{
+                    .alert-actions{
+                        .btn{
+                            &.btn-confirm{
+                                .btn-confirm-label{
+                                    color: var(--link);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .modal-dialog{
+            .modal-content{
+
+                @include borderRadius(1rem);
+
+                .modal-body{
+                    padding: 0;
+
+                    .alert-image{
+                        height: 120px;
+                        
+                        @include d-flex(row, center, center);
+
+                        img{
+                            width: 60px;
+                        }
+                    }
+
+                    .alert-content{
+                        h6{
+                            margin-bottom: 0.75rem;
+
+                            text-align: center;
+
+                            color: var(--white);
+                        }
+
+                        p{
+                            margin-bottom: 1rem;
+
+                            text-align: center;
+                            
+                            color: var(--white);
+                        }
+                    
+                    }
+
+                    .alert-actions{
+                        padding: 1rem;
+
+                        @include d-flex(row, normal, center);
+
+                        .btn{
+
+                            @include borderRadius(1rem);
+
+                            &.btn-deny{
+                                margin-right: 1rem;
+
+                                flex-grow: 0.5;
+                            }
+    
+                            &.btn-confirm{
+                                flex-grow: 1;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &.modal-open-video,
+    &.modal-open-audio,
+    &.modal-open-video-learner,
+    &.modal-open-audio-learner {
+        z-index: 1071;
+    }
+
+    &.modal-open-audio,
+    &.modal-open-audio-learner {
+        .modal-dialog {
+            .modal-content {
+                background-color: transparent;
+                border: none;
+
+                .modal-body {
+                    text-align: center;
+                }
+            }
+        }
+    }
+
+    &.modal-open-video,
+    &.modal-open-video-learner {
+        .modal-dialog{
+            .modal-content{
+                background-color: transparent;
+                border: none;
+
+                .modal-body{
+                    height: 500px;
+
+                    .video-content{
+                        #youtube-player{
+                            width: 100% !important;
+                            height: 100% !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1200.98px) {
+    // OFFCANVAS
+    .offcanvas{
+        &#offcanvasCheckApp{
+            height: auto;
+
+            background-color: var(--bg-bw);
+            
+            .offcanvas-header{
+                @include d-flex(row, center, center);
+
+                h5{
+                    font-size: 1.125rem;
+                }
+            }
+    
+            .offcanvas-body{
+                .list-options{
+                    .item-option{
+                        padding: 0.75rem;
+    
+                        @include d-flex(row, space-between ,center);
+    
+                        .item-icon{
+                            @include d-flex(row, flex-start, center);
+    
+                            .frame{
+                                width: 38px;
+                                height: 38px;
+    
+                                margin-right: 0.75rem;
+    
+                                @include borderRadius();
+    
+                                @include d-flex(row, center, center);
+    
+                                &.edulive{
+                                    background-color: var(--brand);
+                                }
+    
+                                img{
+                                    width: 34px;
+                                    height: auto;
+                                }
+                            }
+                        }
+    
+                        .item-button{
+                            .btn{
+                                width: 100px;
+    
+                                @include borderRadius(2rem);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

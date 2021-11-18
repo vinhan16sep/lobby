@@ -1,0 +1,172 @@
+.chatbox{
+    // width: 320px;
+    // height: calc(100vh - 80px - 0.75rem);
+
+    // margin-right: calc(0.25rem + 25px);
+    // margin-bottom: 0.5rem;
+    
+    position: relative;
+    z-index: 2;
+
+    &.shadowed{
+        @include boxShadowDf();
+    }
+
+    .card-header{
+        height: 32px;
+
+        background-color: var(--bg-bw);
+
+        border-bottom: 1px solid var(--border);
+        
+        h6{
+            color: var(--text-title);
+        }
+    }
+
+    .card-body{
+        height: calc(100% - 32px);
+
+        padding: 0.25rem 0 0;
+        
+        overflow: hidden;
+
+        .conversation-list-wrapper{
+            .conversation-delay{
+                display: block;
+
+                padding: 0.25rem 0.5rem;
+
+                text-align: center;
+
+                color: $color-danger;
+            }
+        }
+        
+        .conversation-list{
+            width: 100%;
+            height: calc(100% - 35px);
+
+            padding: 0 0.5rem;
+            
+            overflow-x: hidden;
+            overflow-y: auto;
+
+            .conversation-item{
+                width: 75%;
+
+                margin-bottom: 0.5rem;
+                
+                @include d-flex(column, normal, flex-start);
+                
+                &:last-of-type{
+                    margin-bottom: 0;
+                }
+                
+                &.conversation-mine{
+                    width: 100%;
+                    
+                    @include d-flex(column, normal, flex-end);
+                    
+                    .conversation-poster{
+                        padding-left: 0;
+                    }
+
+                    .conversation-content {
+                        @include d-flex(row, flex-end, normal);
+
+                        .conversation-text{
+                            width: 100%;
+
+                            @include d-flex(column, normal, flex-end);
+                            
+                            span{
+                                background-color: var(--primary);
+                                color: $color-white;
+                            }
+                        }
+                    }
+                }
+                
+                .conversation-poster{
+                    display: block;
+                    
+                    font-size: 0.625rem;
+                    
+                    color: $color-gray;
+                    
+                    padding-left: calc(30px + 0.25rem);
+                }
+                
+                .conversation-content{
+                    @include d-flex(row, normal, normal);
+                    
+                    .conversation-image{
+                        width: 30px;
+                        height: 30px;
+                        
+                        margin-right: 0.625rem;
+                        
+                        .mask{
+                            width: 100%;
+                            height: 100%;
+                        }
+                    }
+                    
+                    .conversation-text{
+                        width: calc(100% - 30px - 0.625rem);
+                        
+                        @include d-flex(column, normal, flex-start);
+                        
+                        span{
+                            padding: 0.25rem 0.5rem;
+                            margin-bottom: 0.25rem;
+
+                            font-size: 0.75rem;
+
+                            background-color: var(--gray-1);
+                            color: var(--text-paragraph);
+
+                            @include borderRadius(0.25rem);
+
+                            &:first-of-type{
+                                margin-top: 0.125rem;
+                            }
+
+                            &:last-of-type{
+                                margin-bottom: 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .conversation-input{
+            background-color: var(--bg-bw);
+
+            .input-group{
+                .form-control{
+                    font-size: 0.75rem;
+
+                    background-color: var(--bg-bw);
+                    border-color: transparent;
+
+                    &:focus{
+                        box-shadow: none;
+                        outline: none;
+                    }
+                }
+
+                .btn{
+                    font-size: 1.125rem;
+
+                    padding-top: 0.25rem;
+                    padding-bottom: 0;
+
+                    color: var(--primary);
+                }
+            }
+        }
+    }
+}

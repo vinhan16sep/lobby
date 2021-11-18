@@ -1,0 +1,24 @@
+.nav{
+	&.nav-pills{
+		&.nav-underline{
+			.nav-item{
+				.nav-link{
+					border-bottom: 2px solid transparent;
+					color: var(--text-paragraph);
+
+					@include borderRadius(0);
+
+					&:hover{
+						color: var(--text-paragraph);
+					}
+
+					&.active{
+						background-color: transparent;
+						border-bottom-color: var(--bg-bw-rv);
+						color: var(--text-title);
+					}
+				}
+			}
+		}
+	}
+}

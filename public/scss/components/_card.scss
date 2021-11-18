@@ -1,0 +1,64 @@
+.card{
+	background-color: var(--bg-bw);
+	
+	border: none;
+	@include borderRadius(0.5rem);
+	@include boxShadowSm();
+	
+	.card-header{
+		padding: 1rem;
+
+		background-color: var(--bg-bw);
+		
+		@include d-flex(row, space-between, center);
+
+		&:first-child{
+			@include borderRadiusCustom(top, left);
+			@include borderRadiusCustom(top, right);
+		}
+		
+		border-bottom: none;
+		
+		.card-header-left, .card-header-right{
+			width: 50%;
+			
+			display: flex;
+			align-items: center;
+		}
+		
+		.card-header-left{
+			justify-content: flex-start;
+			
+			h6{
+				&.text-wrapper{
+					max-width: 100%;
+					height: 1.5rem;
+					-webkit-line-clamp: 1;
+				}
+			}
+		}
+		
+		.card-header-right{
+			justify-content: flex-end;
+		}
+	}
+	
+	.card-body{
+		padding: 1rem;
+		
+		font-size: 0.875rem;
+	}
+
+	.card-footer{
+		background-color: var(--bg-bw);
+
+		border-top: none;
+
+		@include d-flex(row, space-between, center);
+
+		&:last-child{
+			@include borderRadiusCustom(bottom, left);
+			@include borderRadiusCustom(bottom, right);
+		}
+	}
+}

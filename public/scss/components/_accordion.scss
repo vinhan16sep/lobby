@@ -1,0 +1,27 @@
+.accordion{
+	.accordion-item{
+		.accordion-header{
+			.accordion-button{
+				&:focus{
+					box-shadow: none;
+				}
+
+				&:after{
+					content: '\e9c4';
+
+					background-image: none;
+
+					font-family: 'els';
+
+					color: var(--text-paragraph);
+				}
+
+				&:not(.collapsed){
+					&:after{
+						background-image: none;
+					}
+				}
+			}
+		}
+	}
+}

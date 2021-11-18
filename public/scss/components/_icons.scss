@@ -1,0 +1,1747 @@
+@use "../settings/var";
+
+@font-face {
+    font-family: "elo";
+    src: url("/icon_fonts/elo.eot?o86i42");
+    src: url("/icon_fonts/elo.eot?o86i42#iefix") format("embedded-opentype"),
+        url("/icon_fonts/elo.ttf?o86i42") format("truetype"), url("/icon_fonts/elo.woff?o86i42") format("woff"),
+        url("/icon_fonts/elo.svg?o86i42#icomoon") format("svg");
+    font-weight: normal;
+    font-style: normal;
+    font-display: auto;
+}
+
+@font-face {
+    font-family: "els";
+    src: url("/icon_fonts/els.eot?sjdk01");
+    src: url("/icon_fonts/els.eot?sjdk01#iefix") format("embedded-opentype"),
+        url("/icon_fonts/els.ttf?sjdk01") format("truetype"), url("/icon_fonts/els.woff?sjdk01") format("woff"),
+        url("/icon_fonts/els.svg?sjdk01#icomoon") format("svg");
+    font-weight: normal;
+    font-style: normal;
+    font-display: auto;
+}
+
+@font-face {
+    font-family: "elc";
+    src: url("/icon_fonts/elc.eot?m0lehj");
+    src: url("/icon_fonts/elc.eot?m0lehj#iefix") format("embedded-opentype"),
+        url("/icon_fonts/elc.ttf?m0lehj") format("truetype"), url("/icon_fonts/elc.woff?m0lehj") format("woff"),
+        url("/icon_fonts/elc.svg?m0lehj#icomoon") format("svg");
+    font-weight: normal;
+    font-style: normal;
+    font-display: auto;
+}
+
+.elo,
+.els,
+.elc {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-size: 125%;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    text-rendering: auto;
+    line-height: 1;
+
+    vertical-align: middle;
+
+    display: inline-block;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    &.el-file-audio {
+        color: #fb8965;
+    }
+
+    &.el-file-video {
+        color: #007dff;
+    }
+
+    &.el-file-youtube {
+        color: #f00;
+    }
+
+    &.el-file-img {
+        color: #42ab44;
+    }
+
+    &.el-file-exercise {
+        color: #2f80ed;
+    }
+
+    &.el-file-gif {
+        color: #2f80ed;
+    }
+
+    &.el-file-word {
+        color: #2f80ed;
+    }
+
+    &.el-file-pdf {
+        color: #e55a2e;
+    }
+
+    &.el-file-xls {
+        color: #42ab44;
+    }
+
+    &.el-file-ppt {
+        color: #d04423;
+    }
+
+    &.el-file-slide {
+        color: #007dff;
+    }
+
+    &.el-file-lms {
+        color: #49bcf7;
+    }
+
+    &.el-file {
+        color: #49bcf7;
+    }
+
+    &.el-animation {
+        @include transition(300ms);
+
+        &.el-rotate-90,
+        &.el-rotate-180,
+        &.el-flip-x,
+        &.el-flip-y {
+            @include transition(300ms);
+        }
+    }
+
+    &.el-rotate-90 {
+        @include rotate(90deg);
+    }
+
+    &.el-rotate-180 {
+        @include rotate(180deg);
+    }
+
+    &.el-flip-x {
+        @include scale(-1, 1);
+    }
+
+    &.el-flip-y {
+        @include scale(1, -1);
+    }
+
+    &.el-spin {
+        &.el-spin-clockwise {
+            @keyframes iconSpin {
+                from {
+                    transform: rotate(0deg);
+                }
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+        }
+
+        &.el-spin-counter-clockwise {
+            @keyframes iconSpin {
+                from {
+                    transform: rotate(0deg);
+                }
+                to {
+                    transform: rotate(-360deg);
+                }
+            }
+        }
+
+        -webkit-animation-name: iconSpin;
+        -moz-animation-name: iconSpin;
+        -o-animation-name: iconSpin;
+        animation-name: iconSpin;
+
+        -webkit-animation-duration: 1s;
+        -moz-animation-duration: 1s;
+        -o-animation-duration: 1s;
+        animation-duration: 1s;
+
+        -webkit-animation-iteration-count: infinite;
+        -moz-animation-iteration-count: infinite;
+        -o-animation-iteration-count: infinite;
+        animation-iteration-count: infinite;
+
+        -webkit-animation-direction: normal;
+        -moz-animation-direction: normal;
+        -o-animation-direction: normal;
+        animation-direction: normal;
+    }
+}
+
+.elo {
+    font-family: "elo" !important;
+
+    &.el-add-event:before {
+        content: "\e900";
+    }
+    &.el-add-gv:before {
+        content: "\e901";
+    }
+    &.el-add-resource:before {
+        content: "\e902";
+    }
+    &.el-add-sv:before {
+        content: "\e903";
+    }
+    &.el-add-timer:before {
+        content: "\e904";
+    }
+    &.el-align-bottom:before {
+        content: "\e905";
+    }
+    &.el-align-center:before {
+        content: "\e906";
+    }
+    &.el-align-justify:before {
+        content: "\e907";
+    }
+    &.el-align-left:before {
+        content: "\e908";
+    }
+    &.el-align-middle:before {
+        content: "\e909";
+    }
+    &.el-align-right:before {
+        content: "\e90a";
+    }
+    &.el-align-top:before {
+        content: "\e90b";
+    }
+    &.el-angle:before {
+        content: "\e90c";
+    }
+    &.el-application:before {
+        content: "\e90d";
+    }
+    &.el-arrow-down:before {
+        content: "\e90e";
+    }
+    &.el-arrow-left:before {
+        content: "\e90f";
+    }
+    &.el-arrow-right:before {
+        content: "\e910";
+    }
+    &.el-arrow-up:before {
+        content: "\e911";
+    }
+    &.el-as-collision:before {
+        content: "\e912";
+    }
+    &.el-as-drag:before {
+        content: "\e913";
+    }
+    &.el-as-object-select:before {
+        content: "\e914";
+    }
+    &.el-as-ref-action:before {
+        content: "\e915";
+    }
+    &.el-as-resource-select:before {
+        content: "\e916";
+    }
+    &.el-as-run-on-path:before {
+        content: "\e917";
+    }
+    &.el-as-slide-load:before {
+        content: "\e918";
+    }
+    &.el-as-text-change:before {
+        content: "\e919";
+    }
+    &.el-as-to-slide:before {
+        content: "\e91a";
+    }
+    &.el-as-value-change:before {
+        content: "\e91b";
+    }
+    &.el-attachment:before {
+        content: "\e91c";
+    }
+    &.el-background:before {
+        content: "\e91d";
+    }
+    &.el-backward:before {
+        content: "\e91e";
+    }
+    &.el-badge:before {
+        content: "\e91f";
+    }
+    &.el-bell:before {
+        content: "\e920";
+    }
+    &.el-book:before {
+        content: "\e929";
+    }
+    &.el-book-open:before {
+        content: "\e921";
+    }
+    &.el-book-open-quiz:before {
+        content: "\e922";
+    }
+    &.el-book-window:before {
+        content: "\e923";
+    }
+    &.el-book-window-2:before {
+        content: "\e92a";
+    }
+    &.el-bookmark:before {
+        content: "\e924";
+    }
+    &.el-bring-back:before {
+        content: "\e9d4";
+    }
+    &.el-bring-bottom:before {
+        content: "\ea14";
+    }
+    &.el-bring-front:before {
+        content: "\ea15";
+    }
+    &.el-bring-top:before {
+        content: "\ea16";
+    }
+    &.el-buy-online:before {
+        content: "\e925";
+    }
+    &.el-calendar:before {
+        content: "\e926";
+    }
+    &.el-camera:before {
+        content: "\e927";
+    }
+    &.el-canvas:before {
+        content: "\e928";
+    }
+    &.el-caret-down:before {
+        content: "\e92b";
+    }
+    &.el-caret-left:before {
+        content: "\e92c";
+    }
+    &.el-caret-right:before {
+        content: "\e92d";
+    }
+    &.el-caret-up:before {
+        content: "\e948";
+    }
+    &.el-caret-up-down:before {
+        content: "\e96a";
+    }
+    &.el-cart-window:before {
+        content: "\e92e";
+    }
+    &.el-chalkboard:before {
+        content: "\e931";
+    }
+    &.el-chalkboard-users:before {
+        content: "\e98d";
+    }
+    &.el-change:before {
+        content: "\e92f";
+    }
+    &.el-change-lock:before {
+        content: "\e930";
+    }
+    &.el-chart:before {
+        content: "\e932";
+    }
+    &.el-chart-bar:before {
+        content: "\e933";
+    }
+    &.el-chart-bubble:before {
+        content: "\e934";
+    }
+    &.el-chart-line:before {
+        content: "\e935";
+    }
+    &.el-chart-pie:before {
+        content: "\e936";
+    }
+    &.el-chart-polar:before {
+        content: "\e937";
+    }
+    &.el-chart-radar:before {
+        content: "\e938";
+    }
+    &.el-chat:before {
+        content: "\e939";
+    }
+    &.el-chat-plus:before {
+        content: "\e93a";
+    }
+    &.el-chats:before {
+        content: "\e93b";
+    }
+    &.el-check:before {
+        content: "\e93c";
+    }
+    &.el-check-circle:before {
+        content: "\e93d";
+    }
+    &.el-check-shield:before {
+        content: "\e9a7";
+    }
+    &.el-check-square:before {
+        content: "\e93e";
+    }
+    &.el-checklist:before {
+        content: "\e93f";
+    }
+    &.el-circle:before {
+        content: "\e9c4";
+    }
+    &.el-class-live:before {
+        content: "\e940";
+    }
+    &.el-class-tree:before {
+        content: "\e941";
+    }
+    &.el-classroom:before {
+        content: "\e945";
+    }
+    &.el-click:before {
+        content: "\e942";
+    }
+    &.el-clock:before {
+        content: "\e943";
+    }
+    &.el-clock-warning:before {
+        content: "\e944";
+    }
+    &.el-close:before {
+        content: "\e9e7";
+    }
+    &.el-cloud:before {
+        content: "\e9fe";
+    }
+    &.el-code-window:before {
+        content: "\e946";
+    }
+    &.el-cog:before {
+        content: "\e947";
+    }
+    &.el-cogs:before {
+        content: "\ea0c";
+    }
+    &.el-comment:before {
+        content: "\e949";
+    }
+    &.el-component:before {
+        content: "\e94a";
+    }
+    &.el-config:before {
+        content: "\e94b";
+    }
+    &.el-copy:before {
+        content: "\e94c";
+    }
+    &.el-course:before {
+        content: "\e94d";
+    }
+    &.el-crm:before {
+        content: "\e94e";
+    }
+    &.el-cross-inner:before {
+        content: "\e94f";
+    }
+    &.el-cross-outer:before {
+        content: "\ea0d";
+    }
+    &.el-cursor:before {
+        content: "\e950";
+    }
+    &.el-dashboard:before {
+        content: "\e951";
+    }
+    &.el-desktop:before {
+        content: "\e952";
+    }
+    &.el-document:before {
+        content: "\e953";
+    }
+    &.el-document-box:before {
+        content: "\e954";
+    }
+    &.el-document-plus:before {
+        content: "\e955";
+    }
+    &.el-double-caret-down:before {
+        content: "\ea17";
+    }
+    &.el-double-caret-left:before {
+        content: "\ea18";
+    }
+    &.el-double-caret-right:before {
+        content: "\ea19";
+    }
+    &.el-double-caret-up:before {
+        content: "\ea1a";
+    }
+    &.el-download:before {
+        content: "\e956";
+    }
+    &.el-draw:before {
+        content: "\e957";
+    }
+    &.el-edit:before {
+        content: "\e958";
+    }
+    &.el-ellipsis-h:before {
+        content: "\e959";
+    }
+    &.el-ellipsis-v:before {
+        content: "\e95a";
+    }
+    &.el-emotions:before {
+        content: "\e95b";
+    }
+    &.el-envelope:before {
+        content: "\e95c";
+    }
+    &.el-eraser:before {
+        content: "\e95d";
+    }
+    &.el-exam:before {
+        content: "\e95e";
+    }
+    &.el-exercise:before {
+        content: "\e95f";
+    }
+    &.el-exit:before {
+        content: "\e960";
+    }
+    &.el-eye:before {
+        content: "\e961";
+    }
+    &.el-eye-dropper:before {
+        content: "\e962";
+    }
+    &.el-file-lms:before {
+        content: "\e963";
+    }
+    &.el-fill:before {
+        content: "\e964";
+    }
+    &.el-filter:before {
+        content: "\e965";
+    }
+    &.el-firework:before {
+        content: "\e966";
+    }
+    &.el-flag:before {
+        content: "\e967";
+    }
+    &.el-folder:before {
+        content: "\e968";
+    }
+    &.el-font:before {
+        content: "\e969";
+    }
+    &.el-forward:before {
+        content: "\ea0e";
+    }
+    &.el-fullview:before {
+        content: "\e96b";
+    }
+    &.el-global:before {
+        content: "\e96c";
+    }
+    &.el-google-drive:before {
+        content: "\e96d";
+    }
+    &.el-grid:before {
+        content: "\e96e";
+    }
+    &.el-group:before {
+        content: "\e96f";
+    }
+    &.el-hand:before {
+        content: "\e970";
+    }
+    &.el-heart:before {
+        content: "\e971";
+    }
+    &.el-history:before {
+        content: "\e972";
+    }
+    &.el-holder:before {
+        content: "\e973";
+    }
+    &.el-home:before {
+        content: "\e974";
+    }
+    &.el-image:before {
+        content: "\e975";
+    }
+    &.el-images:before {
+        content: "\e976";
+    }
+    &.el-inbox:before {
+        content: "\e977";
+    }
+    &.el-indent-left:before {
+        content: "\e978";
+    }
+    &.el-indent-right:before {
+        content: "\e979";
+    }
+    &.el-info-circle:before {
+        content: "\e97a";
+    }
+    &.el-laptop:before {
+        content: "\e97b";
+    }
+    &.el-layer:before {
+        content: "\e97c";
+    }
+    &.el-learner:before {
+        content: "\e97d";
+    }
+    &.el-learner-close:before {
+        content: "\e97e";
+    }
+    &.el-learner-plus:before {
+        content: "\e97f";
+    }
+    &.el-like:before {
+        content: "\e980";
+    }
+    &.el-list:before {
+        content: "\e981";
+    }
+    &.el-list-edit:before {
+        content: "\e982";
+    }
+    &.el-list-plus:before {
+        content: "\e983";
+    }
+    &.el-list-quiz:before {
+        content: "\e984";
+    }
+    &.el-lock:before {
+        content: "\e985";
+    }
+    &.el-media:before {
+        content: "\e986";
+    }
+    &.el-microphone:before {
+        content: "\e987";
+    }
+    &.el-minus:before {
+        content: "\e988";
+    }
+    &.el-mobile-rotate:before {
+        content: "\e989";
+    }
+    &.el-money:before {
+        content: "\e98a";
+    }
+    &.el-move:before {
+        content: "\e98b";
+    }
+    &.el-news:before {
+        content: "\e98c";
+    }
+    &.el-next:before {
+        content: "\ea0f";
+    }
+    &.el-note:before {
+        content: "\e98e";
+    }
+    &.el-note-edit:before {
+        content: "\e98f";
+    }
+    &.el-note-pin:before {
+        content: "\ea1b";
+    }
+    &.el-obj-align-bottom:before {
+        content: "\e990";
+    }
+    &.el-obj-align-center:before {
+        content: "\e991";
+    }
+    &.el-obj-align-h:before {
+        content: "\e992";
+    }
+    &.el-obj-align-left:before {
+        content: "\e993";
+    }
+    &.el-obj-align-middle:before {
+        content: "\e994";
+    }
+    &.el-obj-align-right:before {
+        content: "\e995";
+    }
+    &.el-obj-align-top:before {
+        content: "\e996";
+    }
+    &.el-obj-align-v:before {
+        content: "\e997";
+    }
+    &.el-opacity:before {
+        content: "\ea10";
+    }
+    &.el-outbox:before {
+        content: "\e998";
+    }
+    &.el-pallete:before {
+        content: "\e999";
+    }
+    &.el-paper-plane:before {
+        content: "\e99a";
+    }
+    &.el-paste:before {
+        content: "\e99b";
+    }
+    &.el-pause:before {
+        content: "\e99c";
+    }
+    &.el-pencil:before {
+        content: "\e99d";
+    }
+    &.el-pencil-change:before {
+        content: "\e99e";
+    }
+    &.el-pens:before {
+        content: "\e99f";
+    }
+    &.el-phone:before {
+        content: "\e9a0";
+    }
+    &.el-pin:before {
+        content: "\e9a1";
+    }
+    &.el-play:before {
+        content: "\e9a2";
+    }
+    &.el-play-circle:before {
+        content: "\e9a3";
+    }
+    &.el-play-square:before {
+        content: "\e9a4";
+    }
+    &.el-plus:before {
+        content: "\e9a5";
+    }
+    &.el-plus-circle:before {
+        content: "\e9a6";
+    }
+    &.el-prev:before {
+        content: "\ea11";
+    }
+    &.el-preview:before {
+        content: "\e9a8";
+    }
+    &.el-puzzle:before {
+        content: "\e9a9";
+    }
+    &.el-quiz-circle:before {
+        content: "\e9aa";
+    }
+    &.el-quiz-drag:before {
+        content: "\e9ab";
+    }
+    &.el-quiz-image:before {
+        content: "\e9ac";
+    }
+    &.el-quiz-match:before {
+        content: "\e9ad";
+    }
+    &.el-quiz-multi:before {
+        content: "\e9ae";
+    }
+    &.el-quiz-single:before {
+        content: "\e9af";
+    }
+    &.el-quiz-yes-no:before {
+        content: "\e9b0";
+    }
+    &.el-quizs:before {
+        content: "\e9b1";
+    }
+    &.el-ranking:before {
+        content: "\e9b2";
+    }
+    &.el-rating:before {
+        content: "\e9b3";
+    }
+    &.el-record:before {
+        content: "\e9b4";
+    }
+    &.el-redo:before {
+        content: "\e9b5";
+    }
+    &.el-reply:before {
+        content: "\e9b6";
+    }
+    &.el-save:before {
+        content: "\e9b7";
+    }
+    &.el-scale-down:before {
+        content: "\e9b8";
+    }
+    &.el-scale-up:before {
+        content: "\e9b9";
+    }
+    &.el-scroll-h:before {
+        content: "\e9ba";
+    }
+    &.el-scroll-v:before {
+        content: "\e9bb";
+    }
+    &.el-search:before {
+        content: "\e9bc";
+    }
+    &.el-shapes:before {
+        content: "\e9bd";
+    }
+    &.el-share:before {
+        content: "\e9be";
+    }
+    &.el-share-screen:before {
+        content: "\e9bf";
+    }
+    &.el-shopping-cart:before {
+        content: "\e9c0";
+    }
+    &.el-slide:before {
+        content: "\e9c1";
+    }
+    &.el-slide-plus:before {
+        content: "\e9c2";
+    }
+    &.el-sprite:before {
+        content: "\e9c3";
+    }
+    &.el-square:before {
+        content: "\e9c5";
+    }
+    &.el-square-circle:before {
+        content: "\e9c6";
+    }
+    &.el-square-rounded:before {
+        content: "\e9c7";
+    }
+    &.el-stair:before {
+        content: "\e9c8";
+    }
+    &.el-star:before {
+        content: "\e9c9";
+    }
+    &.el-stop-watch:before {
+        content: "\e9ca";
+    }
+    &.el-submit-exercise:before {
+        content: "\e9cb";
+    }
+    &.el-table:before {
+        content: "\e9cc";
+    }
+    &.el-text-edit:before {
+        content: "\e9cd";
+    }
+    &.el-text-spacing:before {
+        content: "\e9ce";
+    }
+    &.el-textbox:before {
+        content: "\e9cf";
+    }
+    &.el-ticket:before {
+        content: "\e9d0";
+    }
+    &.el-tool-advanced-path:before {
+        content: "\e9e6";
+    }
+    &.el-tool-advanced-slider:before {
+        content: "\ea12";
+    }
+    &.el-tool-anchor:before {
+        content: "\e9e8";
+    }
+    &.el-tool-animation-path:before {
+        content: "\e9e9";
+    }
+    &.el-tool-arrow:before {
+        content: "\e9ea";
+    }
+    &.el-tool-arrow-2:before {
+        content: "\e9da";
+    }
+    &.el-tool-draw:before {
+        content: "\e9eb";
+    }
+    &.el-tool-hightlight:before {
+        content: "\e9ec";
+    }
+    &.el-tool-orbit:before {
+        content: "\e9ed";
+    }
+    &.el-tool-path:before {
+        content: "\e9ee";
+    }
+    &.el-tool-path-point-s:before {
+        content: "\e9ef";
+    }
+    &.el-tool-path-point-v:before {
+        content: "\e9f0";
+    }
+    &.el-tool-region:before {
+        content: "\e9f1";
+    }
+    &.el-tool-shape-1:before {
+        content: "\e9f2";
+    }
+    &.el-tool-shape-1-a:before {
+        content: "\ea09";
+    }
+    &.el-tool-shape-10:before {
+        content: "\e9f3";
+    }
+    &.el-tool-shape-11:before {
+        content: "\e9f4";
+    }
+    &.el-tool-shape-12:before {
+        content: "\e9f5";
+    }
+    &.el-tool-shape-2:before {
+        content: "\e9f6";
+    }
+    &.el-tool-shape-2-a:before {
+        content: "\ea0a";
+    }
+    &.el-tool-shape-3:before {
+        content: "\e9f7";
+    }
+    &.el-tool-shape-4:before {
+        content: "\e9f8";
+    }
+    &.el-tool-shape-5:before {
+        content: "\e9f9";
+    }
+    &.el-tool-shape-6:before {
+        content: "\e9fa";
+    }
+    &.el-tool-shape-7:before {
+        content: "\e9fb";
+    }
+    &.el-tool-shape-8:before {
+        content: "\e9fc";
+    }
+    &.el-tool-shape-9:before {
+        content: "\e9fd";
+    }
+    &.el-tool-slider:before {
+        content: "\ea13";
+    }
+    &.el-tool-stroke-bottom:before {
+        content: "\e9ff";
+    }
+    &.el-tool-stroke-center:before {
+        content: "\ea00";
+    }
+    &.el-tool-stroke-full:before {
+        content: "\ea01";
+    }
+    &.el-tool-stroke-inner:before {
+        content: "\ea02";
+    }
+    &.el-tool-stroke-left:before {
+        content: "\ea03";
+    }
+    &.el-tool-stroke-less:before {
+        content: "\ea04";
+    }
+    &.el-tool-stroke-middle:before {
+        content: "\ea05";
+    }
+    &.el-tool-stroke-outer:before {
+        content: "\ea06";
+    }
+    &.el-tool-stroke-right:before {
+        content: "\ea07";
+    }
+    &.el-tool-stroke-top:before {
+        content: "\ea08";
+    }
+    &.el-trash:before {
+        content: "\e9d1";
+    }
+    &.el-undo:before {
+        content: "\e9d2";
+    }
+    &.el-ungroup:before {
+        content: "\e9d3";
+    }
+    &.el-unlock:before {
+        content: "\ea1c";
+    }
+    &.el-upload:before {
+        content: "\e9d5";
+    }
+    &.el-user:before {
+        content: "\e9d6";
+    }
+    &.el-user-clock:before {
+        content: "\e9d7";
+    }
+    &.el-user-cog:before {
+        content: "\e9d8";
+    }
+    &.el-user-list:before {
+        content: "\e9d9";
+    }
+    &.el-user-plus:before {
+        content: "\ea0b";
+    }
+    &.el-user-private:before {
+        content: "\e9db";
+    }
+    &.el-user-raise-hand:before {
+        content: "\e9dc";
+    }
+    &.el-users:before {
+        content: "\e9dd";
+    }
+    &.el-video:before {
+        content: "\e9de";
+    }
+    &.el-video-live:before {
+        content: "\e9df";
+    }
+    &.el-volume-down:before {
+        content: "\e9e0";
+    }
+    &.el-volume-up:before {
+        content: "\e9e1";
+    }
+    &.el-warning-circle:before {
+        content: "\e9e2";
+    }
+    &.el-warning-triangle:before {
+        content: "\e9e3";
+    }
+    &.el-wifi:before {
+        content: "\e9e4";
+    }
+    &.el-youtube:before {
+        content: "\e9e5";
+    }
+}
+
+.els {
+    font-family: "els" !important;
+
+    &.el-align-top:before {
+        content: "\e900";
+    }
+    &.el-animation-delay:before {
+        content: "\e901";
+    }
+    &.el-animation-minus:before {
+        content: "\e902";
+    }
+    &.el-animation-plus:before {
+        content: "\e903";
+    }
+    &.el-arrow-down:before {
+        content: "\e905";
+    }
+    &.el-arrow-left:before {
+        content: "\e906";
+    }
+    &.el-arrow-right:before {
+        content: "\e907";
+    }
+    &.el-arrow-up:before {
+        content: "\e90f";
+    }
+    &.el-as:before {
+        content: "\e908";
+    }
+    &.el-background:before {
+        content: "\e909";
+    }
+    &.el-backward:before {
+        content: "\e90a";
+    }
+    &.el-badge:before {
+        content: "\e90b";
+    }
+    &.el-bell:before {
+        content: "\e90c";
+    }
+    &.el-book:before {
+        content: "\e910";
+    }
+    &.el-book-open:before {
+        content: "\e90d";
+    }
+    &.el-book-window-2:before {
+        content: "\e904";
+    }
+    &.el-bookmark:before {
+        content: "\e90e";
+    }
+    &.el-bring-back:before {
+        content: "\e911";
+    }
+    &.el-bring-bottom:before {
+        content: "\e912";
+    }
+    &.el-bring-front:before {
+        content: "\e914";
+    }
+    &.el-bring-top:before {
+        content: "\e917";
+    }
+    &.el-bullet-square:before {
+        content: "\e913";
+    }
+    &.el-buy-online:before {
+        content: "\e918";
+    }
+    &.el-calendar:before {
+        content: "\e915";
+    }
+    &.el-camera:before {
+        content: "\e916";
+    }
+    &.el-caret-down:before {
+        content: "\e919";
+    }
+    &.el-caret-left:before {
+        content: "\e91a";
+    }
+    &.el-caret-right:before {
+        content: "\e9c3";
+    }
+    &.el-caret-up:before {
+        content: "\e9c4";
+    }
+    &.el-chalkboard:before {
+        content: "\e9cb";
+    }
+    &.el-chalkboard-users:before {
+        content: "\e9c5";
+    }
+    &.el-change:before {
+        content: "\e91b";
+    }
+    &.el-change-lock:before {
+        content: "\e91c";
+    }
+    &.el-change-network:before {
+        content: "\e91d";
+    }
+    &.el-chart:before {
+        content: "\e91e";
+    }
+    &.el-chat:before {
+        content: "\e91f";
+    }
+    &.el-chats:before {
+        content: "\e920";
+    }
+    &.el-check-circle:before {
+        content: "\e921";
+    }
+    &.el-check-shield:before {
+        content: "\e9c6";
+    }
+    &.el-check-square:before {
+        content: "\e922";
+    }
+    &.el-circle:before {
+        content: "\e923";
+    }
+    &.el-class-live:before {
+        content: "\e924";
+    }
+    &.el-classroom:before {
+        content: "\e926";
+    }
+    &.el-clock:before {
+        content: "\e925";
+    }
+    &.el-close:before {
+        content: "\e9c8";
+    }
+    &.el-cloud:before {
+        content: "\e9c9";
+    }
+    &.el-code-window:before {
+        content: "\e927";
+    }
+    &.el-cog:before {
+        content: "\e928";
+    }
+    &.el-comment:before {
+        content: "\e929";
+    }
+    &.el-component:before {
+        content: "\e92a";
+    }
+    &.el-copy:before {
+        content: "\e92b";
+    }
+    &.el-course:before {
+        content: "\e92c";
+    }
+    &.el-crash:before {
+        content: "\e92d";
+    }
+    &.el-cursor:before {
+        content: "\e92e";
+    }
+    &.el-dashboard:before {
+        content: "\e92f";
+    }
+    &.el-desktop:before {
+        content: "\e930";
+    }
+    &.el-devices:before {
+        content: "\e931";
+    }
+    &.el-document-plus:before {
+        content: "\e932";
+    }
+    &.el-draw:before {
+        content: "\e933";
+    }
+    &.el-envelope:before {
+        content: "\e934";
+    }
+    &.el-eraser:before {
+        content: "\e935";
+    }
+    &.el-exercise:before {
+        content: "\e936";
+    }
+    &.el-exit:before {
+        content: "\e937";
+    }
+    &.el-eye:before {
+        content: "\e938";
+    }
+    &.el-fade-in:before {
+        content: "\e998";
+    }
+    &.el-fade-out:before {
+        content: "\e999";
+    }
+    &.el-file:before {
+        content: "\e939";
+    }
+    &.el-file-audio:before {
+        content: "\e93a";
+    }
+    &.el-file-exercise:before {
+        content: "\e93b";
+    }
+    &.el-file-gif:before {
+        content: "\e93c";
+    }
+    &.el-file-img:before {
+        content: "\e93d";
+    }
+    &.el-file-lms:before {
+        content: "\e93e";
+    }
+    &.el-file-pdf:before {
+        content: "\e93f";
+    }
+    &.el-file-ppt:before {
+        content: "\e940";
+    }
+    &.el-file-slide:before {
+        content: "\e941";
+    }
+    &.el-file-video:before {
+        content: "\e942";
+    }
+    &.el-file-word:before {
+        content: "\e943";
+    }
+    &.el-file-xls:before {
+        content: "\e944";
+    }
+    &.el-file-youtube:before {
+        content: "\e945";
+    }
+    &.el-fill:before {
+        content: "\e946";
+    }
+    &.el-filter:before {
+        content: "\e947";
+    }
+    &.el-firework:before {
+        content: "\e948";
+    }
+    &.el-flag:before {
+        content: "\e949";
+    }
+    &.el-folder:before {
+        content: "\e94a";
+    }
+    &.el-font:before {
+        content: "\e94b";
+    }
+    &.el-forward:before {
+        content: "\e94c";
+    }
+    &.el-fullview:before {
+        content: "\e94d";
+    }
+    &.el-global:before {
+        content: "\e94e";
+    }
+    &.el-google-drive:before {
+        content: "\e94f";
+    }
+    &.el-grid:before {
+        content: "\e950";
+    }
+    &.el-hand:before {
+        content: "\e951";
+    }
+    &.el-heart:before {
+        content: "\e952";
+    }
+    &.el-home:before {
+        content: "\e953";
+    }
+    &.el-images:before {
+        content: "\e954";
+    }
+    &.el-info-circle:before {
+        content: "\e955";
+    }
+    &.el-join:before {
+        content: "\e956";
+    }
+    &.el-layer:before {
+        content: "\e957";
+    }
+    &.el-learner:before {
+        content: "\e958";
+    }
+    &.el-learner-close:before {
+        content: "\e959";
+    }
+    &.el-learner-plus:before {
+        content: "\e95a";
+    }
+    &.el-like:before {
+        content: "\e9cc";
+    }
+    &.el-list:before {
+        content: "\e95b";
+    }
+    &.el-list-edit:before {
+        content: "\e95c";
+    }
+    &.el-list-plus:before {
+        content: "\e95d";
+    }
+    &.el-listen:before {
+        content: "\e95e";
+    }
+    &.el-lock:before {
+        content: "\e95f";
+    }
+    &.el-media:before {
+        content: "\e960";
+    }
+    &.el-microphone:before {
+        content: "\e961";
+    }
+    &.el-money:before {
+        content: "\e962";
+    }
+    &.el-news:before {
+        content: "\e963";
+    }
+    &.el-next:before {
+        content: "\e964";
+    }
+    &.el-note:before {
+        content: "\e965";
+    }
+    &.el-note-pin:before {
+        content: "\e9b2";
+    }
+    &.el-obj-align-bottom:before {
+        content: "\e966";
+    }
+    &.el-obj-align-center:before {
+        content: "\e967";
+    }
+    &.el-obj-align-h:before {
+        content: "\e968";
+    }
+    &.el-obj-align-left:before {
+        content: "\e969";
+    }
+    &.el-obj-align-middle:before {
+        content: "\e96a";
+    }
+    &.el-obj-align-right:before {
+        content: "\e96b";
+    }
+    &.el-obj-align-top:before {
+        content: "\e96c";
+    }
+    &.el-obj-align-v:before {
+        content: "\e96d";
+    }
+    &.el-pallete:before {
+        content: "\e96e";
+    }
+    &.el-paper-plane:before {
+        content: "\e96f";
+    }
+    &.el-paste:before {
+        content: "\e970";
+    }
+    &.el-pencil:before {
+        content: "\e971";
+    }
+    &.el-pens:before {
+        content: "\e972";
+    }
+    &.el-phone:before {
+        content: "\e973";
+    }
+    &.el-pin:before {
+        content: "\e974";
+    }
+    &.el-play:before {
+        content: "\e975";
+    }
+    &.el-play-circle:before {
+        content: "\e976";
+    }
+    &.el-play-square:before {
+        content: "\e977";
+    }
+    &.el-plus:before {
+        content: "\e978";
+    }
+    &.el-plus-circle:before {
+        content: "\e979";
+    }
+    &.el-power:before {
+        content: "\e97a";
+    }
+    &.el-prev:before {
+        content: "\e97b";
+    }
+    &.el-preview:before {
+        content: "\e97c";
+    }
+    &.el-puzzle:before {
+        content: "\e97d";
+    }
+    &.el-quiz-circle:before {
+        content: "\e97e";
+    }
+    &.el-quiz-drag:before {
+        content: "\e97f";
+    }
+    &.el-quiz-image:before {
+        content: "\e980";
+    }
+    &.el-quiz-match:before {
+        content: "\e981";
+    }
+    &.el-quiz-multi:before {
+        content: "\e982";
+    }
+    &.el-quiz-single:before {
+        content: "\e983";
+    }
+    &.el-quiz-yes-no:before {
+        content: "\e984";
+    }
+    &.el-quizs:before {
+        content: "\e985";
+    }
+    &.el-ranking:before {
+        content: "\e986";
+    }
+    &.el-record:before {
+        content: "\e987";
+    }
+    &.el-redo:before {
+        content: "\e988";
+    }
+    &.el-refresh-cam:before {
+        content: "\e989";
+    }
+    &.el-refresh-live:before {
+        content: "\e98a";
+    }
+    &.el-reply:before {
+        content: "\e98b";
+    }
+    &.el-save:before {
+        content: "\e98c";
+    }
+    &.el-scale-down:before {
+        content: "\e98d";
+    }
+    &.el-scale-up:before {
+        content: "\e98e";
+    }
+    &.el-scroll-h:before {
+        content: "\e98f";
+    }
+    &.el-scroll-v:before {
+        content: "\e990";
+    }
+    &.el-search:before {
+        content: "\e991";
+    }
+    &.el-shapes:before {
+        content: "\e992";
+    }
+    &.el-share:before {
+        content: "\e993";
+    }
+    &.el-share-screen:before {
+        content: "\e994";
+    }
+    &.el-shopping-cart:before {
+        content: "\e995";
+    }
+    &.el-sign-dollar:before {
+        content: "\e996";
+    }
+    &.el-size-contain:before {
+        content: "\e99a";
+    }
+    &.el-size-cover:before {
+        content: "\e99b";
+    }
+    &.el-slide:before {
+        content: "\e997";
+    }
+    &.el-speak:before {
+        content: "\e99e";
+    }
+    &.el-sprite:before {
+        content: "\e99f";
+    }
+    &.el-square:before {
+        content: "\e9a0";
+    }
+    &.el-square-circle:before {
+        content: "\e9a1";
+    }
+    &.el-square-rounded:before {
+        content: "\e9a2";
+    }
+    &.el-star:before {
+        content: "\e9a3";
+    }
+    &.el-star-half:before {
+        content: "\e9c7";
+    }
+    &.el-stopwatch:before {
+        content: "\e9a4";
+    }
+    &.el-submit-exercise:before {
+        content: "\e9a5";
+    }
+    &.el-sync-check:before {
+        content: "\e9a6";
+    }
+    &.el-sync-close:before {
+        content: "\e9a7";
+    }
+    &.el-table:before {
+        content: "\e9a8";
+    }
+    &.el-text-bold:before {
+        content: "\e9a9";
+    }
+    &.el-text-edit:before {
+        content: "\e9aa";
+    }
+    &.el-text-italic:before {
+        content: "\e9ab";
+    }
+    &.el-text-strikethrough:before {
+        content: "\e9ac";
+    }
+    &.el-text-underline:before {
+        content: "\e9ad";
+    }
+    &.el-textbox:before {
+        content: "\e9ae";
+    }
+    &.el-to-background:before {
+        content: "\e9af";
+    }
+    &.el-tool-shape-1:before {
+        content: "\e99c";
+    }
+    &.el-tool-shape-2:before {
+        content: "\e99d";
+    }
+    &.el-trash:before {
+        content: "\e9b0";
+    }
+    &.el-undo:before {
+        content: "\e9b1";
+    }
+    &.el-unlock:before {
+        content: "\e9ca";
+    }
+    &.el-user:before {
+        content: "\e9b3";
+    }
+    &.el-user-clock:before {
+        content: "\e9b4";
+    }
+    &.el-user-plus:before {
+        content: "\e9c2";
+    }
+    &.el-user-private:before {
+        content: "\e9b5";
+    }
+    &.el-user-raise-hand:before {
+        content: "\e9b6";
+    }
+    &.el-users:before {
+        content: "\e9b7";
+    }
+    &.el-video:before {
+        content: "\e9b8";
+    }
+    &.el-video-live:before {
+        content: "\e9b9";
+    }
+    &.el-video-waiting:before {
+        content: "\e9ba";
+    }
+    &.el-volume-down:before {
+        content: "\e9bb";
+    }
+    &.el-volume-up:before {
+        content: "\e9bc";
+    }
+    &.el-warning-circle:before {
+        content: "\e9bd";
+    }
+    &.el-warning-network:before {
+        content: "\e9be";
+    }
+    &.el-warning-triangle:before {
+        content: "\e9bf";
+    }
+    &.el-youtube:before {
+        content: "\e9c0";
+    }
+    &.el-zalo:before {
+        content: "\e9c1";
+    }
+}
+
+.elc {
+    font-family: "elc" !important;
+
+    &.el-check-circle:before {
+        content: "\e900";
+    }
+    &.el-check-square:before {
+        content: "\e901";
+    }
+    &.el-circle:before {
+        content: "\e902";
+    }
+    &.el-exercise:before {
+        content: "\e903";
+    }
+    &.el-eye:before {
+        content: "\e90a";
+    }
+    &.el-file-audio:before {
+        content: "\e904";
+    }
+    &.el-file-video:before {
+        content: "\e905";
+    }
+    &.el-note-pin:before {
+        content: "\e90b";
+    }
+    &.el-pencil:before {
+        content: "\e906";
+    }
+    &.el-quiz-multi:before {
+        content: "\e907";
+    }
+    &.el-quiz-single:before {
+        content: "\e908";
+    }
+    &.el-square-rounded:before {
+        content: "\e909";
+    }
+}
+
+.el-lg {
+    font-size: 150%;
+    line-height: 0.75em;
+}
+
+.el-sm {
+    font-size: 75%;
+}
+
+.el-xs {
+    font-size: 50%;
+}
+
+.el-2x {
+    font-size: 200%;
+}
+
+.el-3x {
+    font-size: 300%;
+}
+
+.el-4x {
+    font-size: 400%;
+}
+
+.el-group {
+    position: relative;
+
+    &.el-banned {
+        &:before {
+            content: "";
+
+            width: 100%;
+            height: 2px;
+
+            background-color: var(--danger);
+
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 1;
+
+            transform: translate(-50%, -50%) rotate(-45deg);
+        }
+    }
+}

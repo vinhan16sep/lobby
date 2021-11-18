@@ -1,0 +1,35 @@
+ul {
+    &.tree-view {
+        padding-left: 0;
+        margin-bottom: 0;
+
+        list-style: none;
+
+        li {
+            padding-left: 1rem;
+
+            a {
+                font-size: 0.875rem;
+
+                color: var(--text-paragraph);
+
+                i{
+                    @include transition(300ms);
+
+                    &.rotated{
+                        @include rotate(90deg);
+                        @include transition(300ms);
+                    }
+                }
+            }
+
+            ul {
+                padding-left: 1rem;
+
+                list-style: none;
+
+                display: none;
+            }
+        }
+    }
+}

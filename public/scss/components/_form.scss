@@ -1,0 +1,342 @@
+input{
+    &[type="number"]{
+        -moz-appearance: textfield;
+
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    }
+}
+
+// FORM CONTROL
+.form-control{
+    font-size: 0.875rem;
+
+    background-color: var(--bg-bw);
+    border-color: var(--gray-3);
+    color: var(--text-paragraph);
+
+    @include borderRadius();
+
+    &[readonly]{
+        background-color: var(--bg-bw);
+        border-color: var(--border);
+        color: var(--text-paragraph);
+    }
+
+    &:disabled,
+    &.disabled{
+        background-color: var(--gray-1);
+        border-color: var(--border);
+        color: var(--text-paragraph);
+    }
+
+    &:focus{
+        background-color: var(--bg-bw);
+        border-color: var(--gray-6);
+        color: var(--text-paragraph);
+
+        outline: none;
+        box-shadow: none;
+    }
+
+    &.is-valid{
+        border-color: var(--success);
+    }
+
+    &.is-invalid{
+        border-color: var(--danger);
+    }
+
+    &.form-control-lg{
+        font-size: 1.25rem;
+    }
+}
+
+// FORM SELECT
+.form-select{
+    font-size: 0.875rem;
+
+    background-color: var(--bg-bw);
+    border-color: var(--gray-3);
+    color: var(--text-paragraph);
+
+    @include borderRadius();
+
+    &:focus{
+        border-color: var(--gray-6);
+        outline: none;
+        box-shadow: none;
+    }
+}
+
+// FORM GROUP
+.form-group{
+    &:not(:last-child){
+        margin-bottom: 0.5rem;
+    }
+
+    label{
+        margin-bottom: 0.5rem;
+
+        font-size: 0.75rem;
+
+        color: var(--text-overline);
+
+        &.label-sb {
+            @include d-flex(row, space-between, center);
+        }
+    }
+
+    .form-check-group {
+        height: 38px;
+    }
+
+    .form-group-flex{
+        @include d-flex(row, space-between, flex-start);
+    }
+}
+
+// INPUT GROUP
+.input-group{
+    .custom-select {
+        font-size: 0.875rem;
+
+        background-color: var(--bg-bw);
+        border-color: var(--gray-3);
+        color: var(--text-paragraph);
+
+        appearance: var(--text-paragraph);
+
+        @include borderRadius(0);
+
+        &:focus {
+            box-shadow: none;
+            outline: none;
+        }
+    }
+
+    .input-group-text{
+        background-color: var(--bg-bw);
+        border-color: var(--gray-3);
+        color: var(--text-paragraph);
+
+        font-size: 0.875rem;
+
+        &:first-child{
+            @include borderRadiusCustom(top, left);
+            @include borderRadiusCustom(bottom, left);
+        }
+
+        &:last-child{
+            @include borderRadiusCustom(top, right);
+            @include borderRadiusCustom(bottom, right);
+        }
+    }
+
+    .btn {
+        &.btn-outline-default {
+            background-color: var(--bg-bw);
+            border-color: var(--gray-3);
+        }
+
+        &:first-child{
+            @include borderRadiusCustom(top, left);
+            @include borderRadiusCustom(bottom, left);
+        }
+
+        &:last-child{
+            @include borderRadiusCustom(top, right);
+            @include borderRadiusCustom(bottom, right);
+        }
+    }
+
+    .form-control{
+        height: auto;
+
+        &:not(:first-child){
+            border-left-color: var(--bg-bw);
+
+            &:focus {
+                border-color: var(--gray-3);
+                border-left-color: var(--bg-bw);
+            }
+        }
+
+        &:not(:last-child) {
+            border-right-color: var(--bg-bw);
+
+            &:focus {
+                border-color: var(--gray-3);
+                border-right-color: var(--bg-bw);
+            }
+        }
+    }
+}
+
+// FORM CHECK GROUP
+.form-check-group {
+    height: auto;
+
+    @include d-flex(row, normal, center);
+
+    &.form-check-group-column{
+        @include d-flex(column, normal, normal);
+
+        .form-check,
+        .form-switch {
+            &:not(:last-child){
+                margin-right: 0;
+                margin-bottom: 0.75rem;
+            }
+        }
+    }
+
+    &.form-check-group-between {
+        justify-content: space-between;
+
+        .form-check,
+        .form-switch {
+            &:not(:last-child){
+                margin-right: 0;
+            }
+        }
+    }
+
+    .form-check,
+    .form-switch {
+        &:not(:last-child){
+            margin-right: 0.75rem;
+        }
+    }
+}
+
+// FORM CHECK
+.form-check {
+    min-height: unset;
+
+    margin-bottom: 0;
+    padding-left: 0;
+
+    position: relative;
+
+    input {
+        position: absolute;
+        opacity: 0;
+        z-index: -1;
+    }
+
+    label {
+        font-size: 0.875rem;
+        color: var(--text-paragraph);
+
+        &.disabled{
+            opacity: 0.8;
+        }
+
+        i {
+            margin-right: 0.25rem;
+
+            &.els {
+                color: var(--primary);
+            }
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+// FORM SWITCH
+.form-switch{
+    padding-left: 0;
+    
+    position: relative;
+
+    &:not(:last-child){
+        margin-left: 0.5rem;
+    }
+
+    input {
+        position: absolute;
+        opacity: 0;
+        z-index: -1;
+    }
+
+    label {
+        font-size: 0.875rem;
+
+        color: var(--text-paragraph);
+
+        @include d-flex(row, space-between, center);
+
+        .btn-switch{
+            width: 36px;
+            height: 14px;
+
+            border: 1px solid  var(--border);
+
+            display: inline-block;
+
+            &.btn-switch-primary{
+                &.active{
+                    background-color: var(--primary-alpha-50);
+
+                    .control{
+                        background-color: var(--primary-alpha-90);
+                        color: var(--primary);
+                    }
+                }
+            }
+
+            &.btn-switch-secondary{
+                &.active{
+                    background-color: var(--secondary-alpha-50);
+
+                    .control{
+                        background-color: var(--secondary-alpha-90);
+                        color: var(--secondary);
+                    }
+                }
+            }
+
+            .control{
+                border: 1px solid  var(--border);
+            }
+        }
+    }
+}
+
+// FORM CONTROL FILE
+.form-control-file{
+    font-size: 0.875rem;
+}
+
+// FORM CONTROL RANGE
+.form-control-range{
+    &::-webkit-slider-thumb,
+    &::-moz-range-thumb,
+    &::-ms-thumb{
+        background-color: var(--primary);
+    }
+
+    &::-webkit-slider-runnable-track,
+    &::-moz-range-track{
+        background-color: var(--primary);
+    }
+}
+
+// FORM TEXT
+.form-text{
+    color: var(--text-overline);
+}
+
+@media screen and (max-width: 576.98px) {
+    .form-control,
+    .form-select {
+        font-size: 1rem;
+    }
+}
