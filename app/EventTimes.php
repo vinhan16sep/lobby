@@ -19,4 +19,9 @@ class EventTimes extends Model
      * @var array
      */
     protected $guarded = [];
+
+    public function eventDay()
+    {
+        return $this->belongsTo(EventDays::class, 'event_day_id');
+    }
 }
