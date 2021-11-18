@@ -17,6 +17,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
+
+Route::get('/chat', 'HomeController@chat');
+
 Route::get('/home', 'HomeController@index');
 Route::get('/users/logout', 'Auth\LoginController@userLogout')->name('user.logout');
 
