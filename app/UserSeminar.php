@@ -4,14 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Seminars extends Model
+class UserSeminar extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'seminars';
+    protected $table = 'user_seminar';
 
     /**
      * The attributes that aren't mass assignable.
@@ -20,13 +20,13 @@ class Seminars extends Model
      */
     protected $guarded = [];
 
-    public function eventDay()
+    public function user()
     {
-        return $this->belongsTo(EventDays::class, 'event_day_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function eventTime()
+    public function seminar()
     {
-        return $this->belongsTo(EventTimes::class, 'event_time_id');
+        return $this->belongsTo(Seminars::class, 'seminar_id');
     }
 }

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\UserSeminar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use App\EventDays;
+use App\User;
 use App\Blog;
 use Response;
 use Session;
@@ -58,13 +60,53 @@ class UserController extends Controller
      */
     public function doImport(Request $request) {
         if($request->hasFile('file')) {
-
-            $inputFileType = 'Xlsx';
             $path = $request->file('file')->getRealPath();
             $spreadsheet = IOFactory::load($path);
             $data = $spreadsheet->getActiveSheet()->toArray();
-            echo '<pre>';
-            print_r($data);die;
+
+            if (count($data) > 1) {
+                DB::beginTransaction();
+                try {
+                    foreach ($data as $dataKey => $dataVal) {
+                        if ($dataKey == 0) {
+                            continue;
+                        }
+                        $user = User::create([
+                            'name' => $dataVal[0],
+                            'email' => $dataVal[1],
+                            'password' => bcrypt($dataVal[2]),
+                            'phone' => $dataVal[3],
+                            'company' => $dataVal[4],
+                            'position' => $dataVal[5],
+                            'address' => $dataVal[6]
+                        ]);
+                        if ($user) {
+                            $events = explode(',', $dataVal[7]);
+                            $relateData = [];
+                            if (!empty($events)) {
+                                foreach ($events as $key => $value) {
+                                    $relateData[$key] = [
+                                        'user_id' => $user->id,
+                                        'seminar_id' => $value,
+                                        'created_by' => Auth::user()->id,
+                                        'updated_by' => Auth::user()->id
+                                    ];
+                                }
+                                UserSeminar::insert($relateData);
+                            }
+                        }
+                    }
+                    DB::commit();
+                    return redirect()->intended('admin/user');
+
+                } catch (\Exception $e) {
+                    echo '<pre>';
+                    print_r($e->getMessage());die;
+                    DB::rollback();
+                }
+            } else {
+
+            }
         }
     }
 
