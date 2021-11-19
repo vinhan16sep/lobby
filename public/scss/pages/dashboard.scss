@@ -1,6 +1,57 @@
 @import '../settings/var';
 @import '../settings/mixin';
 
+.user-info-wrapper{
+	min-width: 200px;
+
+	position: absolute;
+	z-index: 1030;
+
+	.card{
+		.card-body{
+			.user-info{
+				@include d-flex(row, flex-start, flex-start);
+
+				.img-mask{
+					width: 40px;
+					height: 40px;
+
+					margin-right: 0.5rem;
+				}
+
+				.text{
+					h6{
+						max-width: 200px;
+
+						margin-bottom: 0.375rem;
+						font-weight: 600;
+
+						overflow: hidden;
+						text-overflow: ellipsis;
+
+						white-space: nowrap;
+					}
+
+					p{
+						margin-bottom: 0.25rem;
+
+						font-size: 0.75rem;
+						line-height: normal;
+
+						&:last-of-type{
+							margin-bottom: 0.5rem;
+						}
+					}
+
+					.btn{
+						width: 100px;
+					}
+				}
+			}
+		}
+	}
+}
+
 .view-dashboard{
 	height: 100%;
 
@@ -70,10 +121,6 @@
 
 									padding: 0 0.75rem;
 
-									&:first-child{
-										width: 40%;
-									}
-
 									&:not(:first-child){
 										&:hover{
 											.controls{
@@ -83,11 +130,6 @@
 
 										.controls{
 											opacity: 0;
-
-											.btn{
-												padding: 0.375rem 0.5rem;
-												font-size: 0.75rem;
-											}
 										}
 									}
 
@@ -151,6 +193,9 @@
 										.btn{
 											flex: 1 0 auto;
 
+											padding: 0.375rem 0.5rem;
+											font-size: 0.75rem;
+
 											&:not(:last-child){
 												margin-right: 0.5rem;
 											}
@@ -167,15 +212,195 @@
 		.chat-area{
 			width: 40%;
 
-			@include d-flex(column, normal, normal);
+			padding: 1rem;
+
+			&.chat-area-collapsed{
+				.chat-box{
+					height: 50%;
+				}
+			}
 
 			.chat-box{
 				width: 100%;
+				height: 100%;
 
-				flex: 1 1 auto;
+				&:first-child{
+					margin-bottom: 1.5rem;
+				}
 
 				&.chat-private{
+					height: calc(50% - 1.5rem);
+
 					display: none;
+
+					.card{
+						.card-body{
+							height: calc(100% - 114px);
+						}
+					}
+				}
+
+				.card{
+					height: 100%;
+
+					.card-header{
+						h6{
+							font-weight: 600;
+						}
+					}
+
+					.card-body{
+						height: calc(100% - 54px);
+						padding: 0;
+
+						@include d-flex(row, flex-start, stretch);
+
+						.list-users-wrapper{
+							width: 56px;
+
+							border-right: 1px solid var(--border);
+
+							overflow-x: hidden;
+							@include overflow-y();
+
+							.list-users{
+								a{
+									&.select-user{
+										width: 50px;
+										height: 50px;
+
+										@include d-flex(column, center, center);
+
+										position: relative;
+
+										.img-mask{
+											width: 42px;
+											height: 42px;
+
+											border: 1px solid var(--border);
+										}
+
+										.status{
+											position: absolute;
+											bottom: 4px;
+											right: 4px;
+											z-index: 1;
+
+											.circle{
+												width: 12px;
+												height: 12px;
+
+												background-color: var(--gray-2);
+
+												@include borderRadius(50%);
+											}
+										}
+									}
+								}
+							}
+						}
+
+						.chat-append{
+							max-width: 100%;
+							flex: 1 1 auto;
+
+							height: 100%;
+
+							padding: 1.5rem 0.875rem;
+
+							overflow-x: hidden;
+							@include overflow-y();
+
+							.chat-delay{
+								margin: 0.5rem 0;
+		
+								display: block;
+								text-align: center;
+							}
+		
+							.chat-item{
+								&:not(:last-child){
+									margin-bottom: 0.5rem;
+								}
+		
+								@include d-flex(row, flex-start, flex-start);
+		
+								&.chat-item-mine{
+									@include d-flex(row-reverse, flex-start, flex-start);
+		
+									.item-content{
+										width: 90%;
+		
+										@include d-flex(column, flex-start, flex-end);
+		
+										.content-chat{
+											@include d-flex(column, flex-start, flex-end);
+		
+											p{
+												background-color: var(--primary);
+												color: var(--white);
+											}
+										}
+									}
+								}
+		
+								.item-avatar{
+									width: 40px;
+									height: 40px;
+		
+									margin-right: 0.5rem;
+		
+									.img-mask{
+										width: 100%;
+										height: 100%;
+									}
+								}
+		
+								.item-content{
+									width: calc(100% - 40px - 0.5rem);
+		
+									@include d-flex(column, flex-start, flex-start);
+		
+									> p {
+										&.p-name{
+											margin-bottom: 0.25rem;
+		
+											font-size: 0.75rem;
+										}
+									}
+		
+									.content-chat{
+										max-width: 90%;
+		
+										@include d-flex(column, flex-start, flex-start);
+		
+										p{
+											padding: 0.375rem;
+		
+											background-color: var(--gray-1);
+											font-size: 0.875rem;
+		
+											@include borderRadius(0.5rem);
+		
+											&:not(:last-child){
+												margin-bottom: 0.25rem;
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+					
+					.card-footer{
+						height: 54px;
+
+						border-top: 1px solid var(--border);
+
+						.form-control{
+							margin-right: 0.75rem;
+						}
+					}
 				}
 			}
 		}

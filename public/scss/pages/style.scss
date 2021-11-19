@@ -32,6 +32,12 @@ body{
 					height: 100%;
 
 					@include d-flex(row, center, center);
+
+					img{
+						height: 50px;
+
+						display: block;
+					}
 				}
 			}
 
@@ -40,6 +46,8 @@ body{
 
 				.dropdown{
 					.btn{
+						@include d-flex(row, center, center);
+						
 						.user-info{
 							@include d-flex(row, flex-start, center);
 
@@ -51,6 +59,15 @@ body{
 
 								border: 1px solid var(--border);
 							}
+						}
+
+						h6{
+							max-width: 130px;
+
+							overflow: hidden;
+							text-overflow: ellipsis;
+
+							white-space: nowrap;
 						}
 					}
 				}

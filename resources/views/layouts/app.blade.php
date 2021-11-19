@@ -26,7 +26,7 @@
             <header>
                 <div class="header-brand">
                     <a href="{{ route('home') }}">
-                        Logo
+                        <img src="{{ asset('img/logo.png') }}" alt="Logo">
                     </a>
                 </div>
 
@@ -35,25 +35,39 @@
                 </div>
 
                 <div class="header-user">
-                    <div class="dropdown">
-                        <button class="btn" data-bs-toggle="dropdown" type="button">
-                            <div class="user-info">
-                                <div class="img-mask img-mask-circle">
-                                    <img src="https://images.unsplash.com/photo-1558507652-2d9626c4e67a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80" alt="User Avatar">
-                                </div>
-        
-                                <h6 class="subtitle-md">
-                                    User Name
-                                </h6>
-                            </div>
-                        </button>
+                    @if (Auth::guest())
+                        <a href="{{ route('login') }}" class="btn">
+                            Login
+                        </a>
 
-                        <div class="dropdown-menu dropdown-menu-end">
-                            <a href="#" class="dropdown-item">
-                                <i class="fas fa-sign-out-alt"></i> Logout
-                            </a>
+                        <a href="{{ route('register') }}" class="btn">
+                            Register
+                        </a>
+                    @else
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" data-bs-toggle="dropdown" type="button">
+                                <div class="user-info">
+                                    <div class="img-mask img-mask-circle">
+                                        <img src="https://images.unsplash.com/photo-1558507652-2d9626c4e67a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80" alt="User Avatar">
+                                    </div>
+            
+                                    <h6 class="subtitle-md">
+                                        {{ Auth::user()->name }}
+                                    </h6>
+                                </div>
+                            </button>
+
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <a href="#" class="dropdown-item btn-logout">
+                                    <i class="fas fa-sign-out-alt"></i> Logout
+                                </a>
+
+                                <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    {{ csrf_field() }}
+                                </form>
+                            </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
 
                 <div class="header-expand-control">
@@ -72,6 +86,8 @@
     <script src="{{ asset('plugins/jquery/jquery-3.4.1.min.js') }}"></script>
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+
+    <script src="{{ asset('js/function.js') }}"></script>
     @yield('js')
 </body>
 </html>
