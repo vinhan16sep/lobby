@@ -7,13 +7,12 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
-use App\EventTimes;
+use App\Seminars;
 use Response;
 use Session;
 use File;
-use ZipStream\Exception;
 
-class EventTimesController extends Controller
+class SeminarsController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -29,26 +28,16 @@ class EventTimesController extends Controller
      *
      */
     public function index(){
-        $eventTimes = EventTimes::with('eventDay')
+        $seminars = Seminars::with(['eventDay', 'eventTime'])
             ->where('is_deleted', 0)
             ->paginate(10);
 //        echo '<pre>';
-//        print_r($eventTimes);die;
-        return view('admin/event-times/index', ['eventTimes' => $eventTimes]);
-    }
-
-    public function getByEventDay(Request $request) {
-        try {
-            $eventTimes = [];
-            $req = $request->all();
-            if (!empty($req['eventDay'])) {
-                $eventTimes = EventTimes::where('event_day_id', $req['eventDay'])->get()->toArray();
-            }
-
-            return response()->json(['code' => '200', 'message' => 'OK', 'eventTimes' => $eventTimes]);
-        } catch (Exception $e) {
-            return response()->json(['code' => '400', 'message' => $e->getMessage(), 'eventTimes' => []]);
-        }
+//        print_r($seminars);die;
+//        $seminars = DB::table('seminars')
+//            ->select('*')
+//            ->where('is_deleted', 0)
+//            ->paginate(10);
+        return view('admin/seminars/index', ['seminars' => $seminars]);
     }
 
     /**
@@ -60,7 +49,7 @@ class EventTimesController extends Controller
             ->select('*')
             ->where('is_deleted', 0)->get();
 
-        return view('admin/event-times/create', ['eventDays' => $eventDays]);
+        return view('admin/seminars/create', ['eventDays' => $eventDays]);
     }
 
     /**
@@ -70,15 +59,35 @@ class EventTimesController extends Controller
      */
     public function store(Request $request){
         $this->validateInput($request);
+        $filename = '';
+        if($request->hasFile('image')){
+            $file = $request->file('image');
+            $filename = $file->getClientOriginalName();
+            $path = public_path().'/uploads/seminars/';
+            $uploaded = $file->move($path, $filename);
 
-        $keys = ['event_day_id', 'start_time', 'end_time', 'is_active'];
+//            $file = $request->file('image');
+//            $uploaded = $file->store('public/seminars');
+        }
+
+
+        $keys = [
+            'event_day_id',
+            'event_time_id',
+            'is_main',
+            'name',
+            'link',
+            'description',
+            'is_active'
+        ];
         $input = $this->createQueryInput($keys, $request);
+        $input['image'] = $filename;
         $input['created_by'] = Auth::user()->id;
         $input['updated_by'] = Auth::user()->id;
 
-        EventTimes::create($input);
+        Seminars::create($input);
 
-        return redirect()->intended('admin/event-times');
+        return redirect()->intended('admin/seminars');
     }
 
     /**
@@ -101,7 +110,7 @@ class EventTimesController extends Controller
     {
         $detail = BlogCategory::where(['is_deleted' => 0, 'id' => $id])->first();
         
-        return view('admin.event-times.edit', ['detail' => $detail]);
+        return view('admin.seminars.edit', ['detail' => $detail]);
     }
 
     /**
@@ -131,7 +140,7 @@ class EventTimesController extends Controller
             }
         }
         
-        return redirect()->intended('admin/event-times');
+        return redirect()->intended('admin/seminars');
     }
 
     /**
@@ -147,11 +156,11 @@ class EventTimesController extends Controller
 
             if($destroy){
                 Session::flash('success', 'Xóa thành công!');
-                return redirect()->intended('admin/event-times');
+                return redirect()->intended('admin/seminars');
             }
         }
         Session::flash('error', 'Xóa thất bại do danh mục nay tồn tại bài viết!');
-        return redirect()->intended('admin/event-times');
+        return redirect()->intended('admin/seminars');
     }
 
     /**
@@ -165,7 +174,7 @@ class EventTimesController extends Controller
         ];
         $categories = $this->doSearchingQuery($constraints);
 
-        return view('admin/event-times/index', ['categories' => $categories, 'searchingVals' => $constraints]);
+        return view('admin/seminars/index', ['categories' => $categories, 'searchingVals' => $constraints]);
     }
 
     private function doSearchingQuery($constraints){
@@ -187,8 +196,23 @@ class EventTimesController extends Controller
     private function validateInput($request) {
         $this->validate($request, [
             'event_day_id' => 'required',
-            'start_time' => 'required',
-            'end_time' => 'required',
+            'event_time_id' => 'required',
+            'name' => 'required|max:255',
+            'link' => 'required',
+            'image' => 'image|mimes:jpg,jpeg,png,gif',
         ]);
+    }
+
+    private function buildNewFolderPath($path, $fileName){
+        $newPath = $path . '/' . $fileName;
+        $newName = $fileName;
+        $counter = 1;
+        while (file_exists($newPath)) {
+            $newName = $counter . '-' . $fileName;
+            $newPath = $path . '/' . $newName;
+            $counter++;
+        }
+
+        return array($newName, $newPath);
     }
 }
