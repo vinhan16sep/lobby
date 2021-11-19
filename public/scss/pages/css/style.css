@@ -1,31 +1,31 @@
 :root {
-  --brand:                                        #4397A4;
-  --primary:                                      #F26D21;
-  --secondary:                                    #2D8692;
+  --brand:                                        #037ab2;
+  --primary:                                      #037ab2;
+  --secondary:                                    #363435;
   --black:                                        #000;
   --white:                                        #fff;
   --success:                                      #42AB44;
   --warning:                                      #FFAB1B;
   --danger:                                       #FA6767;
   --link:                                         #007DFF;
-  --primary-alpha-10:                             rgba(242, 109, 33, 0.1);
-  --primary-alpha-20:                             rgba(242, 109, 33, 0.2);
-  --primary-alpha-30:                             rgba(242, 109, 33, 0.3);
-  --primary-alpha-40:                             rgba(242, 109, 33, 0.4);
-  --primary-alpha-50:                             rgba(242, 109, 33, 0.5);
-  --primary-alpha-60:                             rgba(242, 109, 33, 0.6);
-  --primary-alpha-70:                             rgba(242, 109, 33, 0.7);
-  --primary-alpha-80:                             rgba(242, 109, 33, 0.8);
-  --primary-alpha-90:                             rgba(242, 109, 33, 0.9);
-  --secondary-alpha-10:                           rgba(45, 134, 146, 0.1);
-  --secondary-alpha-20:                           rgba(45, 134, 146, 0.2);
-  --secondary-alpha-30:                           rgba(45, 134, 146, 0.3);
-  --secondary-alpha-40:                           rgba(45, 134, 146, 0.4);
-  --secondary-alpha-50:                           rgba(45, 134, 146, 0.5);
-  --secondary-alpha-60:                           rgba(45, 134, 146, 0.6);
-  --secondary-alpha-70:                           rgba(45, 134, 146, 0.7);
-  --secondary-alpha-80:                           rgba(45, 134, 146, 0.8);
-  --secondary-alpha-90:                           rgba(45, 134, 146, 0.9);
+  --primary-alpha-10:                             rgba(3, 122, 178, 0.1);
+  --primary-alpha-20:                             rgba(3, 122, 178, 0.2);
+  --primary-alpha-30:                             rgba(3, 122, 178, 0.3);
+  --primary-alpha-40:                             rgba(3, 122, 178, 0.4);
+  --primary-alpha-50:                             rgba(3, 122, 178, 0.5);
+  --primary-alpha-60:                             rgba(3, 122, 178, 0.6);
+  --primary-alpha-70:                             rgba(3, 122, 178, 0.7);
+  --primary-alpha-80:                             rgba(3, 122, 178, 0.8);
+  --primary-alpha-90:                             rgba(3, 122, 178, 0.9);
+  --secondary-alpha-10:                           rgba(54, 52, 53, 0.1);
+  --secondary-alpha-20:                           rgba(54, 52, 53, 0.2);
+  --secondary-alpha-30:                           rgba(54, 52, 53, 0.3);
+  --secondary-alpha-40:                           rgba(54, 52, 53, 0.4);
+  --secondary-alpha-50:                           rgba(54, 52, 53, 0.5);
+  --secondary-alpha-60:                           rgba(54, 52, 53, 0.6);
+  --secondary-alpha-70:                           rgba(54, 52, 53, 0.7);
+  --secondary-alpha-80:                           rgba(54, 52, 53, 0.8);
+  --secondary-alpha-90:                           rgba(54, 52, 53, 0.9);
   --success-alpha-10:                             rgba(66, 171, 68, 0.1);
   --success-alpha-20:                             rgba(66, 171, 68, 0.2);
   --success-alpha-30:                             rgba(66, 171, 68, 0.3);
@@ -215,8 +215,29 @@ body {
           align-items: center;
 }
 
+.page .page-header header .header-brand a img {
+  height: 50px;
+  display: block;
+}
+
 .page .page-header header .header-user {
   margin-left: auto;
+}
+
+.page .page-header header .header-user .dropdown .btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .page .page-header header .header-user .dropdown .btn .user-info {
@@ -240,6 +261,13 @@ body {
   height: 38px;
   margin-right: 0.5rem;
   border: 1px solid var(--border);
+}
+
+.page .page-header header .header-user .dropdown .btn h6 {
+  max-width: 130px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .page .page-header header .header-expand-control {

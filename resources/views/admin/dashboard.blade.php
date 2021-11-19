@@ -1,6 +1,6 @@
 @extends('admin.layouts.app-template')
 
-@section('content')
+@section('view')
     <div class="content-wrapper">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">

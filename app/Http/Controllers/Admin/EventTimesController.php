@@ -11,6 +11,7 @@ use App\EventTimes;
 use Response;
 use Session;
 use File;
+use ZipStream\Exception;
 
 class EventTimesController extends Controller
 {
@@ -34,6 +35,20 @@ class EventTimesController extends Controller
 //        echo '<pre>';
 //        print_r($eventTimes);die;
         return view('admin/event-times/index', ['eventTimes' => $eventTimes]);
+    }
+
+    public function getByEventDay(Request $request) {
+        try {
+            $eventTimes = [];
+            $req = $request->all();
+            if (!empty($req['eventDay'])) {
+                $eventTimes = EventTimes::where('event_day_id', $req['eventDay'])->get()->toArray();
+            }
+
+            return response()->json(['code' => '200', 'message' => 'OK', 'eventTimes' => $eventTimes]);
+        } catch (Exception $e) {
+            return response()->json(['code' => '400', 'message' => $e->getMessage(), 'eventTimes' => []]);
+        }
     }
 
     /**

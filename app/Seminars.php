@@ -19,4 +19,14 @@ class Seminars extends Model
      * @var array
      */
     protected $guarded = [];
+
+    public function eventDay()
+    {
+        return $this->belongsTo(EventDays::class, 'event_day_id');
+    }
+
+    public function eventTime()
+    {
+        return $this->belongsTo(EventTimes::class, 'event_time_id');
+    }
 }

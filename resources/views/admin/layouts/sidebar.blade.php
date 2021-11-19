@@ -35,7 +35,7 @@
             </li>
           </ul>
         </li>
-        <li class="treeview {{(Request::segment(2) == 'event-days' || Request::segment(2) == 'event-times') ? 'active' : '' }}">
+        <li class="treeview {{(Request::segment(2) == 'event-days' || Request::segment(2) == 'event-times' || Request::segment(2) == 'seminars') ? 'active' : '' }}">
           <a href="#"><i class="fa fa-link"></i> <span>Quản lý sự kiện</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
@@ -47,6 +47,9 @@
             </li>
             <li class="{{(Request::segment(2) == 'event-times') ? 'active' : '' }}">
               <a href="{{ url('admin/event-times') }}">Giờ sự kiện</a>
+            </li>
+            <li class="{{(Request::segment(2) == 'seminars') ? 'active' : '' }}">
+              <a href="{{ url('admin/seminars') }}">Hội thảo</a>
             </li>
           </ul>
         </li>

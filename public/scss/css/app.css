@@ -1,32 +1,32 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap");
 :root {
-  --brand:                                        #4397A4;
-  --primary:                                      #F26D21;
-  --secondary:                                    #2D8692;
+  --brand:                                        #037ab2;
+  --primary:                                      #037ab2;
+  --secondary:                                    #363435;
   --black:                                        #000;
   --white:                                        #fff;
   --success:                                      #42AB44;
   --warning:                                      #FFAB1B;
   --danger:                                       #FA6767;
   --link:                                         #007DFF;
-  --primary-alpha-10:                             rgba(242, 109, 33, 0.1);
-  --primary-alpha-20:                             rgba(242, 109, 33, 0.2);
-  --primary-alpha-30:                             rgba(242, 109, 33, 0.3);
-  --primary-alpha-40:                             rgba(242, 109, 33, 0.4);
-  --primary-alpha-50:                             rgba(242, 109, 33, 0.5);
-  --primary-alpha-60:                             rgba(242, 109, 33, 0.6);
-  --primary-alpha-70:                             rgba(242, 109, 33, 0.7);
-  --primary-alpha-80:                             rgba(242, 109, 33, 0.8);
-  --primary-alpha-90:                             rgba(242, 109, 33, 0.9);
-  --secondary-alpha-10:                           rgba(45, 134, 146, 0.1);
-  --secondary-alpha-20:                           rgba(45, 134, 146, 0.2);
-  --secondary-alpha-30:                           rgba(45, 134, 146, 0.3);
-  --secondary-alpha-40:                           rgba(45, 134, 146, 0.4);
-  --secondary-alpha-50:                           rgba(45, 134, 146, 0.5);
-  --secondary-alpha-60:                           rgba(45, 134, 146, 0.6);
-  --secondary-alpha-70:                           rgba(45, 134, 146, 0.7);
-  --secondary-alpha-80:                           rgba(45, 134, 146, 0.8);
-  --secondary-alpha-90:                           rgba(45, 134, 146, 0.9);
+  --primary-alpha-10:                             rgba(3, 122, 178, 0.1);
+  --primary-alpha-20:                             rgba(3, 122, 178, 0.2);
+  --primary-alpha-30:                             rgba(3, 122, 178, 0.3);
+  --primary-alpha-40:                             rgba(3, 122, 178, 0.4);
+  --primary-alpha-50:                             rgba(3, 122, 178, 0.5);
+  --primary-alpha-60:                             rgba(3, 122, 178, 0.6);
+  --primary-alpha-70:                             rgba(3, 122, 178, 0.7);
+  --primary-alpha-80:                             rgba(3, 122, 178, 0.8);
+  --primary-alpha-90:                             rgba(3, 122, 178, 0.9);
+  --secondary-alpha-10:                           rgba(54, 52, 53, 0.1);
+  --secondary-alpha-20:                           rgba(54, 52, 53, 0.2);
+  --secondary-alpha-30:                           rgba(54, 52, 53, 0.3);
+  --secondary-alpha-40:                           rgba(54, 52, 53, 0.4);
+  --secondary-alpha-50:                           rgba(54, 52, 53, 0.5);
+  --secondary-alpha-60:                           rgba(54, 52, 53, 0.6);
+  --secondary-alpha-70:                           rgba(54, 52, 53, 0.7);
+  --secondary-alpha-80:                           rgba(54, 52, 53, 0.8);
+  --secondary-alpha-90:                           rgba(54, 52, 53, 0.9);
   --success-alpha-10:                             rgba(66, 171, 68, 0.1);
   --success-alpha-20:                             rgba(66, 171, 68, 0.2);
   --success-alpha-30:                             rgba(66, 171, 68, 0.3);
@@ -294,6 +294,7 @@ ul {
   font-weight: 500;
   font-size: 0.875rem;
   color: var(--text-paragraph);
+  border-radius: 0.5rem;
 }
 
 .btn span {
@@ -1261,7 +1262,7 @@ ul {
 }
 
 .calendar .calendar-body .calendar-table .calendar-table-body .calendar-table-row .calendar-table-col a.calendar-table-day.calendar-table-day-active {
-  background-color: rgba(45, 134, 146, 0.1);
+  background-color: rgba(54, 52, 53, 0.1);
 }
 
 .calendar .calendar-body .calendar-table .calendar-table-body .calendar-table-row .calendar-table-col a.calendar-table-day span.day-text {
@@ -1820,12 +1821,12 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 }
 
 .badge.badge-primary {
-  background-color: #F26D21;
+  background-color: #037ab2;
   color: #fff;
 }
 
 .badge.badge-secondary {
-  background-color: #2D8692;
+  background-color: #363435;
   color: #fff;
 }
 
@@ -1845,7 +1846,7 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 }
 
 .badge.badge-link {
-  background-color: #F26D21;
+  background-color: #037ab2;
   color: #fff;
 }
 
@@ -1867,14 +1868,14 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 
 .badge.badge-outline-primary {
   background-color: transparent;
-  border: 2px solid #F26D21;
-  color: #F26D21;
+  border: 2px solid #037ab2;
+  color: #037ab2;
 }
 
 .badge.badge-outline-secondary {
   background-color: transparent;
-  border: 2px solid #2D8692;
-  color: #2D8692;
+  border: 2px solid #363435;
+  color: #363435;
 }
 
 .badge.badge-outline-success {
@@ -1897,8 +1898,8 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 
 .badge.badge-outline-link {
   background-color: transparent;
-  border: 2px solid #F26D21;
-  color: #F26D21;
+  border: 2px solid #037ab2;
+  color: #037ab2;
 }
 
 .badge.badge-outline-light {
@@ -1952,11 +1953,11 @@ a.badge.badge-primary {
 }
 
 a.badge.badge-primary:hover {
-  background-color: #f58d51;
+  background-color: #049ce4;
 }
 
 a.badge.badge-primary:focus {
-  background-color: #f58d51;
+  background-color: #049ce4;
   -webkit-box-shadow: none;
           box-shadow: none;
 }
@@ -1966,11 +1967,11 @@ a.badge.badge-secondary {
 }
 
 a.badge.badge-secondary:hover {
-  background-color: #39aab9;
+  background-color: #504d4f;
 }
 
 a.badge.badge-secondary:focus {
-  background-color: #39aab9;
+  background-color: #504d4f;
   -webkit-box-shadow: none;
           box-shadow: none;
 }
@@ -2022,11 +2023,11 @@ a.badge.badge-link {
 }
 
 a.badge.badge-link:hover {
-  background-color: #f58d51;
+  background-color: #049ce4;
 }
 
 a.badge.badge-link:focus {
-  background-color: #f58d51;
+  background-color: #049ce4;
   -webkit-box-shadow: none;
           box-shadow: none;
 }
@@ -4445,7 +4446,7 @@ svg.svg-alert-icon.svg-alert-icon-success circle {
 }
 
 .card .card-header {
-  padding: 1rem;
+  padding: 0.75rem 1.5rem;
   background-color: var(--bg-bw);
   display: -webkit-box;
   display: -ms-flexbox;
@@ -4763,7 +4764,7 @@ svg.svg-alert-icon.svg-alert-icon-success circle {
 
 .modal-open .modal {
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: overlay;
 }
 
 .modal-open .modal::-webkit-scrollbar {
@@ -4996,7 +4997,7 @@ svg.svg-alert-icon.svg-alert-icon-success circle {
 }
 
 .notifications .noti-item .noti-container .noti-icon.noti-warning {
-  background-color: #2D8692;
+  background-color: #363435;
 }
 
 .notifications .noti-item .noti-container .noti-icon.noti-danger {
@@ -5317,7 +5318,7 @@ svg.svg-alert-icon.svg-alert-icon-success circle {
       -ms-flex: 1 1 auto;
           flex: 1 1 auto;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: overlay;
 }
 
 .popup .popup-dialog .popup-content .popup-body::-webkit-scrollbar {
@@ -5872,7 +5873,7 @@ ul.tree-view li ul {
 
 @media screen and (max-width: 1024.98px) {
   .list-table-responsive {
-    overflow-x: auto;
+    overflow-x: overlay;
   }
   .list-table-responsive::-webkit-scrollbar {
     height: 8px;
@@ -6161,7 +6162,7 @@ body .tooltip.tooltip-toolbar .tooltip-inner, html .tooltip.tooltip-toolbar .too
 }
 
 .datepicker table tr td.day.today:hover {
-  background-color: #f58d51;
+  background-color: #049ce4;
   color: var(--white);
 }
 
@@ -6172,7 +6173,7 @@ body .tooltip.tooltip-toolbar .tooltip-inner, html .tooltip.tooltip-toolbar .too
 }
 
 .datepicker table tr td.day.active:hover {
-  background-color: #39aab9;
+  background-color: #504d4f;
   color: var(--white);
 }
 
@@ -6183,7 +6184,7 @@ body .tooltip.tooltip-toolbar .tooltip-inner, html .tooltip.tooltip-toolbar .too
 }
 
 .datepicker table tr td span.month.active:hover {
-  background-color: #39aab9;
+  background-color: #504d4f;
   color: var(--white);
 }
 
@@ -6199,7 +6200,7 @@ body .tooltip.tooltip-toolbar .tooltip-inner, html .tooltip.tooltip-toolbar .too
   height: 100%;
   padding: 1rem 1.5rem;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: overlay;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -6700,7 +6701,7 @@ body .tooltip.tooltip-toolbar .tooltip-inner, html .tooltip.tooltip-toolbar .too
   border: 1px solid var(--border);
   border-radius: 0.5rem;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: overlay;
 }
 
 .zyk-select .zyk-select-wrapper .zyk-select-menu .zyk-select-menu-body::-webkit-scrollbar {
@@ -6901,7 +6902,7 @@ body .tooltip.tooltip-toolbar .tooltip-inner, html .tooltip.tooltip-toolbar .too
   border: 1px solid var(--border);
   border-radius: 0.5rem;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: overlay;
 }
 
 .zyk-select-2 .zyk-select-2-menu .zyk-select-2-menu-body::-webkit-scrollbar {
@@ -7062,33 +7063,33 @@ body .tooltip.tooltip-toolbar .tooltip-inner, html .tooltip.tooltip-toolbar .too
 }
 
 :root {
-  --brand:                                        #4397A4;
-  --primary:                                      #F26D21;
-  --secondary:                                    #2D8692;
+  --brand:                                        #037ab2;
+  --primary:                                      #037ab2;
+  --secondary:                                    #363435;
   --black:                                        #000;
   --white:                                        #fff;
   --success:                                      #42AB44;
   --warning:                                      #FFAB1B;
   --danger:                                       #FA6767;
   --link:                                         #007DFF;
-  --primary-alpha-10:                             rgba(242, 109, 33, 0.1);
-  --primary-alpha-20:                             rgba(242, 109, 33, 0.2);
-  --primary-alpha-30:                             rgba(242, 109, 33, 0.3);
-  --primary-alpha-40:                             rgba(242, 109, 33, 0.4);
-  --primary-alpha-50:                             rgba(242, 109, 33, 0.5);
-  --primary-alpha-60:                             rgba(242, 109, 33, 0.6);
-  --primary-alpha-70:                             rgba(242, 109, 33, 0.7);
-  --primary-alpha-80:                             rgba(242, 109, 33, 0.8);
-  --primary-alpha-90:                             rgba(242, 109, 33, 0.9);
-  --secondary-alpha-10:                           rgba(45, 134, 146, 0.1);
-  --secondary-alpha-20:                           rgba(45, 134, 146, 0.2);
-  --secondary-alpha-30:                           rgba(45, 134, 146, 0.3);
-  --secondary-alpha-40:                           rgba(45, 134, 146, 0.4);
-  --secondary-alpha-50:                           rgba(45, 134, 146, 0.5);
-  --secondary-alpha-60:                           rgba(45, 134, 146, 0.6);
-  --secondary-alpha-70:                           rgba(45, 134, 146, 0.7);
-  --secondary-alpha-80:                           rgba(45, 134, 146, 0.8);
-  --secondary-alpha-90:                           rgba(45, 134, 146, 0.9);
+  --primary-alpha-10:                             rgba(3, 122, 178, 0.1);
+  --primary-alpha-20:                             rgba(3, 122, 178, 0.2);
+  --primary-alpha-30:                             rgba(3, 122, 178, 0.3);
+  --primary-alpha-40:                             rgba(3, 122, 178, 0.4);
+  --primary-alpha-50:                             rgba(3, 122, 178, 0.5);
+  --primary-alpha-60:                             rgba(3, 122, 178, 0.6);
+  --primary-alpha-70:                             rgba(3, 122, 178, 0.7);
+  --primary-alpha-80:                             rgba(3, 122, 178, 0.8);
+  --primary-alpha-90:                             rgba(3, 122, 178, 0.9);
+  --secondary-alpha-10:                           rgba(54, 52, 53, 0.1);
+  --secondary-alpha-20:                           rgba(54, 52, 53, 0.2);
+  --secondary-alpha-30:                           rgba(54, 52, 53, 0.3);
+  --secondary-alpha-40:                           rgba(54, 52, 53, 0.4);
+  --secondary-alpha-50:                           rgba(54, 52, 53, 0.5);
+  --secondary-alpha-60:                           rgba(54, 52, 53, 0.6);
+  --secondary-alpha-70:                           rgba(54, 52, 53, 0.7);
+  --secondary-alpha-80:                           rgba(54, 52, 53, 0.8);
+  --secondary-alpha-90:                           rgba(54, 52, 53, 0.9);
   --success-alpha-10:                             rgba(66, 171, 68, 0.1);
   --success-alpha-20:                             rgba(66, 171, 68, 0.2);
   --success-alpha-30:                             rgba(66, 171, 68, 0.3);
@@ -7623,7 +7624,7 @@ p.no-data {
 .popup.popup-preview-files .popup-dialog .popup-content .popup-body .row > div .preview-append {
   height: 100%;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: overlay;
 }
 
 .popup.popup-preview-files .popup-dialog .popup-content .popup-body .row > div .preview-append::-webkit-scrollbar {
