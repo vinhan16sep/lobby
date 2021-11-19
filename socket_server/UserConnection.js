@@ -1,10 +1,7 @@
 class UserConnection {
-    constructor(connectJsonData, userId) {
-        if (!connectJsonData) {
-            return;
-        }
+    constructor(userId, socketId) {
         this.userId = userId;
-        this.connectJsonData = connectJsonData;
+        this.socketId = socketId;
     }
 
     static fromJSON(data) {

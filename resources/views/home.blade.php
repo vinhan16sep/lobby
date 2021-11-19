@@ -178,4 +178,11 @@
 
 @section('js')
 	<script src="{{ asset('js/home/function.js') }}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+	<script>
+		const SOCKET_URL = '{{ env('SOCKET_URL') }}';
+		const userId = '{{ $userId }}';
+	</script>
+	<script src="{{ asset('js/socket/socket_client.js') }}"></script>
+	
 @endsection
