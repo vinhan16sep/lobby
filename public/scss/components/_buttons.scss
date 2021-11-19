@@ -18,6 +18,8 @@ $color-buttons: (
 
 	color: var(--text-paragraph);
 
+	@include borderRadius();
+
 	span{
 		font-family: 'Inter', sans-serif;
 	}

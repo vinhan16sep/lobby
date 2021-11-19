@@ -278,7 +278,7 @@
 }
 
 @mixin overflow-x($size : 8px){
-	overflow-x: auto;
+	overflow-x: overlay;
 
 	&::-webkit-scrollbar {
 		height: $size;
@@ -305,7 +305,7 @@
 }
 
 @mixin overflow-y($size : 8px) {
-	overflow-y: auto;
+	overflow-y: overlay;
 
     &::-webkit-scrollbar {
         width: $size;
