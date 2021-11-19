@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
+
 @section('meta')
-	
 @endsection
 
 @section('title')
