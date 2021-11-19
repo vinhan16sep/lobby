@@ -60,6 +60,7 @@ io.sockets.on("connection", function (socket) {
                     user.socketId = socket.id;
                 }
             });
+            //todo: send list online user
         } catch (error) {
             logger.error("EXCEPTION", "START_TRACKING", socket.id, error.toString());
         }
@@ -74,16 +75,19 @@ io.sockets.on("connection", function (socket) {
             }
             var time = Date.now();
             var m = {
-                sender: socket.id,
+                sender: userId,
                 time: time,
-                content: message.content
+                content: message.content,
+                isGlobal: true
             };
             if (message.to) {
-                io.to(socket.id).emit(socketType.SEND_MESSAGE, m);
-                io.to(message.to).emit(socketType.SEND_MESSAGE, m);
+                m.isGlobal = false;
+                io.to(socket.id).emit(socketType.RECV_MESSAGE, m);
+                io.to(message.to).emit(socketType.RECV_MESSAGE, m);
             } else {
-                io.emit(socketType.SEND_MESSAGE, m);
+                io.emit(socketType.RECV_MESSAGE, m);
             }
+            logger.info("SEND", "RECV_MESSAGE", socket.id, JSON.stringify(m));
         } catch (error) {
             logger.error("EXCEPTION", "SEND_MESSAGE", socket.id, error.toString());
         }
