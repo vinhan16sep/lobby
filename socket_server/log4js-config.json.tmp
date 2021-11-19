@@ -1,0 +1,32 @@
+{
+    "appenders": {
+        "logfile": {
+            "type": "dateFile", 
+            "layout": {
+                "type": "json"
+            },
+            "filename": "logs",
+            "compress": true
+        },
+        "consoleout" : {
+            "type": "stdout",
+            "layout": {
+                "type": "json"
+            }
+        }
+    },
+    "categories": {
+        "default": {
+            "appenders": ["consoleout"],
+            "level": "off"
+        },
+        "logfile": {
+            "appenders": ["logfile"],
+            "level": "debug"
+        },
+        "consoleout": {
+            "appenders": ["consoleout"],
+            "level": "debug"
+        }
+    }
+}

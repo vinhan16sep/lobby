@@ -33,7 +33,10 @@
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+        
         <script>
+            let SOCKET_URL = '{{ env('SOCKET_URL') }}';
             $(document).ready(function(){
                 $('#inputMessage').on('keyup', function(e){
                     if(e.keyCode == 13){
@@ -97,5 +100,6 @@
                 }, 1000)
             }
         </script>
+        <script src ="{{ asset('/js/socket/socket_client.js')}}"></script>
     </body>
 </html>
