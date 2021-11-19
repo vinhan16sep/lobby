@@ -1,0 +1,8 @@
+{
+	"SSL":"false",
+	"DEBUG": "true",
+	"PORT":"3000",
+	"SSL_KEY_PATH":"C:/ssl/all_private.key",
+	"SSL_CERT_PATH":"C:/ssl/all_certificate.crt",
+	"SOCKET_PRIVATE_KEY":"j9j43kbb7y8N8TP",
+}
