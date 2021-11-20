@@ -277,4 +277,8 @@ body {
 .page .page-body {
   height: calc(100% - 60px);
 }
+
+.page .page-footer footer {
+  display: none;
+}
 /*# sourceMappingURL=style.css.map */

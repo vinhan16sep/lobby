@@ -181,8 +181,9 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
 	<script>
 		const SOCKET_URL = '{{ env('SOCKET_URL') }}';
-		const userId = '{{ $userId }}';
+		// const SOCKET_URL = 'http://localhost:3000';
+		const currentUserId = '{{ $userId }}';
 	</script>
-	<script src="{{ asset('js/socket/socket_client.js') }}"></script>
+	<script src="{{ asset('js/home/socket_client.js') }}"></script>
 	
 @endsection

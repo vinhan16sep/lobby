@@ -18,7 +18,11 @@
 				> a {
 					font-weight: 600;
 
-					color: var(--white);
+					&.btn{
+						&:not(.btn-primary){
+							color: var(--primary);
+						}
+					}
 				}
 			}
 		}
@@ -27,16 +31,59 @@
 	.page-body{
 		height: 100%;
 	}
+
+	.page-footer{
+		width: 100%;
+
+		position: absolute;
+		bottom: 0;
+		left: 0;
+
+		footer{
+			padding: 1.5rem;
+			
+			@include d-flex(row, flex-end, center);
+
+			p{
+				&:not(:first-child){
+					margin-left: 1.5rem;
+				}
+			}
+		}
+	}
 }
 
 .view-home{
 	height: 100%;
 
-	position: relative;
+	> .row{
+		height: 100%;
 
-	background-position: center center;
-	background-repeat: no-repeat;
-	background-size: cover;
+		> div {
+			height: 100%;
+
+			.cover{
+				width: 100%;
+				height: 100%;
+
+				.img-mask{
+					width: 100%;
+					height: 100%;
+				}
+			}
+
+			.form-login{
+				width: 100%;
+				height: 100%;
+
+				@include d-flex(column, center, center);
+
+				.panel{
+					width: 400px;
+				}
+			}
+		}
+	}
 
 	.overlay{
 		width: 100%;
