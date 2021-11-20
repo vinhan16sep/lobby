@@ -29,7 +29,7 @@ class UsersWrapper {
                 callback(null);
                 return;
             }
-            return val;
+            return callback(val);
         });
     }
 

@@ -21,7 +21,10 @@ $().ready(() => {
 
     socket.on('connect', () => {
         socket.emit(SocketMessageType.JOIN, {
-            userId: userId
+            userId: currentUser.id,
+            name: currentUser.name,
+            company: currentUser.company,
+            position: currentUser.position
         });
     });
 
@@ -50,7 +53,7 @@ function sendGlobalMessage(data) {
     });
 }
 
-function sendPrivateMessage(data) {
+function sendPrivateMessage(data, to) {
     socket.emit(SocketMessageType.SEND_MESSAGE, {
         content: data,
         to: to

@@ -563,7 +563,7 @@
       -ms-flex: 1 1 auto;
           flex: 1 1 auto;
   height: 100%;
-  padding: 1.5rem 0.875rem;
+  padding: 0.875rem;
   overflow-x: hidden;
   overflow-y: overlay;
 }

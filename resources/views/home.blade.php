@@ -200,28 +200,16 @@
 @endsection
 
 @section('js')
-	<script src="{{ asset('js/home/function.js') }}"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
 	<script>
-        const SOCKET_URL = '{{ env('SOCKET_URL') }}';
-        const userId = '{{ $userId }}';
+        const SOCKET_URL = '{{ config('env.SOCKET_URL') }}';
+        const currentUser = {
+			id: '{{ $userId }}',
+			name: '{{ $userName }}',
+			company: '{{ $userCompany }}',
+			position: '{{ $userPosition }}'
+		};
 	</script>
-	<script src="{{ asset('js/socket/socket_client.js') }}"></script>
-
-	<script type="text/javascript">
-        function addToWishlist(seminarId) {
-            $.ajax({
-                url: '{{ route('home.addToWishlist') }}',
-                method: 'GET',
-                data: {
-                    seminarId: seminarId
-                },
-                success: function (res) {
-					if (res.code == '200') {
-                        $('#followSuccessModal').modal('show');
-                    }
-                },
-            });
-        }
-	</script>
+	<script src="{{ asset('js/home/function.js') }}"></script>
+	<script src="{{ asset('js/home/socket_client.js') }}"></script>
 @endsection
