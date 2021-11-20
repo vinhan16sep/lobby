@@ -82,4 +82,10 @@ body{
 	.page-body{
 		height: calc(100% - 60px);
 	}
+
+	.page-footer{
+		footer{
+			display: none;
+		}
+	}
 }

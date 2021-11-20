@@ -6,9 +6,8 @@ const SocketMessageType = {
     USER_JOIN: 'USER_JOIN'
 };
 
-let socket;
 $().ready(() => {
-    socket = io.connect(SOCKET_URL, {
+    const socket = io.connect(SOCKET_URL, {
         reconnection: true,
         autoConnect: true,
         reconnectionDelay: 1000,
@@ -21,7 +20,7 @@ $().ready(() => {
 
     socket.on('connect', () => {
         socket.emit(SocketMessageType.JOIN, {
-            userId: userId
+            userId: currentUserId
         });
     });
 
@@ -31,6 +30,19 @@ $().ready(() => {
 
     socket.on(SocketMessageType.RECV_MESSAGE, (data) => {
         console.log(data);
+
+        let message = {
+            id: parseInt(data.sender),
+            message: data.content
+        };
+
+        if (currentUserId != parseInt(data.sender)) {
+            if (data.isGlobal) {
+                receiveChatMessage('.chat-public', message);
+            } else {
+                receiveChatMessage('.chat-private', message);
+            }
+        }
     });
 
     socket.on(SocketMessageType.USER_LEAVE, (data) => {

@@ -40,7 +40,7 @@
                             Login
                         </a>
 
-                        <a href="{{ route('register') }}" class="btn">
+                        <a href="{{ route('register') }}" class="btn btn-primary">
                             Register
                         </a>
                     @else
@@ -80,6 +80,22 @@
 
         <div class="page-body">
             @yield('view')
+        </div>
+
+        <div class="page-footer">
+            <footer>
+                <p class="p-sm">
+                    <b>Company Info 1:</b> Info
+                </p>
+
+                <p class="p-sm">
+                    <b>Company Info 2:</b> Info
+                </p>
+
+                <p class="p-sm">
+                    <b>Company Info 3:</b> Info
+                </p>
+            </footer>
         </div>
     </div>
 
