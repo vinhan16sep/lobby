@@ -3,7 +3,7 @@ var Logger = require("./Logger.js");
 var express = require("express");
 var app = express();
 var fs = require("fs");
-var DataWrapper = require("./DataWrapper.js");
+var UsersWrapper = require("./UsersWrapper.js");
 var os = require("os");
 var socketType = require("./SocketMessageType.js");
 const UserConnection = require("./UserConnection.js");
@@ -36,7 +36,7 @@ if (cfg.ssl) {
     httpsServer = httpServ.createServer(app);
 }
 var io = require("socket.io")(httpsServer);
-var dataWrapper = new DataWrapper();
+var usersWrapper = new UsersWrapper();
 io.set("heartbeat timeout", 60000);
 io.set("heartbeat interval", 25000);
 
@@ -50,15 +50,23 @@ io.sockets.on("connection", function (socket) {
                 logger.info("SERVIVE", "JOIN", socket.id, "invalid message");
             }
             userId = message.userId;
-            dataWrapper.getUser(`${userId}`, (user) => {
+            usersWrapper.getUser(`${userId}`, (user) => {
                 if (!user) {
-                    var newUser = new UserConnection(userId, socket.id);
+                    var newUser = new UserConnection(userId, socket.id, message.name || "No name");
 
                     logger.info("INFO", "JOIN", socket.id, JSON.stringify(message));
-                    dataWrapper.setUserData(`${userId}`, JSON.stringify(newUser));
+                    usersWrapper.setUserData(`${userId}`, JSON.stringify(newUser));
+                    socket.broadcast.emit(socketType.USER_JOIN, {
+                        userId: newUser.userId,
+                        name: newUser.name
+                    });
                 } else {
                     user.socketId = socket.id;
                 }
+                var listUser = usersWrapper.getOnlineUser().map((u) => {
+                    return u.toJSON();
+                });
+                socket.emit(socketType.JOIN, listUser);
             });
             //todo: send list online user
         } catch (error) {
@@ -81,9 +89,14 @@ io.sockets.on("connection", function (socket) {
                 isGlobal: true
             };
             if (message.to) {
-                m.isGlobal = false;
-                io.to(socket.id).emit(socketType.RECV_MESSAGE, m);
-                io.to(message.to).emit(socketType.RECV_MESSAGE, m);
+                usersWrapper.getUser(`${message.to}`, (destUser) => {
+                    if (!destUser) {
+                        return;
+                    }
+                    m.isGlobal = false;
+                    io.to(socket.id).emit(socketType.RECV_MESSAGE, m);
+                    io.to(destUser.socketId).emit(socketType.RECV_MESSAGE, m);
+                });
             } else {
                 io.emit(socketType.RECV_MESSAGE, m);
             }
@@ -101,18 +114,21 @@ io.sockets.on("connection", function (socket) {
                 return;
             }
 
-            dataWrapper.getUser(`${userId}`, (user) => {
+            usersWrapper.getUser(`${userId}`, (user) => {
                 if (!user) {
                     logger.info("SERVIVE", "HANDLE DISCONNECT", socket.id, `user ${userId} not found`);
                     return;
                 }
+                io.emit(socketType.USER_LEAVE, {
+                    userId: user.userId
+                });
                 logger.info("INFO", "DISCONNECT", socket.id, "");
                 delete user.openingContent[socket.id];
                 if (Object.keys(user.openingContent).length === 0) {
                     //delete user
-                    dataWrapper.deleteUserDoNotLock(`${userId}`);
+                    usersWrapper.deleteUserDoNotLock(`${userId}`);
                 } else {
-                    dataWrapper.setUserDataDoNotLock(`${userId}`, JSON.stringify(user));
+                    usersWrapper.setUserDataDoNotLock(`${userId}`, JSON.stringify(user));
                 }
             });
         } catch (error) {

@@ -6,7 +6,7 @@ var UserConnection = require("./UserConnection.js");
  * @param {UserConnection} user
  */
 
-class DataWrapper {
+class UsersWrapper {
     /**
      * Constructor
      * @param {object} options
@@ -29,14 +29,12 @@ class DataWrapper {
                 callback(null);
                 return;
             }
-            if (!val) {
-                callback(null);
-                return;
-            }
-            let userJson = JSON.parse(val);
-            var returnVal = UserConnection.fromJSON(userJson);
-            callback(returnVal);
+            return val;
         });
+    }
+
+    async getOnlineUser() {
+        return Object.values(this.localStorage);
     }
 
     async setUserData(key, data) {
@@ -55,4 +53,4 @@ class DataWrapper {
         await this.del(`nodejs-socket-user-${key}`);
     }
 }
-module.exports = DataWrapper;
+module.exports = UsersWrapper;
