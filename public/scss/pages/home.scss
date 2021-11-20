@@ -1,0 +1,85 @@
+@import '../settings/var';
+@import '../settings/mixin';
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap');
+
+.page{
+	.page-header{
+		width: 100%;
+
+		background-color: transparent;
+
+		position: fixed;
+		top: 0;
+		z-index: 1030;
+
+		header{
+			.header-user{
+				> a {
+					font-weight: 600;
+
+					color: var(--white);
+				}
+			}
+		}
+	}
+
+	.page-body{
+		height: 100%;
+	}
+}
+
+.view-home{
+	height: 100%;
+
+	position: relative;
+
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+
+	.overlay{
+		width: 100%;
+		height: 100%;
+
+		background-color: var(--bg-bw-rv-alpha-50);
+
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		z-index: 1;
+
+		@include translate(-50%, -50%);
+
+		.container{
+			height: calc(100% - 50px);
+
+			@include d-flex(column, center, flex-start);
+
+			h1{
+				font-family: 'Roboto Condensed', sans-serif;
+				font-weight: 700;
+
+				color: var(--white);
+			}
+		}
+
+		.links{
+			height: 50px;
+
+			padding: 0 1.5rem;
+
+			margin-top: auto;
+
+			@include d-flex(row, flex-end, center);
+
+			a{
+				color: var(--white);
+
+				&:not(:last-child){
+					margin-right: 0.75rem;
+				}
+			}
+		}
+	}
+}

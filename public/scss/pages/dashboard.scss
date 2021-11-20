@@ -263,6 +263,8 @@
 							overflow-x: hidden;
 							@include overflow-y();
 
+							@include overflow-hidden();
+
 							.list-users{
 								a{
 									&.select-user{
