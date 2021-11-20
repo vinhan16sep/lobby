@@ -19,4 +19,12 @@ class EventDays extends Model
      * @var array
      */
     protected $guarded = [];
+
+    public function eventTimes() {
+        return $this->hasMany('App\EventTimes', 'event_day_id');
+    }
+
+    public function seminars() {
+        return $this->hasManyThrough('App\Seminars', 'App\EventTimes', 'event_day_id', 'event_time_id', 'id');
+    }
 }

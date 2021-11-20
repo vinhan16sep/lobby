@@ -42,76 +42,83 @@
 
 			<div class="list-events">
 				<ul class="nav nav-tabs" id="eventTabs" role="tablist">
-					<li class="nav-item" role="presentation">
-					  	<button class="nav-link active" id="btnTab_1" data-bs-toggle="tab" data-bs-target="#tab_1" type="button" role="tab" aria-controls="tab_1" aria-selected="true">
-							  Web 17/11/2021
-						  </button>
-					</li>
-					<li class="nav-item" role="presentation">
-					  	<button class="nav-link" id="btnTab_2" data-bs-toggle="tab" data-bs-target="#tab_2" type="button" role="tab" aria-controls="tab_2" aria-selected="false">
-							  Thu 18/11/2021
-						  </button>
-					</li>
-					<li class="nav-item" role="presentation">
-						<button class="nav-link" id="btnTab_3" data-bs-toggle="tab" data-bs-target="#tab_3" type="button" role="tab" aria-controls="tab_3" aria-selected="false">
-							Fri 19/11/2021
-						</button>
-				  </li>
+
+					@foreach ($eventDays as $dKey => $eventDay)
+						<li class="nav-item" role="presentation">
+							<button class="nav-link {{ $dKey == 0 ? 'active' : '' }}" id="btnTab_{{ $dKey + 1  }}"
+							        data-bs-toggle="tab" data-bs-target="#tab_{{ $dKey + 1  }}"
+							        type="button" role="tab" aria-controls="tab_{{ $dKey + 1  }}" aria-selected="true">
+								{{ $eventDay->event_date  }}
+							</button>
+						</li>
+					@endforeach
 				</ul>
 				<div class="tab-content" id="eventTabsContent">
-					<div class="tab-pane fade show active" id="tab_1" role="tabpanel" aria-labelledby="btnTab_1">
-						<div class="event-schedule">
-							@for ($i = 0; $i < 5; $i++)
-								<div class="event-item">
-									<div class="event-time">
-										<h6 class="subtitle-md">
-											8h30 - 10h00
-										</h6>
-									</div>
-
-									<div class="event-content">
-										@for ($j = 0; $j < 3; $j++)
-											<div class="item-event">
-												<div class="ratio-wrapper ratio-wrapper-4-3">
-													<div class="overlay">
-														<h6 class="subtitle-sm">
-															Event name
-														</h6>
-
-														<p class="p-sm">
-															Nulla faucibus ligula mauris, non lacinia odio interdum eget. Praesent justo ipsum, imperdiet eu finibus vitae, tincidunt ut sem. Suspendisse auctor tellus eget erat posuere facilisis.
-														</p>
-													</div>
-													
-													<div class="img-mask">
-														<img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80" alt="">
-													</div>
-												</div>
-
-												<div class="controls">
-													<button class="btn btn-outline-default" type="button">
-														Detail
-													</button>
-													<button class="btn btn-outline-default" type="button">
-														Detail
-													</button>
-													<button class="btn btn-primary" type="button">
-														Join Event
-													</button>
-												</div>
+					@foreach ($eventDays as $dKey => $eventDay)
+						<div class="tab-pane fade {{ $dKey == 0 ? 'show active' : '' }}" id="tab_{{ $dKey + 1  }}"
+						     role="tabpanel" aria-labelledby="btnTab_{{ $dKey + 1  }}">
+							<div class="event-schedule">
+								@if ($eventDay->eventTimes)
+									@foreach ($eventDay->eventTimes as $tKey => $eventTime)
+										<div class="event-item">
+											<div class="event-time">
+												<h6 class="subtitle-md">
+													{{ $eventTime->start_time }} - {{ $eventTime->end_time }}
+												</h6>
 											</div>
-										@endfor
-									</div>
-								</div>
-							@endfor
+											<div class="event-content">
+												@if ($eventTime->seminars)
+													@foreach ($eventTime->seminars as $sKey => $seminar)
+														<div class="item-event">
+															<div class="ratio-wrapper ratio-wrapper-4-3">
+																<div class="overlay">
+																	<h6 class="subtitle-sm">
+																		{{ $seminar->name }}
+																	</h6>
+
+																	<p class="p-sm">
+																		{{ $seminar->description }}
+																	</p>
+																</div>
+
+																<div class="img-mask">
+																	<img src="{{ asset('uploads/seminars/' . $seminar->image) }}"
+																	     width="300" height="200"
+																	     alt="{{ $seminar->name }}"/>
+																</div>
+															</div>
+
+															<div class="controls">
+																@if (!empty($seminarArr) && in_array($seminar->id, $seminarArr))
+																	<button class="btn btn-outline-default"
+																	        type="button" disabled>
+																		Followed
+																	</button>
+																@else
+																	<button class="btn btn-outline-default"
+																	        type="button"
+																	        onclick="addToWishlist('{{ $seminar->id }}')">
+																		Follow
+																	</button>
+																@endif
+																<button class="btn btn-outline-default" type="button">
+																	Detail
+																</button>
+																<button class="btn btn-primary" type="button"
+																        onclick="window.open('{{ $seminar->link }}', '_blank')">
+																	Join Event
+																</button>
+															</div>
+														</div>
+													@endforeach
+												@endif
+											</div>
+										</div>
+									@endforeach
+								@endif
+							</div>
 						</div>
-					</div>
-					<div class="tab-pane fade" id="tab_2" role="tabpanel" aria-labelledby="btnTab_2">
-						
-					</div>
-					<div class="tab-pane fade" id="tab_3" role="tabpanel" aria-labelledby="btnTab_3">
-						
-					</div>
+					@endforeach
 				</div>
 			</div>
 
@@ -119,19 +126,20 @@
 				<div class="chat-box chat-public">
 					<div class="card">
 						<div class="card-body">
-                            <div class="list-users-wrapper">
-                                <div class="list-users" id="appendListUsers"></div>
-                            </div>
+							<div class="list-users-wrapper">
+								<div class="list-users" id="appendListUsers"></div>
+							</div>
 
-                            <div class="chat-append append-message"></div>
+							<div class="chat-append append-message"></div>
 						</div>
 
 						<div class="card-footer">
-							<input type="text" class="form-control input-message" placeholder="Type something to send...">
+							<input type="text" class="form-control input-message"
+							       placeholder="Type something to send...">
 
-                            <button class="btn btn-primary btn-send-message" type="button">
-                                Send
-                            </button>
+							<button class="btn btn-primary btn-send-message" type="button">
+								Send
+							</button>
 						</div>
 					</div>
 				</div>
@@ -149,25 +157,40 @@
 							<div class="chat-append append-message"></div>
 						</div>
 						<div class="card-footer">
-							<input type="text" class="form-control input-message" placeholder="Type something to send...">
+							<input type="text" class="form-control input-message"
+							       placeholder="Type something to send...">
 
-                            <button class="btn btn-primary btn-send-message" type="button">
-                                Send
-                            </button>
+							<button class="btn btn-primary btn-send-message" type="button">
+								Send
+							</button>
 						</div>
 					</div>
 				</div>
 
-                <a href="#" class="select-user select-user-prepare" style="display: none">
-                    <div class="img-mask img-mask-circle">
-                        <img src="" alt="">
-                    </div>
+				<a href="#" class="select-user select-user-prepare" style="display: none">
+					<div class="img-mask img-mask-circle">
+						<img src="" alt="">
+					</div>
 
 					<div class="status">
 						<div class="circle"></div>
 					</div>
-                </a>
+				</a>
 			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="followSuccessModal" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-body">
+					<p>Bạn đã đăng ký theo dõi hội thảo thành công</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+				</div>
+			</div>
+
 		</div>
 	</div>
 @endsection
@@ -180,9 +203,26 @@
 	<script src="{{ asset('js/home/function.js') }}"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
 	<script>
-		const SOCKET_URL = '{{ env('SOCKET_URL') }}';
-		const userId = '{{ $userId }}';
+        const SOCKET_URL = '{{ env('SOCKET_URL') }}';
+        const userId = '{{ $userId }}';
 	</script>
 	<script src="{{ asset('js/socket/socket_client.js') }}"></script>
-	
+
+	<script type="text/javascript">
+        function addToWishlist(seminarId) {
+            $.ajax({
+                url: '{{ route('home.addToWishlist') }}',
+                method: 'GET',
+                data: {
+                    seminarId: seminarId
+                },
+                success: function (res) {
+					if (res.code == '200') {
+                        $('#followSuccessModal').modal('show');
+                    }
+                },
+            });
+        }
+	</script>
+
 @endsection

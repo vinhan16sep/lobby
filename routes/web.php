@@ -22,6 +22,7 @@ Auth::routes();
 Route::get('/chat', 'HomeController@chat');
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home/addToWishlist', 'HomeController@addToWishlist')->name('home.addToWishlist');
 Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard');
 Route::get('/users/logout', 'Auth\LoginController@userLogout')->name('user.logout');
 
