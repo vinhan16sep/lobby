@@ -20,8 +20,11 @@ class EventTimes extends Model
      */
     protected $guarded = [];
 
-    public function eventDay()
-    {
+    public function eventDay() {
         return $this->belongsTo(EventDays::class, 'event_day_id');
+    }
+
+    public function seminars() {
+        return $this->hasMany('App\Seminars', 'event_time_id');
     }
 }
