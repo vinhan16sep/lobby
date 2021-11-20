@@ -3,6 +3,7 @@ let users = [];
 $(document).ready(function () {
     for (let i = 0; i < 20; i++) {
         users.push({
+            id: parseInt(i + 1),
             name: `User name ${i + 1}`,
             avatar: 'https://images.unsplash.com/photo-1541823709867-1b206113eafd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80',
             company: `Company ${i + 1}`,
@@ -121,6 +122,9 @@ let blockMessage = false;
 function sendChatMessage(wrapper) {
     const $append = $(wrapper).find('.append-message');
     const $input = $(wrapper).find('.input-message');
+
+    let recvId = $wrapper.data('user-id');
+
     let message = $input.val();
 
     if (message == '') {
@@ -154,6 +158,12 @@ function sendChatMessage(wrapper) {
     let $span = $(`<p>${message}</p>`);
     $span.appendTo($append.find('.chat-item.chat-item-mine:last-child').find('.content-chat'));
 
+    if (typeof recvId == 'undefined') {
+        sendGlobalMessage(message);
+    } else {
+        sendPrivateMessage(message, recvId);
+    }
+
     blockMessage = true;
 
     $input.val('');
@@ -163,38 +173,42 @@ function sendChatMessage(wrapper) {
     setTimeout(function () {
         blockMessage = false;
     }, 1000);
-
-    setTimeout(function () {
-        for (let i = 0; i < 2; i++) {
-            receiveChatMessage(wrapper, messageFormData);
-        }
-    }, 1000);
 }
 
 let messageFormData = {
     id: 1,
-    name: 'User name',
-    avatar: 'https://images.unsplash.com/photo-1558507652-2d9626c4e67a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80',
     message: 'Hello World!'
 };
 
 function receiveChatMessage(wrapper, data) {
     const $append = $(wrapper).find('.append-message');
 
-    let userId = data.id;
-    let userAvatar = data.avatar != null ? data.avatar : `https://ui-avatars.com/api/?name=${data.name}`;
+    if (wrapper == '.chat-priavte' && !$(wrapper).is(':visible')) {
+        $(wrapper).parent().addClass('chat-area-collapsed');
+        $(wrapper).show();
 
-    let $chatWrap = $(`
+        initChatBox(wrapper);
+    }
+
+    let userId = data.id;
+    let user = users.find((usr) => {
+        return usr.id == userId;
+    });
+
+    if (user) {
+        let userAvatar = user.avatar != null ? user.avatar : `https://ui-avatars.com/api/?name=${user.name}`;
+
+        let $chatWrap = $(`
         <div class="chat-item" data-sender-id="${userId}">
             <div class="item-avatar">
                 <div class="img-mask img-mask-circle">
-                    <img src="${userAvatar}" alt="Avatar of ${data.name}">
+                    <img src="${userAvatar}" alt="Avatar of ${user.name}">
                 </div>
             </div>
 
             <div class="item-content">
                 <p class="p-name">
-                    ${data.name}
+                    ${user.name}
                 </p>
 
                 <div class="content-chat"></div>
@@ -202,19 +216,20 @@ function receiveChatMessage(wrapper, data) {
         </div>
     `);
 
-    if (wrapper == '.chat-private') {
-        $chatWrap.find('.item-avatar').remove();
-        $chatWrap.find('.p-name').remove();
+        if (wrapper == '.chat-private') {
+            $chatWrap.find('.item-avatar').remove();
+            $chatWrap.find('.p-name').remove();
+        }
+
+        const $box = $append.find('.chat-item:last-child');
+
+        if ($box.length == 0 || $box.data('sender-id') != userId) {
+            $append.append($chatWrap);
+        }
+
+        let $span = $(`<p>${data.message}</p>`);
+        $span.appendTo($append.find('.chat-item:last-child').find('.content-chat'));
+
+        $append.scrollTop($(wrapper).find('.append-message')[0].scrollHeight);
     }
-
-    const $box = $append.find('.chat-item:last-child');
-
-    if ($box.length == 0 || $box.data('sender-id') != userId) {
-        $append.append($chatWrap);
-    }
-
-    let $span = $(`<p>${data.message}</p>`);
-    $span.appendTo($append.find('.chat-item:last-child').find('.content-chat'));
-
-    $append.scrollTop($(wrapper).find('.append-message')[0].scrollHeight);
 }
