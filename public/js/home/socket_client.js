@@ -20,12 +20,17 @@ $().ready(() => {
 
     socket.on('connect', () => {
         socket.emit(SocketMessageType.JOIN, {
-            userId: currentUserId
+            userId: currentUser.id,
+            name: currentUser.name,
+            company: currentUser.company,
+            position: currentUser.position
         });
     });
 
     socket.on(SocketMessageType.JOIN, (data) => {
-        //handle list online user
+        console.log('join', data);
+
+        recvListUser(data);
     });
 
     socket.on(SocketMessageType.RECV_MESSAGE, (data) => {
@@ -36,7 +41,7 @@ $().ready(() => {
             message: data.content
         };
 
-        if (currentUserId != parseInt(data.sender)) {
+        if (currentUser.id != parseInt(data.sender)) {
             if (data.isGlobal) {
                 receiveChatMessage('.chat-public', message);
             } else {
@@ -46,11 +51,15 @@ $().ready(() => {
     });
 
     socket.on(SocketMessageType.USER_LEAVE, (data) => {
-        //remove user from online list
+        console.log('user leave', data);
+
+        removeUser(data);
     });
 
     socket.on(SocketMessageType.USER_JOIN, (data) => {
-        //add user to online list
+        console.log('user join', data);
+
+        addUser(data);
     });
 
     window.socket = socket;
@@ -62,7 +71,7 @@ function sendGlobalMessage(data) {
     });
 }
 
-function sendPrivateMessage(data) {
+function sendPrivateMessage(data, to) {
     socket.emit(SocketMessageType.SEND_MESSAGE, {
         content: data,
         to: to

@@ -1,16 +1,16 @@
 let users = [];
 
 $(document).ready(function () {
-    for (let i = 0; i < 20; i++) {
-        users.push({
-            id: parseInt(i + 1),
-            name: `User name ${i + 1}`,
-            avatar: 'https://images.unsplash.com/photo-1541823709867-1b206113eafd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80',
-            company: `Company ${i + 1}`,
-            position: 'Employee',
-            status: 1
-        });
-    }
+    // for (let i = 0; i < 20; i++) {
+    //     users.push({
+    //         id: parseInt(i + 1),
+    //         name: `User name ${i + 1}`,
+    //         avatar: `https://ui-avatars.com/api/?name=Username`,
+    //         company: `Company ${i + 1}`,
+    //         position: 'Employee',
+    //         status: 1
+    //     });
+    // }
 
     $(document)
         .on('click', function (e) {
@@ -47,7 +47,7 @@ $(document).ready(function () {
 
                         $card.remove();
 
-                        $chatBox.data('user-id', userInfo.id);
+                        $chatBox.data('user-id', userInfo.userId);
                         $chatBox.find('h6').text(userInfo.name);
 
                         $chatBox.parent().addClass('chat-area-collapsed');
@@ -73,10 +73,38 @@ $(document).ready(function () {
         $('.chat-private').hide();
     });
 
-    getListUsers();
+    // getListUsers();
 
     initChatBox('.chat-public');
 });
+
+function recvListUser(data) {
+    if (data.length > 0) {
+        data.forEach((item) => {
+            if (item.userId == currentUser.id) {
+                return;
+            }
+
+            users.push(item);
+        });
+
+        getListUsers();
+    }
+}
+
+function addUser(data) {
+    users.push(data);
+
+    getListUsers();
+}
+
+function removeUser(data) {
+    users = users.filter((usr) => {
+        return usr.userId != data.userId;
+    });
+
+    getListUsers();
+}
 
 function getListUsers() {
     const $wrapper = $('#appendListUsers');
@@ -92,9 +120,7 @@ function getListUsers() {
             $item.find('img').attr('src', user.avatar != null ? user.avatar : `https://ui-avatars.com/api/?name=${user.name}`);
             $item.find('img').attr('alt', `Avatar of ${user.name}`);
 
-            if (user.status) {
-                $item.find('.circle').addClass('bg-success');
-            }
+            $item.find('.circle').addClass('bg-success');
 
             $wrapper.append($item);
         });
@@ -123,7 +149,7 @@ function sendChatMessage(wrapper) {
     const $append = $(wrapper).find('.append-message');
     const $input = $(wrapper).find('.input-message');
 
-    let recvId = $wrapper.data('user-id');
+    let recvId = $(wrapper).data('user-id');
 
     let message = $input.val();
 
@@ -158,6 +184,8 @@ function sendChatMessage(wrapper) {
     let $span = $(`<p>${message}</p>`);
     $span.appendTo($append.find('.chat-item.chat-item-mine:last-child').find('.content-chat'));
 
+    console.log(recvId);
+
     if (typeof recvId == 'undefined') {
         sendGlobalMessage(message);
     } else {
@@ -183,19 +211,21 @@ let messageFormData = {
 function receiveChatMessage(wrapper, data) {
     const $append = $(wrapper).find('.append-message');
 
-    if (wrapper == '.chat-priavte' && !$(wrapper).is(':visible')) {
-        $(wrapper).parent().addClass('chat-area-collapsed');
-        $(wrapper).show();
-
-        initChatBox(wrapper);
-    }
-
     let userId = data.id;
     let user = users.find((usr) => {
-        return usr.id == userId;
+        return usr.userId == userId;
     });
 
     if (user) {
+        if (wrapper == '.chat-private' && !$(wrapper).is(':visible')) {
+            $(wrapper).find('h6').text(user.name);
+            $(wrapper).data('user-id', data.id);
+            $(wrapper).parent().addClass('chat-area-collapsed');
+            $(wrapper).show();
+
+            initChatBox('.chat-private');
+        }
+
         let userAvatar = user.avatar != null ? user.avatar : `https://ui-avatars.com/api/?name=${user.name}`;
 
         let $chatWrap = $(`
@@ -232,4 +262,19 @@ function receiveChatMessage(wrapper, data) {
 
         $append.scrollTop($(wrapper).find('.append-message')[0].scrollHeight);
     }
+}
+
+function addToWishlist(seminarId) {
+    $.ajax({
+        url: '/home/addToWishlist',
+        method: 'GET',
+        data: {
+            seminarId: seminarId
+        },
+        success: function (res) {
+            if (res.code == '200') {
+                $('#followSuccessModal').modal('show');
+            }
+        }
+    });
 }

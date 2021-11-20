@@ -38,6 +38,7 @@
 		position: absolute;
 		bottom: 0;
 		left: 0;
+		z-index: 1031;
 
 		footer{
 			padding: 1.5rem;
@@ -45,6 +46,8 @@
 			@include d-flex(row, flex-end, center);
 
 			p{
+				color: var(--white);
+				
 				&:not(:first-child){
 					margin-left: 1.5rem;
 				}
@@ -55,6 +58,35 @@
 
 .view-home{
 	height: 100%;
+
+	position: relative;
+	
+	.overlay{
+		width: 100%;
+		height: 100%;
+
+		background-color: rgba(0,0,0,0.5);
+		backdrop-filter: blur(4px);
+
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		z-index: 1;
+
+		@include translate(-50%, -50%);
+
+		@include d-flex(column, center, center);
+
+		.panel{
+			width: 460px;
+
+			padding: 1.5rem 1.5rem 2rem;
+
+			background-color: rgba(255,255,255,0.8);
+
+			@include borderRadius();
+		}
+	}
 
 	> .row{
 		height: 100%;

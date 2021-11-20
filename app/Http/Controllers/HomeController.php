@@ -29,6 +29,8 @@ class HomeController extends Controller
     public function index() {
         $userId = Auth::user()->id;
         $userName = Auth::user()->name;
+        $userCompany = Auth::user()->company;
+        $userPosition = Auth::user()->position;
 
         $seminarArr = [];
         $userSeminar = UserSeminar::select('seminar_id')->where(['user_id' => $userId, 'is_active' => 1, 'is_deleted' => 0])->get()->toArray();
@@ -42,6 +44,8 @@ class HomeController extends Controller
         return view('home', [
             'userId' => $userId,
             'userName' => $userName,
+            'userCompany' => $userCompany,
+            'userPosition' => $userPosition,
             'eventDays' => $eventDays,
             'seminarArr' => $seminarArr
         ]);
