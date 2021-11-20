@@ -304,6 +304,18 @@
 	}
 }
 
+@mixin overflow-hidden() {
+	&::-webkit-scrollbar-thumb {
+		display: none;
+	}
+
+	&:hover{
+		&::-webkit-scrollbar-thumb {
+			display: block;
+		}	
+	}
+}
+
 @mixin overflow-y($size : 8px) {
 	overflow-y: overlay;
 

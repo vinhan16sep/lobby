@@ -510,6 +510,14 @@
   transition: all ease-in-out 300ms;
 }
 
+.view-dashboard .dashboard-wrapper .chat-area .chat-box .card .card-body .list-users-wrapper::-webkit-scrollbar-thumb {
+  display: none;
+}
+
+.view-dashboard .dashboard-wrapper .chat-area .chat-box .card .card-body .list-users-wrapper:hover::-webkit-scrollbar-thumb {
+  display: block;
+}
+
 .view-dashboard .dashboard-wrapper .chat-area .chat-box .card .card-body .list-users-wrapper .list-users a.select-user {
   width: 50px;
   height: 50px;

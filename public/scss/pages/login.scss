@@ -1,0 +1,16 @@
+@import '../settings/var';
+@import '../settings/mixin';
+
+.view-login{
+	height: 100%;
+
+	.container{
+		height: 100%;
+
+		@include d-flex(column, center, center);
+
+		.panel{
+			width: 400px;
+		}
+	}
+}
