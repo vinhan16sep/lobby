@@ -41,13 +41,16 @@ class HomeController extends Controller
         }
 
         $eventDays = EventDays::where('is_deleted', 0)->get();
+        $userArr = User::all()->toArray();
+
         return view('home', [
             'userId' => $userId,
             'userName' => $userName,
             'userCompany' => $userCompany,
             'userPosition' => $userPosition,
             'eventDays' => $eventDays,
-            'seminarArr' => $seminarArr
+            'seminarArr' => $seminarArr,
+            'userArr' => $userArr
         ]);
     }
 
