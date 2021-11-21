@@ -1,6 +1,12 @@
 @import '../settings/var';
 @import '../settings/mixin';
 
+.page{
+	.page-header{
+		background-color: var(--primary);
+	}
+}
+
 .user-info-wrapper{
 	min-width: 200px;
 
@@ -225,17 +231,17 @@
 				height: 100%;
 
 				&:first-child{
-					margin-bottom: 1.5rem;
+					margin-bottom: 0.75rem;
 				}
 
 				&.chat-private{
-					height: calc(50% - 1.5rem);
+					height: calc(50% - 0.75rem);
 
 					display: none;
 
 					.card{
 						.card-body{
-							height: calc(100% - 114px);
+							height: calc(100% - 108px);
 						}
 					}
 				}
@@ -243,20 +249,33 @@
 				.card{
 					height: 100%;
 
+					border: 1px solid var(--border);
+					box-shadow: none;
+
 					.card-header{
+						height: 50px;
+
+						padding: 0.75rem;
+
 						h6{
 							font-weight: 600;
+						}
+
+						.btn{
+							&.btn-close-chat{
+								padding: 0;
+							}
 						}
 					}
 
 					.card-body{
-						height: calc(100% - 54px);
+						height: calc(100% - 58px);
 						padding: 0;
 
 						@include d-flex(row, flex-start, stretch);
 
 						.list-users-wrapper{
-							width: 56px;
+							width: 140px;
 
 							border-right: 1px solid var(--border);
 
@@ -266,38 +285,82 @@
 							@include overflow-hidden();
 
 							.list-users{
-								a{
-									&.select-user{
-										width: 50px;
-										height: 50px;
+								.select-user-item{
+									a{
+										&.select-user{
+											padding: 0.5rem;
 
-										@include d-flex(column, center, center);
+											@include d-flex(row, flex-start, center);
+	
+											.img-mask-wrapper{
+												width: 32px;
+												height: 32px;
 
-										position: relative;
+												margin-right: 0.5rem;
 
-										.img-mask{
-											width: 42px;
-											height: 42px;
+												position: relative;
+	
+												.img-mask{
+													width: 100%;
+													height: 100%;
+		
+													border: 1px solid var(--border);
+												}
+		
+												.unread,
+												.status {
+													.circle{
+														width: 12px;
+														height: 12px;
+		
+														background-color: var(--gray-4);
+		
+														@include borderRadius(50%);
+													}
+												}
+		
+												.unread{
+													position: absolute;
+													top: -6px;
+													right: -4px;
+													z-index: 1;
+		
+													display: none;
+		
+													.circle{
+														width: 16px;
+														height: 16px;
+		
+														background-color: var(--gray-2);
+														border: 1px solid var(--white);
+													}
+		
+													.circle{
+														font-size: 0.625rem;
+														color: var(--text-paragraph);
+		
+														@include d-flex(row, center, center);
+													}
+												}
+		
+												.status{
+													position: absolute;
+													bottom: -2px;
+													right: -2px;
+													z-index: 1;
+												}
+											}
 
-											border: 1px solid var(--border);
-										}
+											h6{
+												width: calc(100% - 32px - 0.5rem);
 
-										.status{
-											position: absolute;
-											bottom: 4px;
-											right: 4px;
-											z-index: 1;
+												overflow: hidden;
+												text-overflow: ellipsis;
 
-											.circle{
-												width: 12px;
-												height: 12px;
-
-												background-color: var(--gray-2);
-
-												@include borderRadius(50%);
+												white-space: nowrap;
 											}
 										}
-									}
+									}	
 								}
 							}
 						}
@@ -347,8 +410,8 @@
 								}
 		
 								.item-avatar{
-									width: 40px;
-									height: 40px;
+									width: 32px;
+									height: 32px;
 		
 									margin-right: 0.5rem;
 		
@@ -359,7 +422,7 @@
 								}
 		
 								.item-content{
-									width: calc(100% - 40px - 0.5rem);
+									width: calc(100% - 32px - 0.5rem);
 		
 									@include d-flex(column, flex-start, flex-start);
 		
@@ -395,7 +458,8 @@
 					}
 					
 					.card-footer{
-						height: 54px;
+						height: 58px;
+						padding: 0.75rem;
 
 						border-top: 1px solid var(--border);
 

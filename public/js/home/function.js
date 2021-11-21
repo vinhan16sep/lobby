@@ -1,17 +1,8 @@
 let users = [];
 
-$(document).ready(function () {
-    // for (let i = 0; i < 20; i++) {
-    //     users.push({
-    //         id: parseInt(i + 1),
-    //         name: `User name ${i + 1}`,
-    //         avatar: `https://ui-avatars.com/api/?name=Username`,
-    //         company: `Company ${i + 1}`,
-    //         position: 'Employee',
-    //         status: 1
-    //     });
-    // }
+getListUsers();
 
+$(document).ready(function () {
     $(document)
         .on('click', function (e) {
             if ($(e.target).parents('.user-info-wrapper').length == 0) {
@@ -22,17 +13,26 @@ $(document).ready(function () {
             e.preventDefault();
             e.stopPropagation();
 
+            const _this = this;
+
             $('body').find('.user-info-wrapper.show').remove();
 
-            let offset = $(this).offset();
-            let userIndex = $(this).data('index');
-            let userInfo = users[userIndex];
+            let offset = $(this).parent().offset();
+            let id = $(this).data('user-id');
+            let userInfo = users.find((usr) => {
+                return usr.userId == id;
+            });
 
             if (userInfo) {
+                userInfo.unread = 0;
+
+                $(_this).parent().find('.unread .circle').text(0);
+                $(_this).parent().find('.unread').hide();
+
                 let $card = $('.user-info-wrapper-prepare').clone().show();
                 $card.removeClass('user-info-wrapper-prepare');
 
-                $card.find('.user-avatar img').attr('src', userInfo.avatar != null ? userInfo.avatar : `https://ui-avatars.com/api/?name=${userInfo.name}`);
+                $card.find('.user-avatar img').attr('src', $(_this).find('img').attr('src'));
                 $card.find('.user-avatar img').attr('alt', `Avatar of ${userInfo.name}`);
 
                 $card.find('.user-name').text(userInfo.name);
@@ -73,54 +73,117 @@ $(document).ready(function () {
         $('.chat-private').hide();
     });
 
-    // getListUsers();
-
     initChatBox('.chat-public');
 });
 
+function getListUsers() {
+    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+    $.ajax({
+        type: 'GET',
+        url: '/home/getListUsers',
+        data: {
+            _token: CSRF_TOKEN
+        },
+        success: (res) => {
+            let dataUsers = JSON.parse(res.users);
+
+            if (dataUsers.length > 0) {
+                dataUsers.forEach((usr) => {
+                    users.push({
+                        userId: usr.id,
+                        name: usr.name,
+                        company: usr.company,
+                        position: usr.position,
+                        isAvailable: 0,
+                        unread: 0
+                    });
+                });
+
+                users.sort((a, b) => {
+                    return b.isAvailable - a.isAvailable;
+                });
+
+                renderListUsers();
+            }
+        },
+        error: () => {}
+    });
+}
+
+function reloadListUsers() {
+    users.sort((a, b) => {
+        return b.isAvailable - a.isAvailable;
+    });
+
+    renderListUsers();
+}
+
 function recvListUser(data) {
     if (data.length > 0) {
-        data.forEach((item) => {
-            if (item.userId == currentUser.id) {
-                return;
-            }
+        data.forEach((usr) => {
+            let availableUser = users.find((user) => {
+                return user.userId == usr.userId;
+            });
 
-            users.push(item);
+            availableUser.isAvailable = 1;
         });
 
-        getListUsers();
+        reloadListUsers();
     }
 }
 
 function addUser(data) {
-    users.push(data);
+    let user = users.find((usr) => {
+        return usr.userId == data.userId;
+    });
 
-    getListUsers();
+    user.isAvailable = 1;
+
+    reloadListUsers();
 }
 
 function removeUser(data) {
-    users = users.filter((usr) => {
-        return usr.userId != data.userId;
+    let user = users.find((usr) => {
+        return usr.userId == data.userId;
     });
 
-    getListUsers();
+    user.isAvailable = 0;
+
+    reloadListUsers();
 }
 
-function getListUsers() {
+function renderListUsers() {
     const $wrapper = $('#appendListUsers');
     $wrapper.empty();
 
     if (users.length > 0) {
-        users.forEach((user, index) => {
+        users.forEach((user) => {
+            if (user.userId == currentUser.id) {
+                return;
+            }
+
             let $item = $('.select-user-prepare').clone().show();
             $item.removeClass('select-user-prepare');
 
-            $item.data('index', index);
+            $item.find('.select-user').data('user-id', user.userId);
 
             $item.find('img').attr('src', user.avatar != null ? user.avatar : `https://ui-avatars.com/api/?name=${user.name}`);
             $item.find('img').attr('alt', `Avatar of ${user.name}`);
 
-            $item.find('.circle').addClass('bg-success');
+            $item.find('h6').text(user.name);
+
+            if (user.isAvailable) {
+                $item.find('.status .circle').addClass('bg-success');
+            }
+
+            if (user.unread > 0) {
+                $item.find('.unread .circle').text(user.unread);
+                $item.find('.unread').show();
+            } else {
+                $item.find('.unread .circle').text(0);
+                $item.find('.unread').hide();
+            }
 
             $wrapper.append($item);
         });
@@ -128,6 +191,11 @@ function getListUsers() {
 }
 
 function initChatBox(wrapper) {
+    $(wrapper).find('.append-message').empty();
+
+    // LOAD CHAT LOGS HERE
+    // Do something...
+
     $(wrapper)
         .find('.input-message')
         .on('keyup', function (e) {
@@ -184,8 +252,6 @@ function sendChatMessage(wrapper) {
     let $span = $(`<p>${message}</p>`);
     $span.appendTo($append.find('.chat-item.chat-item-mine:last-child').find('.content-chat'));
 
-    console.log(recvId);
-
     if (typeof recvId == 'undefined') {
         sendGlobalMessage(message);
     } else {
@@ -217,13 +283,27 @@ function receiveChatMessage(wrapper, data) {
     });
 
     if (user) {
-        if (wrapper == '.chat-private' && !$(wrapper).is(':visible')) {
-            $(wrapper).find('h6').text(user.name);
-            $(wrapper).data('user-id', data.id);
-            $(wrapper).parent().addClass('chat-area-collapsed');
-            $(wrapper).show();
+        if (wrapper == '.chat-private') {
+            if ($(wrapper).is(':visible') && $(wrapper).data('user-id') != userId) {
+                $('#appendListUsers')
+                    .find('.select-user-item')
+                    .each(function () {
+                        if ($(this).find('a.select-user').data('user-id') == userId) {
+                            user.unread++;
 
-            initChatBox('.chat-private');
+                            $(this).find('.unread .circle').text(user.unread);
+                            $(this).find('.unread').show();
+                        }
+                    });
+                return;
+            } else {
+                $(wrapper).find('h6').text(user.name);
+                $(wrapper).data('user-id', data.id);
+                $(wrapper).parent().addClass('chat-area-collapsed');
+                $(wrapper).show();
+
+                initChatBox('.chat-private');
+            }
         }
 
         let userAvatar = user.avatar != null ? user.avatar : `https://ui-avatars.com/api/?name=${user.name}`;

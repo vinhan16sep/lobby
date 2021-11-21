@@ -41,7 +41,7 @@ class HomeController extends Controller
         }
 
         $eventDays = EventDays::where('is_deleted', 0)->get();
-        $userArr = User::all()->toArray();
+        $userArr = User::all()->toJson();
 
         return view('home', [
             'userId' => $userId,
@@ -50,8 +50,14 @@ class HomeController extends Controller
             'userPosition' => $userPosition,
             'eventDays' => $eventDays,
             'seminarArr' => $seminarArr,
-            'userArr' => $userArr
+            'userArr' => json_encode($userArr)
         ]);
+    }
+
+    public function getListUsers(){
+        $users = User::all()->toJson();
+
+        return response()->json(['users'=>$users]);
     }
 
     public function dashboard() {

@@ -9,6 +9,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @yield('meta')
 
+    <link rel="icon" href="{{ asset('img/favicon.ico') }}" type="image/x-icon">
+
     <title>
         @yield('title')
     </title>
@@ -26,7 +28,7 @@
             <header>
                 <div class="header-brand">
                     <a href="{{ route('home') }}">
-                        <img src="{{ asset('img/logo.png') }}" alt="Logo">
+                        <img src="{{ asset('img/logo_w.svg') }}" alt="Logo">
                     </a>
                 </div>
 
@@ -36,19 +38,19 @@
 
                 <div class="header-user">
                     @if (Auth::guest())
-                        <a href="{{ route('login') }}" class="btn">
+                        {{-- <a href="{{ route('login') }}" class="btn">
                             Login
                         </a>
 
                         <a href="{{ route('register') }}" class="btn btn-primary">
                             Register
-                        </a>
+                        </a> --}}
                     @else
                         <div class="dropdown">
                             <button class="btn dropdown-toggle" data-bs-toggle="dropdown" type="button">
                                 <div class="user-info">
                                     <div class="img-mask img-mask-circle">
-                                        <img src="https://images.unsplash.com/photo-1558507652-2d9626c4e67a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80" alt="User Avatar">
+                                        <img src="https://ui-avatars.com/api/?name={{ Auth::user()->name }}" alt="Avatar of {{ Auth::user()->name }}">
                                     </div>
             
                                     <h6 class="subtitle-md">
@@ -84,16 +86,38 @@
 
         <div class="page-footer">
             <footer>
-                <p class="p-sm">
-                    <b>Company Info 1:</b> Info
+                <h6 class="subtitle-sm">
+                    © HIỆP HỘI PHẦN MỀM & DỊCH VỤ CNTT VIỆT NAM (VINASA)
+                </h6>
+
+                <p>
+                    <a href="mailto:contact@vinasa.org.vn">
+                        Email: contact@vinasa.org.vn
+                    </a>
+                    | 
+                    <a href="https://www.vinasa.org.vn" target="_blank">
+                        Website: www.vinasa.org.vn
+                    </a>
+                </p>
+
+                <p>
+                    Trụ sở chính:
                 </p>
 
                 <p class="p-sm">
-                    <b>Company Info 2:</b> Info
+                    Tầng 11, tòa nhà Cung Trí thức thành phố, 01 Tôn Thất Thuyết, Cầu Giấy, Hà Nội
+                    <br>
+                    Điện thoại: (024) 3577 2336 - 3577 2338; Fax: (024) 3577 2337
+                </p>
+                
+                <p>
+                    Văn phòng Tp. Hồ Chí Minh:
                 </p>
 
                 <p class="p-sm">
-                    <b>Company Info 3:</b> Info
+                    Tầng 4, Tòa nhà QTSC, 97-101 Nguyễn Công Trứ, P. Nguyễn Thái Bình, Q. 1, TP.HCM
+                    <br>
+                    Điện thoại: (028) 3821 2001
                 </p>
             </footer>
         </div>

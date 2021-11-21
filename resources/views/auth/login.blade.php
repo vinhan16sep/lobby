@@ -1,5 +1,12 @@
 @extends('layouts.app')
 
+@section('meta')
+@endsection
+
+@section('title')
+	Home
+@endsection
+
 @section('view')
     <div class="view-home" style="background-image: url('https://images.unsplash.com/photo-1551818255-e6e10975bc17?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1373&q=80')">
         <div class="overlay">
@@ -34,7 +41,7 @@
                                 @endif
                             </div>
     
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
                                     <div class="checkbox">
                                         <label>
@@ -42,17 +49,17 @@
                                         </label>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
     
                             <div class="form-group">
-                                <div class="col-md-8 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary">
+                                <div class="col-md-12">
+                                    <button class="btn btn-block btn-primary" type="submit">
                                         Login
                                     </button>
     
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                    {{-- <a class="btn btn-link" href="{{ route('password.request') }}">
                                         Forgot Your Password?
-                                    </a>
+                                    </a> --}}
                                 </div>
                             </div>
                         </form>
