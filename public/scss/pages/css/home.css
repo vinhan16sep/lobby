@@ -196,29 +196,43 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
+  -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
 }
 
+.page .page-footer footer h6,
 .page .page-footer footer p {
   color: var(--white);
 }
 
-.page .page-footer footer p:not(:first-child) {
-  margin-left: 1.5rem;
+.page .page-footer footer h6 {
+  margin-bottom: 0.5rem;
+}
+
+.page .page-footer footer p {
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.page .page-footer footer p a {
+  font-size: 0.875rem;
+  color: var(--white);
 }
 
 .view-home {
   height: 100%;
   position: relative;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .view-home .overlay {
@@ -253,107 +267,11 @@
   padding: 1.5rem 1.5rem 2rem;
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 0.5rem;
+  -webkit-transform: translate(0, -4rem);
+  transform: translate(0, -4rem);
 }
 
-.view-home > .row {
-  height: 100%;
-}
-
-.view-home > .row > div {
-  height: 100%;
-}
-
-.view-home > .row > div .cover {
+.view-home .overlay .panel .panel-body form .form-group > div .btn.btn-block {
   width: 100%;
-  height: 100%;
-}
-
-.view-home > .row > div .cover .img-mask {
-  width: 100%;
-  height: 100%;
-}
-
-.view-home > .row > div .form-login {
-  width: 100%;
-  height: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-.view-home > .row > div .form-login .panel {
-  width: 400px;
-}
-
-.view-home .overlay {
-  width: 100%;
-  height: 100%;
-  background-color: var(--bg-bw-rv-alpha-50);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  z-index: 1;
-  -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-}
-
-.view-home .overlay .container {
-  height: calc(100% - 50px);
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
-}
-
-.view-home .overlay .container h1 {
-  font-family: 'Roboto Condensed', sans-serif;
-  font-weight: 700;
-  color: var(--white);
-}
-
-.view-home .overlay .links {
-  height: 50px;
-  padding: 0 1.5rem;
-  margin-top: auto;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-.view-home .overlay .links a {
-  color: var(--white);
-}
-
-.view-home .overlay .links a:not(:last-child) {
-  margin-right: 0.75rem;
 }
 /*# sourceMappingURL=home.css.map */

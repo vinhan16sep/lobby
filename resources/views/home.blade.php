@@ -1,6 +1,5 @@
 @extends('layouts.app')
 
-
 @section('meta')
 @endsection
 
@@ -167,15 +166,27 @@
 					</div>
 				</div>
 
-				<a href="#" class="select-user select-user-prepare" style="display: none">
-					<div class="img-mask img-mask-circle">
-						<img src="" alt="">
-					</div>
+				<div class="select-user-item select-user-prepare" style="display: none">
+					<a href="#" class="select-user">
+						<div class="img-mask-wrapper">
+							<div class="img-mask img-mask-circle">
+								<img src="" alt="">
+							</div>
+		
+							<div class="unread">
+								<div class="circle">
+									1
+								</div>
+							</div>
+		
+							<div class="status">
+								<div class="circle"></div>
+							</div>
+						</div>
 
-					<div class="status">
-						<div class="circle"></div>
-					</div>
-				</a>
+						<h6 class="subtitle-sm"></h6>
+					</a>
+				</div>
 			</div>
 		</div>
 	</div>

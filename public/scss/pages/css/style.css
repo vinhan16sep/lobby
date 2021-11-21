@@ -240,6 +240,10 @@ body {
           align-items: center;
 }
 
+.page .page-header header .header-user .dropdown .btn.dropdown-toggle:after {
+  border-top-color: var(--white);
+}
+
 .page .page-header header .header-user .dropdown .btn .user-info {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -257,14 +261,16 @@ body {
 }
 
 .page .page-header header .header-user .dropdown .btn .user-info .img-mask {
-  width: 38px;
-  height: 38px;
+  width: 34px;
+  height: 34px;
   margin-right: 0.5rem;
   border: 1px solid var(--border);
 }
 
 .page .page-header header .header-user .dropdown .btn h6 {
   max-width: 130px;
+  font-weight: 600;
+  color: var(--white);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

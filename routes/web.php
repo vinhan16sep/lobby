@@ -20,8 +20,12 @@ Auth::routes();
 
 Route::get('/chat', 'HomeController@chat');
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/home/addToWishlist', 'HomeController@addToWishlist')->name('home.addToWishlist');
+Route::prefix('home')->group(function () {
+    Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/addToWishlist', 'HomeController@addToWishlist')->name('home.addToWishlist');
+    Route::get('/getListUsers', 'HomeController@getListUsers');
+});
+
 Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard');
 Route::get('/users/logout', 'Auth\LoginController@userLogout')->name('user.logout');
 

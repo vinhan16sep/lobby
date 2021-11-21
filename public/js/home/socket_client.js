@@ -34,7 +34,7 @@ $().ready(() => {
     });
 
     socket.on(SocketMessageType.RECV_MESSAGE, (data) => {
-        console.log(data);
+        console.log('recv', data);
 
         let message = {
             id: parseInt(data.sender),

@@ -162,6 +162,10 @@
   --color-main-nav-link:                          var(--text-paragraph);
 }
 
+.page .page-header {
+  background-color: var(--primary);
+}
+
 .user-info-wrapper {
   min-width: 200px;
   position: absolute;
@@ -445,28 +449,40 @@
 }
 
 .view-dashboard .dashboard-wrapper .chat-area .chat-box:first-child {
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.75rem;
 }
 
 .view-dashboard .dashboard-wrapper .chat-area .chat-box.chat-private {
-  height: calc(50% - 1.5rem);
+  height: calc(50% - 0.75rem);
   display: none;
 }
 
 .view-dashboard .dashboard-wrapper .chat-area .chat-box.chat-private .card .card-body {
-  height: calc(100% - 114px);
+  height: calc(100% - 108px);
 }
 
 .view-dashboard .dashboard-wrapper .chat-area .chat-box .card {
   height: 100%;
+  border: 1px solid var(--border);
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.view-dashboard .dashboard-wrapper .chat-area .chat-box .card .card-header {
+  height: 50px;
+  padding: 0.75rem;
 }
 
 .view-dashboard .dashboard-wrapper .chat-area .chat-box .card .card-header h6 {
   font-weight: 600;
 }
 
+.view-dashboard .dashboard-wrapper .chat-area .chat-box .card .card-header .btn.btn-close-chat {
+  padding: 0;
+}
+
 .view-dashboard .dashboard-wrapper .chat-area .chat-box .card .card-body {
-  height: calc(100% - 54px);
+  height: calc(100% - 58px);
   padding: 0;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -484,7 +500,7 @@
 }
 
 .view-dashboard .dashboard-wrapper .chat-area .chat-box .card .card-body .list-users-wrapper {
-  width: 56px;
+  width: 140px;
   border-right: 1px solid var(--border);
   overflow-x: hidden;
   overflow-y: overlay;
@@ -518,43 +534,89 @@
   display: block;
 }
 
-.view-dashboard .dashboard-wrapper .chat-area .chat-box .card .card-body .list-users-wrapper .list-users a.select-user {
-  width: 50px;
-  height: 50px;
+.view-dashboard .dashboard-wrapper .chat-area .chat-box .card .card-body .list-users-wrapper .list-users .select-user-item a.select-user {
+  padding: 0.5rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
+  -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.view-dashboard .dashboard-wrapper .chat-area .chat-box .card .card-body .list-users-wrapper .list-users .select-user-item a.select-user .img-mask-wrapper {
+  width: 32px;
+  height: 32px;
+  margin-right: 0.5rem;
+  position: relative;
+}
+
+.view-dashboard .dashboard-wrapper .chat-area .chat-box .card .card-body .list-users-wrapper .list-users .select-user-item a.select-user .img-mask-wrapper .img-mask {
+  width: 100%;
+  height: 100%;
+  border: 1px solid var(--border);
+}
+
+.view-dashboard .dashboard-wrapper .chat-area .chat-box .card .card-body .list-users-wrapper .list-users .select-user-item a.select-user .img-mask-wrapper .unread .circle,
+.view-dashboard .dashboard-wrapper .chat-area .chat-box .card .card-body .list-users-wrapper .list-users .select-user-item a.select-user .img-mask-wrapper .status .circle {
+  width: 12px;
+  height: 12px;
+  background-color: var(--gray-4);
+  border-radius: 50%;
+}
+
+.view-dashboard .dashboard-wrapper .chat-area .chat-box .card .card-body .list-users-wrapper .list-users .select-user-item a.select-user .img-mask-wrapper .unread {
+  position: absolute;
+  top: -6px;
+  right: -4px;
+  z-index: 1;
+  display: none;
+}
+
+.view-dashboard .dashboard-wrapper .chat-area .chat-box .card .card-body .list-users-wrapper .list-users .select-user-item a.select-user .img-mask-wrapper .unread .circle {
+  width: 16px;
+  height: 16px;
+  background-color: var(--gray-2);
+  border: 1px solid var(--white);
+}
+
+.view-dashboard .dashboard-wrapper .chat-area .chat-box .card .card-body .list-users-wrapper .list-users .select-user-item a.select-user .img-mask-wrapper .unread .circle {
+  font-size: 0.625rem;
+  color: var(--text-paragraph);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  position: relative;
 }
 
-.view-dashboard .dashboard-wrapper .chat-area .chat-box .card .card-body .list-users-wrapper .list-users a.select-user .img-mask {
-  width: 42px;
-  height: 42px;
-  border: 1px solid var(--border);
-}
-
-.view-dashboard .dashboard-wrapper .chat-area .chat-box .card .card-body .list-users-wrapper .list-users a.select-user .status {
+.view-dashboard .dashboard-wrapper .chat-area .chat-box .card .card-body .list-users-wrapper .list-users .select-user-item a.select-user .img-mask-wrapper .status {
   position: absolute;
-  bottom: 4px;
-  right: 4px;
+  bottom: -2px;
+  right: -2px;
   z-index: 1;
 }
 
-.view-dashboard .dashboard-wrapper .chat-area .chat-box .card .card-body .list-users-wrapper .list-users a.select-user .status .circle {
-  width: 12px;
-  height: 12px;
-  background-color: var(--gray-2);
-  border-radius: 50%;
+.view-dashboard .dashboard-wrapper .chat-area .chat-box .card .card-body .list-users-wrapper .list-users .select-user-item a.select-user h6 {
+  width: calc(100% - 32px - 0.5rem);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .view-dashboard .dashboard-wrapper .chat-area .chat-box .card .card-body .chat-append {
@@ -669,8 +731,8 @@
 }
 
 .view-dashboard .dashboard-wrapper .chat-area .chat-box .card .card-body .chat-append .chat-item .item-avatar {
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   margin-right: 0.5rem;
 }
 
@@ -680,7 +742,7 @@
 }
 
 .view-dashboard .dashboard-wrapper .chat-area .chat-box .card .card-body .chat-append .chat-item .item-content {
-  width: calc(100% - 40px - 0.5rem);
+  width: calc(100% - 32px - 0.5rem);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -730,7 +792,8 @@
 }
 
 .view-dashboard .dashboard-wrapper .chat-area .chat-box .card .card-footer {
-  height: 54px;
+  height: 58px;
+  padding: 0.75rem;
   border-top: 1px solid var(--border);
 }
 
