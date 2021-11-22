@@ -9,7 +9,6 @@ var UserConnection = require("./UserConnection.js");
 class UsersWrapper {
     /**
      * Constructor
-     * @param {object} options
      */
     constructor() {
         this.localStorage = {};

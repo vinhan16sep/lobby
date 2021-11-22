@@ -5,4 +5,6 @@
 	"SSL_KEY_PATH":"C:/ssl/all_private.key",
 	"SSL_CERT_PATH":"C:/ssl/all_certificate.crt",
 	"SOCKET_PRIVATE_KEY":"j9j43kbb7y8N8TP",
+	"MYSQL_URL":"mysql://root@localhost:3306/lobby_db",
+	"TMP_MSG_NUM":"100"
 }

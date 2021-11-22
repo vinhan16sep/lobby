@@ -12,4 +12,4 @@ socket_server/node_modules
 socket_server/package-lock.json
 socket_server/log4js-config.json
 socket_server/Setting
-socket_server/logs
+socket_server/logs*

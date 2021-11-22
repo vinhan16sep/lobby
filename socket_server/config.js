@@ -17,6 +17,8 @@ class Config {
             this.ssl_cert = "";
         }
         this.socketPrivateKey = json.SOCKET_PRIVATE_KEY;
+        this.mysqlUrl = json.MYSQL_URL;
+        this.tempLogMessageNum = parseInt(json.TMP_MSG_NUM, 10);
     }
 }
 
