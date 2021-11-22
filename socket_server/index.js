@@ -163,7 +163,7 @@ io.sockets.on("connection", function (socket) {
 //API
 /** catch 404 and forward to error handler */
 
-const messageAPI = require("./routes/messageAPI")(dbWrapper, logger);
+const messageAPI = require("./routes/messageAPI")(dbWrapper, usersWrapper, logger);
 app.use("/message", messageAPI);
 app.use("*", (req, res) => {
     return res.status(404).json({
