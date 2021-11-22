@@ -11,18 +11,70 @@ const router = express.Router();
  */
 module.exports = function (dbWrapper, usersWrapper, logger) {
     //PARAMS: timestamp(n)
-    router.get("/getGlobalMessage", function (req, res) {
-        console.log(req);
-        res.send({ response: "TEST getGlobalMessage" }).status(200);
+    router.get("/getGlobalMessage", async function (req, res) {
+        // console.log(req.query);
+        let paramUserId = req.query.userId;
+        let paramSocketId = req.query.socketId;
+        let user = await new Promise((resolve) => {
+            usersWrapper.getUser(paramUserId, (user) => {
+                resolve(user);
+            });
+        });
+        if (!user || user.socketId != paramSocketId) {
+            //unauthorized
+            res.send({ response: "unauthorized" }).status(403);
+            return;
+        }
+        // authorized
+        let paramTime = req.query.time;
+        if (!paramTime) {
+            paramTime = Date.now();
+        }
+
+        let result = await dbWrapper.getGlobalMessage(paramTime);
+        res.send({ response: result }).status(200);
     });
     //PARAMS: user
-    router.get("/getMessage", function (req, res) {
-        console.log(req);
-        res.send({ response: "TEST getMessage" }).status(200);
+    router.get("/getMessage", async function (req, res) {
+        let paramUserId = req.query.userId;
+        let paramSocketId = req.query.socketId;
+        let user = await new Promise((resolve) => {
+            usersWrapper.getUser(paramUserId, (user) => {
+                resolve(user);
+            });
+        });
+        if (!user || user.socketId != paramSocketId) {
+            //unauthorized
+            res.send({ response: "unauthorized" }).status(403);
+            return;
+        }
+        // authorized
+        let userPartner = req.query.userPartner;
+        let paramTime = req.query.time;
+        if (!paramTime) {
+            paramTime = Date.now();
+        }
+
+        let result = await dbWrapper.getMessage(paramUserId, userPartner, paramTime);
+        res.send({ response: result }).status(200);
     });
-    router.post("/setReadMessage", function (req, res) {
-        console.log(req);
-        res.send({ response: "TEST setReadMessage" }).status(200);
+    router.post("/setReadMessage", async function (req, res) {
+        let paramUserId = req.query.userId;
+        let paramSocketId = req.query.socketId;
+        let user = await new Promise((resolve) => {
+            usersWrapper.getUser(paramUserId, (user) => {
+                resolve(user);
+            });
+        });
+        if (!user || user.socketId != paramSocketId) {
+            //unauthorized
+            res.send({ response: "unauthorized" }).status(403);
+            return;
+        }
+        // authorized
+        let userPartner = req.query.userPartner;
+        dbWrapper.setReadMessage(paramUserId, userPartner);
+        res.send({ response: "Success" }).status(200);
     });
     return router;
 };

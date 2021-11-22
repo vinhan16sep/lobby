@@ -28,6 +28,25 @@ class DatabaseWrapper {
 
         if (this.temporaryLogs.length >= this.tempLogMessageNum) {
             //TODO: add message list to DB and empty temp list
+
+            let insertArr = [];
+            this.temporaryLogs.forEach(function(item) {
+                let toUser = 0;
+                if (item.toUser) {
+                    toUser = parseInt(item.toUser);
+                }
+                insertArr.push([parseInt(item.fromUser), toUser, item.content, item.time, item.read]);
+            });
+            let query = `INSERT INTO chat_logs(from_user, to_user, message, created_at, read)  VALUES ? `;
+            // execute the insert statment
+            this.dbConnection.query(query, [insertArr], (err, results) => {
+                if (err) {
+                    return console.error(err.message);
+                }
+                this.temporaryLogs = [];
+                logger.info("SERVICE", "MYSQL", "", "Row inserted " + results.affectedRows);
+            });
+            // connection.end();
         }
     }
 
@@ -35,7 +54,7 @@ class DatabaseWrapper {
      *
      * @param {Number} timestamp nullable, if timestamp is null, get newest message
      */
-    getGlobalMessage(timestamp) {
+    async getGlobalMessage(timestamp) {
         var returnMessage = this.temporaryLogs.filter((m) => {
             if (m.toUser) {
                 return;
@@ -46,8 +65,35 @@ class DatabaseWrapper {
                 return true;
             }
         });
-        //TODO: get 10 more message in db if has depend on timestamp (if null, get 10 newest message)
-        return returnMessage;
+
+        if (timestamp) {
+            timestamp = Number(timestamp);
+        } else {
+            timestamp = Date.now();
+        }
+
+        let sql = 'SELECT * FROM chat_logs WHERE to_user = 0 AND created_at <= ? ORDER BY created_at DESC LIMIT 10';
+        let resultDB = await new Promise((resolve) => {
+            this.dbConnection.query(sql, [timestamp], function (err, result) {
+                if (err) throw err;
+                resolve(result);
+              });
+        });
+        if (resultDB.length) {
+            resultDB.forEach(function(item) {
+                returnMessage.push({
+                    fromUser: item.from_user,
+                    toUser: 0,
+                    content: item.message,
+                    time: item.created_at,
+                    read: item.read
+                });
+            });
+        }
+
+        return returnMessage.sort(function(a, b) {
+            return b.time - a.time;
+        });
     }
 
     /**
@@ -56,7 +102,7 @@ class DatabaseWrapper {
      * @param {*} toUser  to User Id
      * @param {*} timestamp query time (use when using DB to get 10 nearest message)
      */
-    getMessage(user1Id, user2Id, timestamp) {
+    async getMessage(user1Id, user2Id, timestamp) {
         var returnMessage = this.temporaryLogs.filter((m) => {
             if ((m.fromUser == user1Id && m.toUser == user2Id) || (m.fromUser == user2Id && m.toUser == user1Id)) {
                 if (timestamp) {
@@ -68,11 +114,37 @@ class DatabaseWrapper {
                 return false;
             }
         });
-        //TODO: get 10 more message in db if has depend on timestamp (if null, get 10 newest message)
-        return returnMessage;
+        if (timestamp) {
+            timestamp = Number(timestamp);
+        } else {
+            timestamp = Date.now();
+        }
+
+        let sql = 'SELECT * FROM chat_logs WHERE ((to_user = ? AND from_user = ?) OR (to_user = ? AND from_user = ?)) AND created_at <= ? ORDER BY created_at DESC LIMIT 10';
+        let resultDB = await new Promise((resolve) => {
+            this.dbConnection.query(sql, [user1Id, user2Id, user2Id, user1Id, timestamp], function (err, result) {
+                if (err) throw err;
+                resolve(result);
+              });
+        });
+        if (resultDB.length) {
+            resultDB.forEach(function(item) {
+                returnMessage.push({
+                    fromUser: item.from_user,
+                    toUser: 0,
+                    content: item.message,
+                    time: item.created_at,
+                    read: item.read
+                });
+            });
+        }
+
+        return returnMessage.sort(function(a, b) {
+            return b.time - a.time;
+        });
     }
 
-    countUnreadMessage(fromUser, toUser) {
+    async countUnreadMessage(fromUser, toUser) {
         var returnMessage = this.temporaryLogs.filter((m) => {
             if (m.fromUser == fromUser && m.toUser == toUser) {
                 return m.read;
@@ -80,7 +152,24 @@ class DatabaseWrapper {
                 return false;
             }
         });
-        //TODO: get 10 more message in db if has depend on timestamp (if null, get 10 newest message)
+        let sql = 'SELECT * FROM chat_logs WHERE to_user = ? AND from_user = ? AND read = 0';
+        let resultDB = await new Promise((resolve) => {
+            this.dbConnection.query(sql, [toUser, fromUser], function (err, result) {
+                if (err) throw err;
+                resolve(result);
+              });
+        });
+        if (resultDB.length) {
+            resultDB.forEach(function(item) {
+                returnMessage.push({
+                    fromUser: item.from_user,
+                    toUser: 0,
+                    content: item.message,
+                    time: item.created_at,
+                    read: item.read
+                });
+            });
+        }
         return returnMessage;
     }
 
@@ -95,7 +184,11 @@ class DatabaseWrapper {
                 m.read = true;
             }
         });
-        //TODO: set read to message fromUser to toUser
+        let sql = 'UPDATE chat_logs SET read = 1 WHERE to_user = ? AND from_user = ? AND read = 0';
+        this.dbConnection.query(sql, [toUser, fromUser], function (err, result) {
+            if (err) throw err;
+            logger.info("SERVICE", "MYSQL", "", "Row updated " + result.affectedRows);
+        });
     }
 }
 
