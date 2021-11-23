@@ -1,13 +1,14 @@
-var Config = require("./config.js");
-var Logger = require("./Logger.js");
-var express = require("express");
+var Config = require('./config.js');
+var Logger = require('./Logger.js');
+var express = require('express');
+var cors = require('cors');
 var app = express();
-var fs = require("fs");
-var UsersWrapper = require("./UsersWrapper.js");
-var os = require("os");
-var socketType = require("./SocketMessageType.js");
-const UserConnection = require("./UserConnection.js");
-var DatabaseWrapper = require("./DatabaseWrapper.js");
+var fs = require('fs');
+var UsersWrapper = require('./UsersWrapper.js');
+var os = require('os');
+var socketType = require('./SocketMessageType.js');
+const UserConnection = require('./UserConnection.js');
+var DatabaseWrapper = require('./DatabaseWrapper.js');
 
 var cfg = new Config();
 
@@ -18,13 +19,13 @@ var logger = new Logger(cfg.debug);
 logger.hostAddress = hostAddress;
 
 var onSocketStarted = function () {
-    logger.info("PLAIN", "", "", "******************************************");
-    logger.info("PLAIN", "", "", "*                                        *");
-    logger.info("PLAIN", "", "", "*          SOCKET SERVER STARTED         *");
-    logger.info("PLAIN", "", "", `* AT HOST: ${hostAddress.padStart(29, " ")} *`);
-    logger.info("PLAIN", "", "", "******************************************");
+    logger.info('PLAIN', '', '', '******************************************');
+    logger.info('PLAIN', '', '', '*                                        *');
+    logger.info('PLAIN', '', '', '*          SOCKET SERVER STARTED         *');
+    logger.info('PLAIN', '', '', `* AT HOST: ${hostAddress.padStart(29, ' ')} *`);
+    logger.info('PLAIN', '', '', '******************************************');
 };
-var httpServ = cfg.ssl ? require("https") : require("http");
+var httpServ = cfg.ssl ? require('https') : require('http');
 if (cfg.ssl) {
     httpsServer = httpServ.createServer(
         {
@@ -39,19 +40,19 @@ if (cfg.ssl) {
 
 var dbWrapper = new DatabaseWrapper(cfg.mysqlUrl, cfg.tempLogMessageNum, logger);
 
-var io = require("socket.io")(httpsServer);
+var io = require('socket.io')(httpsServer);
 var usersWrapper = new UsersWrapper();
-io.set("heartbeat timeout", 60000);
-io.set("heartbeat interval", 25000);
+io.set('heartbeat timeout', 60000);
+io.set('heartbeat interval', 25000);
 
-io.sockets.on("connection", function (socket) {
+io.sockets.on('connection', function (socket) {
     var userId = null;
-    logger.info("RECV", "CONNECTION", socket.id, "CONNECTED");
+    logger.info('RECV', 'CONNECTION', socket.id, 'CONNECTED');
     socket.on(socketType.JOIN, (message) => {
         try {
-            logger.info("RECV", "JOIN", socket.id, JSON.stringify(message));
+            logger.info('RECV', 'JOIN', socket.id, JSON.stringify(message));
             if (!message.userId) {
-                logger.info("SERVICE", "JOIN", socket.id, "invalid message");
+                logger.info('SERVICE', 'JOIN', socket.id, 'invalid message');
                 return;
             }
             userId = Number(message.userId);
@@ -59,7 +60,7 @@ io.sockets.on("connection", function (socket) {
                 if (!user) {
                     var newUser = new UserConnection(userId, socket.id);
 
-                    logger.info("INFO", "JOIN", socket.id, JSON.stringify(message));
+                    logger.info('INFO', 'JOIN', socket.id, JSON.stringify(message));
                     usersWrapper.setUserData(userId, newUser);
                     var joinMess = {
                         userId: newUser.userId
@@ -86,15 +87,15 @@ io.sockets.on("connection", function (socket) {
             });
             //todo: send list online user
         } catch (error) {
-            logger.error("EXCEPTION", "JOIN", socket.id, error.toString());
+            logger.error('EXCEPTION', 'JOIN', socket.id, error.toString());
         }
     });
 
     socket.on(socketType.SEND_MESSAGE, (message) => {
         try {
-            logger.info("RECV", "SEND_MESSAGE", socket.id, JSON.stringify(message));
+            logger.info('RECV', 'SEND_MESSAGE', socket.id, JSON.stringify(message));
             if (!userId) {
-                logger.info("SERVIVE", "SEND_MESSAGE", socket.id, "userId invalid");
+                logger.info('SERVIVE', 'SEND_MESSAGE', socket.id, 'userId invalid');
                 return;
             }
             var time = Date.now();
@@ -129,43 +130,43 @@ io.sockets.on("connection", function (socket) {
                 });
                 io.emit(socketType.RECV_MESSAGE, m);
             }
-            logger.info("SEND", "RECV_MESSAGE", socket.id, JSON.stringify(m));
+            logger.info('SEND', 'RECV_MESSAGE', socket.id, JSON.stringify(m));
         } catch (error) {
-            logger.error("EXCEPTION", "SEND_MESSAGE", socket.id, error.toString());
+            logger.error('EXCEPTION', 'SEND_MESSAGE', socket.id, error.toString());
         }
     });
 
-    socket.on("disconnect", function (reason) {
+    socket.on('disconnect', function (reason) {
         try {
-            logger.info("RECV", "CONNECTION", socket.id, "DISCONNECTED Reason:", reason);
+            logger.info('RECV', 'CONNECTION', socket.id, 'DISCONNECTED Reason:', reason);
             if (!userId) {
-                logger.info("SERVIVE", "disconnect", socket.id, "userId invalid");
+                logger.info('SERVIVE', 'disconnect', socket.id, 'userId invalid');
                 return;
             }
 
             usersWrapper.getUser(userId, (user) => {
                 if (!user) {
-                    logger.info("SERVIVE", "HANDLE DISCONNECT", socket.id, `user ${userId} not found`);
+                    logger.info('SERVIVE', 'HANDLE DISCONNECT', socket.id, `user ${userId} not found`);
                     return;
                 }
                 io.emit(socketType.USER_LEAVE, {
                     userId: user.userId
                 });
-                logger.info("INFO", "DISCONNECT", socket.id, "");
+                logger.info('INFO', 'DISCONNECT', socket.id, '');
                 usersWrapper.deleteUser(userId);
             });
         } catch (error) {
-            logger.error("EXCEPTION", "disconnect", socket.id, error.toString());
+            logger.error('EXCEPTION', 'disconnect', socket.id, error.toString());
         }
     });
 });
 
 //API
 /** catch 404 and forward to error handler */
-
-const messageAPI = require("./routes/messageAPI")(dbWrapper, usersWrapper, logger);
-app.use("/message", messageAPI);
-app.use("*", (req, res) => {
+app.use(cors());
+const messageAPI = require('./routes/messageAPI')(dbWrapper, usersWrapper, logger);
+app.use('/message', messageAPI);
+app.use('*', (req, res) => {
     return res.status(404).json({
         success: false,
         message: "API endpoint doesn't exist"

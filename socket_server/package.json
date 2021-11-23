@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "date-format": "^3.0.0",
     "express": "^4.17.1",
     "log4js": "^6.1.2",

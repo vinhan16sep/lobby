@@ -40,84 +40,87 @@
 			</div>
 
 			<div class="list-events">
-				<ul class="nav nav-tabs" id="eventTabs" role="tablist">
-
-					@foreach ($eventDays as $dKey => $eventDay)
-						<li class="nav-item" role="presentation">
-							<button class="nav-link {{ $dKey == 0 ? 'active' : '' }}" id="btnTab_{{ $dKey + 1  }}"
-							        data-bs-toggle="tab" data-bs-target="#tab_{{ $dKey + 1  }}"
-							        type="button" role="tab" aria-controls="tab_{{ $dKey + 1  }}" aria-selected="true">
-								{{ $eventDay->event_date  }}
-							</button>
-						</li>
-					@endforeach
-				</ul>
-				<div class="tab-content" id="eventTabsContent">
-					@foreach ($eventDays as $dKey => $eventDay)
-						<div class="tab-pane fade {{ $dKey == 0 ? 'show active' : '' }}" id="tab_{{ $dKey + 1  }}"
-						     role="tabpanel" aria-labelledby="btnTab_{{ $dKey + 1  }}">
-							<div class="event-schedule">
-								@if ($eventDay->eventTimes)
-									@foreach ($eventDay->eventTimes as $tKey => $eventTime)
-										<div class="event-item">
-											<div class="event-time">
-												<h6 class="subtitle-md">
-													{{ $eventTime->start_time }} - {{ $eventTime->end_time }}
-												</h6>
-											</div>
-											<div class="event-content">
-												@if ($eventTime->seminars)
-													@foreach ($eventTime->seminars as $sKey => $seminar)
-														<div class="item-event">
-															<div class="ratio-wrapper ratio-wrapper-4-3">
-																<div class="overlay">
-																	<h6 class="subtitle-sm">
-																		{{ $seminar->name }}
-																	</h6>
-
-																	<p class="p-sm">
-																		{{ $seminar->description }}
-																	</p>
+				<div class="card">
+					<div class="card-body">
+						<ul class="nav nav-tabs" id="eventTabs" role="tablist">
+							@foreach ($eventDays as $dKey => $eventDay)
+								<li class="nav-item" role="presentation">
+									<button class="nav-link {{ $dKey == 0 ? 'active' : '' }}" id="btnTab_{{ $dKey + 1  }}"
+											data-bs-toggle="tab" data-bs-target="#tab_{{ $dKey + 1  }}"
+											type="button" role="tab" aria-controls="tab_{{ $dKey + 1  }}" aria-selected="true">
+										{{ $eventDay->event_date  }}
+									</button>
+								</li>
+							@endforeach
+						</ul>
+						<div class="tab-content" id="eventTabsContent">
+							@foreach ($eventDays as $dKey => $eventDay)
+								<div class="tab-pane fade {{ $dKey == 0 ? 'show active' : '' }}" id="tab_{{ $dKey + 1  }}"
+									 role="tabpanel" aria-labelledby="btnTab_{{ $dKey + 1  }}">
+									<div class="event-schedule">
+										@if ($eventDay->eventTimes)
+											@foreach ($eventDay->eventTimes as $tKey => $eventTime)
+												<div class="event-item">
+													<div class="event-time">
+														<h6 class="subtitle-md">
+															{{ $eventTime->start_time }} - {{ $eventTime->end_time }}
+														</h6>
+													</div>
+													<div class="event-content">
+														@if ($eventTime->seminars)
+															@foreach ($eventTime->seminars as $sKey => $seminar)
+																<div class="item-event">
+																	<div class="ratio-wrapper ratio-wrapper-4-3">
+																		<div class="overlay">
+																			<h6 class="subtitle-sm">
+																				{{ $seminar->name }}
+																			</h6>
+		
+																			<p class="p-sm">
+																				{{ $seminar->description }}
+																			</p>
+																		</div>
+		
+																		<div class="img-mask">
+																			<img src="{{ asset('uploads/seminars/' . $seminar->image) }}"
+																				 width="300" height="200"
+																				 alt="{{ $seminar->name }}"/>
+																		</div>
+																	</div>
+		
+																	<div class="controls">
+																		@if (!empty($seminarArr) && in_array($seminar->id, $seminarArr))
+																			<button class="btn btn-outline-default"
+																					type="button" disabled>
+																				Followed
+																			</button>
+																		@else
+																			<button class="btn btn-outline-default"
+																					type="button"
+																					onclick="addToWishlist('{{ $seminar->id }}')">
+																				Follow
+																			</button>
+																		@endif
+																		<button class="btn btn-outline-default" type="button">
+																			Detail
+																		</button>
+																		<button class="btn btn-primary" type="button"
+																				onclick="window.open('{{ $seminar->link }}', '_blank')">
+																			Join Event
+																		</button>
+																	</div>
 																</div>
-
-																<div class="img-mask">
-																	<img src="{{ asset('uploads/seminars/' . $seminar->image) }}"
-																	     width="300" height="200"
-																	     alt="{{ $seminar->name }}"/>
-																</div>
-															</div>
-
-															<div class="controls">
-																@if (!empty($seminarArr) && in_array($seminar->id, $seminarArr))
-																	<button class="btn btn-outline-default"
-																	        type="button" disabled>
-																		Followed
-																	</button>
-																@else
-																	<button class="btn btn-outline-default"
-																	        type="button"
-																	        onclick="addToWishlist('{{ $seminar->id }}')">
-																		Follow
-																	</button>
-																@endif
-																<button class="btn btn-outline-default" type="button">
-																	Detail
-																</button>
-																<button class="btn btn-primary" type="button"
-																        onclick="window.open('{{ $seminar->link }}', '_blank')">
-																	Join Event
-																</button>
-															</div>
-														</div>
-													@endforeach
-												@endif
-											</div>
-										</div>
-									@endforeach
-								@endif
-							</div>
+															@endforeach
+														@endif
+													</div>
+												</div>
+											@endforeach
+										@endif
+									</div>
+								</div>
+							@endforeach
 						</div>
-					@endforeach
+					</div>
 				</div>
 			</div>
 
@@ -137,7 +140,7 @@
 							       placeholder="Type something to send...">
 
 							<button class="btn btn-primary btn-send-message" type="button">
-								Send
+								Gửi
 							</button>
 						</div>
 					</div>
@@ -160,7 +163,7 @@
 							       placeholder="Type something to send...">
 
 							<button class="btn btn-primary btn-send-message" type="button">
-								Send
+								Gửi
 							</button>
 						</div>
 					</div>
@@ -198,7 +201,9 @@
 					<p>Bạn đã đăng ký theo dõi hội thảo thành công</p>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+					<button type="button" class="btn btn-default" data-bs-dismiss="modal">
+						Đóng
+					</button>
 				</div>
 			</div>
 
@@ -221,6 +226,6 @@
 			position: '{{ $userPosition }}'
 		};
 	</script>
-	<script src="{{ asset('js/home/function.js') }}"></script>
 	<script src="{{ asset('js/home/socket_client.js') }}"></script>
+	<script src="{{ asset('js/home/function.js') }}"></script>
 @endsection

@@ -100,11 +100,7 @@ function getListUsers() {
                     });
                 });
 
-                users.sort((a, b) => {
-                    return b.isAvailable - a.isAvailable;
-                });
-
-                renderListUsers();
+                reloadListUsers();
             }
         },
         error: () => {}
@@ -120,8 +116,8 @@ function reloadListUsers() {
 }
 
 function recvListUser(data) {
-    if (data.length > 0) {
-        data.forEach((usr) => {
+    if (data.online.length > 0) {
+        data.online.forEach((usr) => {
             let availableUser = users.find((user) => {
                 return user.userId == usr.userId;
             });
@@ -130,6 +126,8 @@ function recvListUser(data) {
         });
 
         reloadListUsers();
+
+        initChatPublic();
     }
 }
 
@@ -190,11 +188,108 @@ function renderListUsers() {
     }
 }
 
+const CHATLOG = {
+    PUBLIC: 0,
+    PRIVATE: 1
+};
+
+function initChatPublic() {
+    getChatLogs(CHATLOG.PUBLIC);
+}
+
+function initChatPrivate() {}
+
+function loadChatDialog(type, data, prepend = false) {
+    console.log(prepend);
+    let $wrapper, $append;
+
+    if (!prepend) {
+        data = data.reverse();
+    }
+
+    if (type == 0) {
+        $wrapper = $('.chat-public');
+        $append = $wrapper.find('.append-message');
+    } else if (type == 1) {
+        $wrapper = $('.chat-private');
+        $append = $wrapper.find('.append-message');
+    }
+
+    $append.find('.chat-loading').remove();
+
+    data.forEach((msg, index) => {
+        let fromUser = users.find((usr) => {
+            return usr.userId == msg.fromUser;
+        });
+
+        let $box = $append.find('.chat-item:last-child');
+
+        let userAvatar = fromUser.avatar != null ? fromUser.avatar : `https://ui-avatars.com/api/?name=${fromUser.name}`;
+
+        let $chatWrap = $(`
+            <div class="chat-item">
+                <div class="item-avatar">
+                    <div class="img-mask img-mask-circle">
+                        <img src="${userAvatar}" alt="Avatar of ${fromUser.name}">
+                    </div>
+                </div>
+
+                <div class="item-content">
+                    <p class="p-name">
+                        ${fromUser.name}
+                    </p>
+
+                    <div class="content-chat"></div>
+                </div>
+            </div>
+        `);
+
+        $chatWrap.data('sender-id', fromUser.userId);
+        $chatWrap.data('time', msg.time);
+
+        if (type == 1) {
+            $chatWrap.find('.item-avatar').remove();
+            $chatWrap.find('.p-name').remove();
+        }
+
+        if (type == 0 && msg.fromUser == currentUser.id) {
+            $chatWrap.find('.item-avatar').remove();
+            $chatWrap.find('.p-name').text('Me');
+        }
+
+        if (msg.fromUser == currentUser.id) {
+            $chatWrap.addClass('chat-item-mine');
+        }
+
+        let prevIndex = 0;
+        if (index > 0) {
+            prevIndex = index - 1;
+        }
+
+        if (prepend) {
+            if (fromUser.userId != data[prevIndex].fromUser) {
+                $append.prepend($chatWrap);
+            }
+        } else {
+            if ($box.length == 0 || fromUser.userId != data[prevIndex].fromUser) {
+                $append.append($chatWrap);
+            }
+        }
+
+        let $span = $(`<p>${msg.content}</p>`);
+
+        if (prepend) {
+            $span.appendTo($append.find('.chat-item:first-child').find('.content-chat'));
+            $append.scrollTop(0);
+        } else {
+            $span.appendTo($append.find('.chat-item:last-child').find('.content-chat'));
+            $append.scrollTop($wrapper.find('.append-message')[0].scrollHeight);
+        }
+    });
+}
+
 function initChatBox(wrapper) {
     $(wrapper).find('.append-message').empty();
-
-    // LOAD CHAT LOGS HERE
-    // Do something...
 
     $(wrapper)
         .find('.input-message')
@@ -209,6 +304,81 @@ function initChatBox(wrapper) {
         .on('click', function () {
             sendChatMessage(wrapper);
         });
+
+    $(wrapper)
+        .find('.append-message')
+        .on('scroll', function () {
+            if ($(wrapper).find('.append-message').scrollTop() == 0) {
+                // $(wrapper).find('.append-message').find('.chat-loading').remove();
+                // $(wrapper).find('.append-message').prepend('<p class="p-overline chat-loading">Loading...</p>');
+
+                let time = $(wrapper).find('.append-message .chat-item:first-child').data('time');
+                let type, id;
+
+                if (wrapper == '.chat-public') {
+                    type = 0;
+                    id = currentUser.id;
+                } else if (wrapper == '.chat-private') {
+                    type = 1;
+                    id = $(wrapper).data('user-id');
+                }
+
+                // console.log(wrapper, time);
+                // return;
+                getChatLogs(type, id, time);
+            }
+        });
+}
+
+function getChatLogs(type, id, time = false) {
+    console.log(time);
+    let chatLogs = [];
+
+    let socketUrl;
+
+    if (typeof socket == 'undefined') {
+        throw new Error('Can not find socket');
+    }
+
+    socketUrl = socket.io.uri;
+
+    let url = `${socketUrl}/message`;
+
+    switch (type) {
+        case 0:
+            url = `${url}/getGlobalMessage`;
+            url = commonFunc.buildUrl(url, 'userId', currentUser.id);
+            break;
+        case 1:
+            url = `${url}/getMessage`;
+            url = commonFunc.buildUrl(url, 'userId', id);
+            break;
+    }
+
+    url = commonFunc.buildUrl(url, 'socketId', socket.id);
+
+    if (time) {
+        url = commonFunc.buildUrl(url, 'time', time);
+    }
+
+    $.ajax({
+        url: url,
+        method: 'GET',
+        dataType: 'json',
+        crossDomain: true,
+        success: function (res) {
+            if (res.response.length > 0) {
+                if (time) {
+                    loadChatDialog(type, res.response, true);
+                } else {
+                    loadChatDialog(type, res.response);
+                }
+            }
+        },
+        error: () => {}
+    });
+
+    return chatLogs;
 }
 
 let blockMessage = false;
@@ -229,6 +399,7 @@ function sendChatMessage(wrapper) {
 
     if (blockMessage) {
         $append.append('<p class="p-overline chat-delay">Please wait for 1 sec for next message</p>');
+        $append.scrollTop($(wrapper).find('.append-message')[0].scrollHeight);
         return;
     }
 
@@ -309,22 +480,22 @@ function receiveChatMessage(wrapper, data) {
         let userAvatar = user.avatar != null ? user.avatar : `https://ui-avatars.com/api/?name=${user.name}`;
 
         let $chatWrap = $(`
-        <div class="chat-item" data-sender-id="${userId}">
-            <div class="item-avatar">
-                <div class="img-mask img-mask-circle">
-                    <img src="${userAvatar}" alt="Avatar of ${user.name}">
+            <div class="chat-item" data-sender-id="${userId}">
+                <div class="item-avatar">
+                    <div class="img-mask img-mask-circle">
+                        <img src="${userAvatar}" alt="Avatar of ${user.name}">
+                    </div>
+                </div>
+
+                <div class="item-content">
+                    <p class="p-name">
+                        ${user.name}
+                    </p>
+
+                    <div class="content-chat"></div>
                 </div>
             </div>
-
-            <div class="item-content">
-                <p class="p-name">
-                    ${user.name}
-                </p>
-
-                <div class="content-chat"></div>
-            </div>
-        </div>
-    `);
+        `);
 
         if (wrapper == '.chat-private') {
             $chatWrap.find('.item-avatar').remove();

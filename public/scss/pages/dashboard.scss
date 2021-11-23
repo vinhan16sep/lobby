@@ -61,7 +61,7 @@
 .view-dashboard{
 	height: 100%;
 
-	padding: 2rem 1.5rem 0;
+	padding: 1rem 1.5rem 0.5rem;
 
 	.dashboard-wrapper{
 		height: 100%;
@@ -71,139 +71,153 @@
 		.list-events,
 		.chat-area{
 			height: 100%;
+
+			padding: 0 0.75rem;
 		}
 
 		.list-events{
 			width: 60%;
 
-			overflow-x: hidden;
-			@include overflow-y();
+			.card{
+				height: 100%;
 
-			.nav {
-				&.nav-tabs{
-					background-color: var(--bg-bw);
+				box-shadow: none;
 
-					@include positionSticky(top, 0, 10);
+				border: 1px solid var(--border);
 
-					.nav-item{
-						.nav-link{
-							&.active{
-								font-weight: 600;
+				.card-body{
+					height: 100%;
+
+					overflow-x: hidden;
+					@include overflow-y();
+
+					.nav {
+						&.nav-tabs{
+							background-color: var(--bg-bw);
+		
+							@include positionSticky(top, 0, 10);
+		
+							.nav-item{
+								.nav-link{
+									&.active{
+										font-weight: 600;
+									}
+								}
 							}
 						}
 					}
-				}
-			}
-
-			.tab-content{
-				.tab-pane{
-					.event-schedule{
-						.event-item{
-							padding: 1.5rem 0.75rem;
-
-							@include d-flex(row, flex-start, flex-start);
-
-							&:not(:last-child){
-								border-bottom: 1px solid var(--border);
-							}
-
-							.event-time{
-								width: 150px;
-
-								padding: 0 0.75rem;
-
-								h6{
-									font-weight: 600;
-								}
-							}
-
-							.event-content{
-								width: calc(100% - 150px);
-
-								@include d-flex(row, flex-start, flex-start);
-
-								.item-event{
-									width: 30%;
-
-									padding: 0 0.75rem;
-
-									&:not(:first-child){
-										&:hover{
+		
+					.tab-content{
+						.tab-pane{
+							.event-schedule{
+								.event-item{
+									padding: 1.5rem 0.75rem;
+		
+									@include d-flex(row, flex-start, flex-start);
+		
+									&:not(:last-child){
+										border-bottom: 1px solid var(--border);
+									}
+		
+									.event-time{
+										width: 150px;
+		
+										padding: 0 0.75rem;
+		
+										h6{
+											font-weight: 600;
+										}
+									}
+		
+									.event-content{
+										width: calc(100% - 150px);
+		
+										@include d-flex(row, flex-start, flex-start);
+		
+										.item-event{
+											width: 30%;
+		
+											padding: 0 0.75rem;
+		
+											&:not(:first-child){
+												&:hover{
+													.controls{
+														opacity: 1;
+													}
+												}
+		
+												.controls{
+													opacity: 0;
+												}
+											}
+		
+											&:hover{
+												.ratio-wrapper{
+													.overlay{
+														opacity: 1;
+		
+														@include transition();
+													}
+												}
+											}
+		
+											.ratio-wrapper{
+												margin-bottom: 0.75rem;
+		
+												.img-mask{
+													@include borderRadius();
+												}
+		
+												.overlay{
+													width: 100%;
+													height: 100%;
+		
+													padding: 0.75rem;
+		
+													background-color: var(--bg-bw-rv-alpha-50);
+		
+													opacity: 0;
+		
+													position: absolute;
+													top: 50%;
+													left: 50%;
+													z-index: 2;
+		
+													@include borderRadius();
+		
+													@include translate(-50%, -50%);
+													@include d-flex(column, flex-end, flex-start);
+		
+													@include transition();
+		
+													h6,
+													p{
+														color: var(--white);
+													}
+		
+													h6{
+														margin-bottom: 0.5rem;
+													}
+		
+													p{
+														@include textWrapper(100%, 2.75rem, 2);
+													}
+												}
+											}
+		
 											.controls{
-												opacity: 1;
-											}
-										}
-
-										.controls{
-											opacity: 0;
-										}
-									}
-
-									&:hover{
-										.ratio-wrapper{
-											.overlay{
-												opacity: 1;
-
-												@include transition();
-											}
-										}
-									}
-
-									.ratio-wrapper{
-										margin-bottom: 0.75rem;
-
-										.img-mask{
-											@include borderRadius();
-										}
-
-										.overlay{
-											width: 100%;
-											height: 100%;
-
-											padding: 0.75rem;
-
-											background-color: var(--bg-bw-rv-alpha-50);
-
-											opacity: 0;
-
-											position: absolute;
-											top: 50%;
-											left: 50%;
-											z-index: 2;
-
-											@include borderRadius();
-
-											@include translate(-50%, -50%);
-											@include d-flex(column, flex-end, flex-start);
-
-											@include transition();
-
-											h6,
-											p{
-												color: var(--white);
-											}
-
-											h6{
-												margin-bottom: 0.5rem;
-											}
-
-											p{
-												@include textWrapper(100%, 2.75rem, 2);
-											}
-										}
-									}
-
-									.controls{
-										@include d-flex(row, flex-start, center);
-
-										.btn{
-											flex: 1 0 auto;
-
-											padding: 0.375rem 0.5rem;
-											font-size: 0.75rem;
-
-											&:not(:last-child){
-												margin-right: 0.5rem;
+												@include d-flex(row, flex-start, center);
+		
+												.btn{
+													flex: 1 0 auto;
+		
+													padding: 0.375rem 0.5rem;
+													font-size: 0.75rem;
+		
+													&:not(:last-child){
+														margin-right: 0.5rem;
+													}
+												}
 											}
 										}
 									}
@@ -217,8 +231,6 @@
 
 		.chat-area{
 			width: 40%;
-
-			padding: 1rem;
 
 			&.chat-area-collapsed{
 				.chat-box{
