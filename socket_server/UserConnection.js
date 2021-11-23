@@ -1,10 +1,7 @@
 class UserConnection {
-    constructor(userId, socketId, name, company, position) {
+    constructor(userId, socketId) {
         this.userId = userId;
         this.socketId = socketId;
-        this.name = name;
-        this.company = company;
-        this.position = position;
     }
 
     static fromJSON(data) {
@@ -13,15 +10,8 @@ class UserConnection {
 
     toJSON() {
         var json = {
-            userId: this.userId,
-            name: this.name
+            userId: this.userId
         };
-        if (this.company) {
-            json.company = this.company;
-        }
-        if (this.position) {
-            json.position = this.position;
-        }
 
         return json;
     }
