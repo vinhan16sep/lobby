@@ -54,35 +54,35 @@ io.sockets.on("connection", function (socket) {
                 logger.info("SERVICE", "JOIN", socket.id, "invalid message");
                 return;
             }
-            userId = message.userId;
-            usersWrapper.getUser(`${userId}`, async (user) => {
+            userId = Number(message.userId);
+            usersWrapper.getUser(userId, async (user) => {
                 if (!user) {
-                    var newUser = new UserConnection(userId, socket.id, message.name || "No name", message.company, message.position);
+                    var newUser = new UserConnection(userId, socket.id);
 
                     logger.info("INFO", "JOIN", socket.id, JSON.stringify(message));
-                    usersWrapper.setUserData(`${userId}`, newUser);
+                    usersWrapper.setUserData(userId, newUser);
                     var joinMess = {
-                        userId: newUser.userId,
-                        name: newUser.name
+                        userId: newUser.userId
                     };
-                    if (message.company) {
-                        joinMess.company = message.company;
-                    }
-                    if (message.position) {
-                        joinMess.position = message.position;
-                    }
                     socket.broadcast.emit(socketType.USER_JOIN, joinMess);
                 } else {
                     user.socketId = socket.id;
                 }
                 var listUser = await usersWrapper.getOnlineUser();
-
-                socket.emit(
-                    socketType.JOIN,
-                    listUser.map((u) => {
+                var unreadAll = await dbWrapper.countUnreadAll(userId);
+                var count = {};
+                unreadAll.forEach((u) => {
+                    if (!count[u.fromUser]) {
+                        count[u.fromUser] = 0;
+                    }
+                    count[u.fromUser]++;
+                });
+                socket.emit(socketType.JOIN, {
+                    online: listUser.map((u) => {
                         return u.toJSON();
-                    })
-                );
+                    }),
+                    unread: count
+                });
             });
             //todo: send list online user
         } catch (error) {
@@ -107,12 +107,12 @@ io.sockets.on("connection", function (socket) {
             if (message.to) {
                 dbWrapper.addMessage({
                     fromUser: userId,
-                    toUser: message.to,
+                    toUser: Number(message.to),
                     content: message.content,
                     time: time,
                     read: false
                 });
-                usersWrapper.getUser(`${message.to}`, (destUser) => {
+                usersWrapper.getUser(message.to, (destUser) => {
                     if (!destUser) {
                         return;
                     }
@@ -143,7 +143,7 @@ io.sockets.on("connection", function (socket) {
                 return;
             }
 
-            usersWrapper.getUser(`${userId}`, (user) => {
+            usersWrapper.getUser(userId, (user) => {
                 if (!user) {
                     logger.info("SERVIVE", "HANDLE DISCONNECT", socket.id, `user ${userId} not found`);
                     return;
@@ -152,7 +152,7 @@ io.sockets.on("connection", function (socket) {
                     userId: user.userId
                 });
                 logger.info("INFO", "DISCONNECT", socket.id, "");
-                usersWrapper.deleteUser(`${userId}`);
+                usersWrapper.deleteUser(userId);
             });
         } catch (error) {
             logger.error("EXCEPTION", "disconnect", socket.id, error.toString());
@@ -168,7 +168,7 @@ app.use("/message", messageAPI);
 app.use("*", (req, res) => {
     return res.status(404).json({
         success: false,
-        message: "API endpoint doesnt exist"
+        message: "API endpoint doesn't exist"
     });
 });
 
