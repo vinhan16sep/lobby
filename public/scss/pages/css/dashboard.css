@@ -258,6 +258,9 @@
 
 .view-dashboard .dashboard-wrapper .list-events .card .card-body {
   height: 100%;
+  padding-top: 0;
+  padding-left: 0;
+  padding-right: 0;
   overflow-x: hidden;
   overflow-y: overlay;
 }
@@ -283,6 +286,8 @@
 }
 
 .view-dashboard .dashboard-wrapper .list-events .card .card-body .nav.nav-tabs {
+  margin-left: -1px;
+  margin-right: -1px;
   background-color: var(--bg-bw);
   position: sticky;
   position: -webkit-sticky;
@@ -588,7 +593,6 @@
   top: -6px;
   right: -4px;
   z-index: 1;
-  display: none;
 }
 
 .view-dashboard .dashboard-wrapper .chat-area .chat-box .card .card-body .list-users-wrapper .list-users .select-user-item a.select-user .img-mask-wrapper .unread .circle {

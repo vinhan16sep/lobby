@@ -176,7 +176,7 @@
 								<img src="" alt="">
 							</div>
 		
-							<div class="unread">
+							<div class="unread" style="display: none">
 								<div class="circle">
 									1
 								</div>

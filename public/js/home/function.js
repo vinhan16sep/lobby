@@ -1,6 +1,5 @@
 let users = [];
-
-getListUsers();
+// getListUsers();
 
 $(document).ready(function () {
     $(document)
@@ -24,11 +23,6 @@ $(document).ready(function () {
             });
 
             if (userInfo) {
-                userInfo.unread = 0;
-
-                $(_this).parent().find('.unread .circle').text(0);
-                $(_this).parent().find('.unread').hide();
-
                 let $card = $('.user-info-wrapper-prepare').clone().show();
                 $card.removeClass('user-info-wrapper-prepare');
 
@@ -51,9 +45,18 @@ $(document).ready(function () {
                         $chatBox.find('h6').text(userInfo.name);
 
                         $chatBox.parent().addClass('chat-area-collapsed');
+
+                        $chatBox.find('.append-message').empty();
                         $chatBox.show();
 
-                        initChatBox('.chat-private');
+                        initChatPrivate(userInfo.userId);
+
+                        // setUserReadMessage(() => {
+                        //     userInfo.unread = 0;
+
+                        //     $(_this).parent().find('.unread .circle').text(0);
+                        //     $(_this).parent().find('.unread').hide();
+                        // });
                     });
 
                 $card.addClass('show');
@@ -73,10 +76,10 @@ $(document).ready(function () {
         $('.chat-private').hide();
     });
 
-    initChatBox('.chat-public');
+    // initChatBox('.chat-public');
 });
 
-function getListUsers() {
+function getListUsers(callback = false) {
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
     $.ajax({
@@ -100,7 +103,74 @@ function getListUsers() {
                     });
                 });
 
-                reloadListUsers();
+                if (callback) {
+                    callback();
+                }
+            }
+        },
+        error: () => {}
+    });
+}
+
+function getUserUnread() {
+    let socketUrl;
+
+    if (typeof socket == 'undefined') {
+        throw new Error('Can not find socket');
+    }
+
+    socketUrl = socket.io.uri;
+
+    let url = `${socketUrl}/message/countUnread`;
+
+    url = commonFunc.buildUrl(url, 'userId', currentUser.id);
+    url = commonFunc.buildUrl(url, 'socketId', socket.id);
+
+    $.ajax({
+        url: url,
+        method: 'GET',
+        dataType: 'json',
+        crossDomain: true,
+        success: function (res) {
+            if (typeof res.response == 'object' && Object.keys(res.response).length > 0) {
+                $.each(res.response, (id, count) => {
+                    let user = users.find((usr) => {
+                        return usr.userId == id;
+                    });
+
+                    if (user) {
+                        user.unread = count;
+                    }
+                });
+            }
+        },
+        error: () => {}
+    });
+}
+
+function setUserReadMessage(id, callback = false) {
+    let socketUrl;
+
+    if (typeof socket == 'undefined') {
+        throw new Error('Can not find socket');
+    }
+
+    socketUrl = socket.io.uri;
+
+    let url = `${socketUrl}/message/setReadMessage`;
+
+    url = commonFunc.buildUrl(url, 'userId', currentUser.id);
+    url = commonFunc.buildUrl(url, 'socketId', socket.id);
+    url = commonFunc.buildUrl(url, 'userPartner', id);
+
+    $.ajax({
+        url: url,
+        method: 'POST',
+        dataType: 'json',
+        crossDomain: true,
+        success: function (res) {
+            if (res.response == 'Success' && callback) {
+                callback();
             }
         },
         error: () => {}
@@ -116,19 +186,33 @@ function reloadListUsers() {
 }
 
 function recvListUser(data) {
-    if (data.online.length > 0) {
-        data.online.forEach((usr) => {
-            let availableUser = users.find((user) => {
-                return user.userId == usr.userId;
+    getListUsers(() => {
+        if (data.online.length > 0) {
+            data.online.forEach((usr) => {
+                let availableUser = users.find((user) => {
+                    return user.userId == usr.userId;
+                });
+
+                availableUser.isAvailable = 1;
             });
 
-            availableUser.isAvailable = 1;
-        });
+            if (Object.keys(data.unread).length > 0) {
+                $.each(data.unread, (id, count) => {
+                    let user = users.find((usr) => {
+                        return usr.userId == id;
+                    });
 
-        reloadListUsers();
+                    if (user) {
+                        user.unread = count;
+                    }
+                });
+            }
 
-        initChatPublic();
-    }
+            reloadListUsers();
+
+            initChatPublic();
+        }
+    });
 }
 
 function addUser(data) {
@@ -176,7 +260,7 @@ function renderListUsers() {
             }
 
             if (user.unread > 0) {
-                $item.find('.unread .circle').text(user.unread);
+                $item.find('.unread .circle').text(user.unread < 10 ? user.unread : '10+');
                 $item.find('.unread').show();
             } else {
                 $item.find('.unread .circle').text(0);
@@ -197,10 +281,11 @@ function initChatPublic() {
     getChatLogs(CHATLOG.PUBLIC);
 }
 
-function initChatPrivate() {}
+function initChatPrivate(userId) {
+    getChatLogs(CHATLOG.PRIVATE, userId);
+}
 
 function loadChatDialog(type, data, prepend = false) {
-    console.log(prepend);
     let $wrapper, $append;
 
     if (!prepend) {
@@ -217,79 +302,87 @@ function loadChatDialog(type, data, prepend = false) {
 
     $append.find('.chat-loading').remove();
 
-    data.forEach((msg, index) => {
-        let fromUser = users.find((usr) => {
-            return usr.userId == msg.fromUser;
-        });
+    if (data.length > 0) {
+        data.forEach((msg, index) => {
+            let fromUser = users.find((usr) => {
+                return usr.userId == msg.fromUser;
+            });
 
-        let $box = $append.find('.chat-item:last-child');
+            let $box = $append.find('.chat-item:last-child');
 
-        let userAvatar = fromUser.avatar != null ? fromUser.avatar : `https://ui-avatars.com/api/?name=${fromUser.name}`;
+            let userAvatar = fromUser.avatar != null ? fromUser.avatar : `https://ui-avatars.com/api/?name=${fromUser.name}`;
 
-        let $chatWrap = $(`
-            <div class="chat-item">
-                <div class="item-avatar">
-                    <div class="img-mask img-mask-circle">
-                        <img src="${userAvatar}" alt="Avatar of ${fromUser.name}">
+            let $chatWrap = $(`
+                <div class="chat-item">
+                    <div class="item-avatar">
+                        <div class="img-mask img-mask-circle">
+                            <img src="${userAvatar}" alt="Avatar of ${fromUser.name}">
+                        </div>
+                    </div>
+    
+                    <div class="item-content">
+                        <p class="p-name">
+                            ${fromUser.name}
+                        </p>
+    
+                        <div class="content-chat"></div>
                     </div>
                 </div>
+            `);
 
-                <div class="item-content">
-                    <p class="p-name">
-                        ${fromUser.name}
-                    </p>
+            $chatWrap.data('sender-id', fromUser.userId);
+            $chatWrap.data('time', msg.time);
 
-                    <div class="content-chat"></div>
-                </div>
-            </div>
-        `);
-
-        $chatWrap.data('sender-id', fromUser.userId);
-        $chatWrap.data('time', msg.time);
-
-        if (type == 1) {
-            $chatWrap.find('.item-avatar').remove();
-            $chatWrap.find('.p-name').remove();
-        }
-
-        if (type == 0 && msg.fromUser == currentUser.id) {
-            $chatWrap.find('.item-avatar').remove();
-            $chatWrap.find('.p-name').text('Me');
-        }
-
-        if (msg.fromUser == currentUser.id) {
-            $chatWrap.addClass('chat-item-mine');
-        }
-
-        let prevIndex = 0;
-        if (index > 0) {
-            prevIndex = index - 1;
-        }
-
-        if (prepend) {
-            if (fromUser.userId != data[prevIndex].fromUser) {
-                $append.prepend($chatWrap);
+            if (type == CHATLOG.PRIVATE) {
+                $chatWrap.find('.item-avatar').remove();
+                $chatWrap.find('.p-name').remove();
             }
-        } else {
-            if ($box.length == 0 || fromUser.userId != data[prevIndex].fromUser) {
-                $append.append($chatWrap);
+
+            if (type == CHATLOG.PUBLIC && msg.fromUser == currentUser.id) {
+                $chatWrap.find('.item-avatar').remove();
+                $chatWrap.find('.p-name').text('Me');
             }
-        }
 
-        let $span = $(`<p>${msg.content}</p>`);
+            if (msg.fromUser == currentUser.id) {
+                $chatWrap.addClass('chat-item-mine');
+            }
 
-        if (prepend) {
-            $span.appendTo($append.find('.chat-item:first-child').find('.content-chat'));
-            $append.scrollTop(0);
-        } else {
-            $span.appendTo($append.find('.chat-item:last-child').find('.content-chat'));
-            $append.scrollTop($wrapper.find('.append-message')[0].scrollHeight);
-        }
-    });
+            let prevIndex = 0;
+            if (index > 0) {
+                prevIndex = index - 1;
+            }
+
+            if (prepend) {
+                if (fromUser.userId != data[prevIndex].fromUser) {
+                    $append.prepend($chatWrap);
+                }
+            } else {
+                if ($box.length == 0 || fromUser.userId != data[prevIndex].fromUser) {
+                    $append.append($chatWrap);
+                }
+            }
+
+            let $span = $(`<p>${msg.content}</p>`);
+
+            if (prepend) {
+                $span.appendTo($append.find('.chat-item:first-child').find('.content-chat'));
+                $append.scrollTop(0);
+            } else {
+                $span.appendTo($append.find('.chat-item:last-child').find('.content-chat'));
+                $append.scrollTop($wrapper.find('.append-message')[0].scrollHeight);
+            }
+        });
+    }
+
+    if (type == CHATLOG.PUBLIC) {
+        initChatBox('.chat-public');
+    } else if (type == CHATLOG.PRIVATE) {
+        initChatBox('.chat-private');
+    }
 }
 
 function initChatBox(wrapper) {
-    $(wrapper).find('.append-message').empty();
+    // $(wrapper).find('.append-message').empty();
 
     $(wrapper)
         .find('.input-message')
@@ -316,22 +409,19 @@ function initChatBox(wrapper) {
                 let type, id;
 
                 if (wrapper == '.chat-public') {
-                    type = 0;
+                    type = CHATLOG.PUBLIC;
                     id = currentUser.id;
                 } else if (wrapper == '.chat-private') {
-                    type = 1;
+                    type = CHATLOG.PRIVATE;
                     id = $(wrapper).data('user-id');
                 }
 
-                // console.log(wrapper, time);
-                // return;
                 getChatLogs(type, id, time);
             }
         });
 }
 
 function getChatLogs(type, id, time = false) {
-    console.log(time);
     let chatLogs = [];
 
     let socketUrl;
@@ -345,15 +435,16 @@ function getChatLogs(type, id, time = false) {
     let url = `${socketUrl}/message`;
 
     switch (type) {
-        case 0:
+        case CHATLOG.PUBLIC:
             url = `${url}/getGlobalMessage`;
-            url = commonFunc.buildUrl(url, 'userId', currentUser.id);
             break;
-        case 1:
+        case CHATLOG.PRIVATE:
             url = `${url}/getMessage`;
-            url = commonFunc.buildUrl(url, 'userId', id);
+            url = commonFunc.buildUrl(url, 'userPartner', id);
             break;
     }
+
+    url = commonFunc.buildUrl(url, 'userId', currentUser.id);
 
     url = commonFunc.buildUrl(url, 'socketId', socket.id);
 
@@ -367,7 +458,7 @@ function getChatLogs(type, id, time = false) {
         dataType: 'json',
         crossDomain: true,
         success: function (res) {
-            if (res.response.length > 0) {
+            if (typeof res.response == 'object') {
                 if (time) {
                     loadChatDialog(type, res.response, true);
                 } else {
@@ -473,7 +564,8 @@ function receiveChatMessage(wrapper, data) {
                 $(wrapper).parent().addClass('chat-area-collapsed');
                 $(wrapper).show();
 
-                initChatBox('.chat-private');
+                initChatPrivate(userId);
+                // initChatBox('.chat-private');
             }
         }
 

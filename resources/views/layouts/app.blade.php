@@ -61,7 +61,7 @@
 
                             <div class="dropdown-menu dropdown-menu-end">
                                 <a href="#" class="dropdown-item btn-logout">
-                                    <i class="fas fa-sign-out-alt"></i> Logout
+                                    <i class="fas fa-sign-out-alt"></i> Đăng xuất
                                 </a>
 
                                 <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="display: none;">

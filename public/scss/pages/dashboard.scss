@@ -88,11 +88,18 @@
 				.card-body{
 					height: 100%;
 
+					padding-top: 0;
+					padding-left: 0;
+					padding-right: 0;
+
 					overflow-x: hidden;
 					@include overflow-y();
 
 					.nav {
 						&.nav-tabs{
+							margin-left: -1px;
+							margin-right: -1px;
+
 							background-color: var(--bg-bw);
 		
 							@include positionSticky(top, 0, 10);
@@ -337,7 +344,7 @@
 													right: -4px;
 													z-index: 1;
 		
-													display: none;
+													// display: none;
 		
 													.circle{
 														width: 16px;
