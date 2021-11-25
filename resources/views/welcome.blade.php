@@ -4,7 +4,7 @@
 @endsection
 
 @section('title')
-	Home
+	DX Summit
 @endsection
 
 @section('view')

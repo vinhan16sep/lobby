@@ -4,21 +4,21 @@
 @endsection
 
 @section('title')
-	Home
+	DX Summit
 @endsection
 
 @section('view')
-    <div class="view-home" style="background-image: url('https://images.unsplash.com/photo-1551818255-e6e10975bc17?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1373&q=80')">
+    <div class="view-home" style="background-image: url('{{ asset("public/img/Wallpaper.jpg") }}')">
         <div class="overlay">
             <div class="form-login">
                 <div class="panel panel-default">
-                    <div class="panel-heading">User Login</div>
+                    <div class="panel-heading">Đăng nhập</div>
                     <div class="panel-body">
                         <form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}">
                             {{ csrf_field() }}
     
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                <label for="email" class="control-label">E-Mail Address</label>
+                                <label for="email" class="control-label">Địa chỉ email</label>
     
                                 <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
     
@@ -30,7 +30,7 @@
                             </div>
     
                             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                                <label for="password" class="control-label">Password</label>
+                                <label for="password" class="control-label">Mật khẩu</label>
     
                                 <input id="password" type="password" class="form-control" name="password" required>
     
@@ -54,7 +54,7 @@
                             <div class="form-group">
                                 <div class="col-md-12">
                                     <button class="btn btn-block btn-primary" type="submit">
-                                        Login
+                                        Đăng nhập
                                     </button>
     
                                     {{-- <a class="btn btn-link" href="{{ route('password.request') }}">

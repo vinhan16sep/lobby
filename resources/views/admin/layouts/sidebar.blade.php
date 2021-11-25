@@ -20,7 +20,7 @@
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu">
         <li class="{{(Request::segment(2) == '') ? 'active' : '' }}">
-          <a href="{{ url('admin') }}"><i class="fa fa-link"></i> <span>Dashboard</span>
+          <a href="{{ url('admin/dashboard') }}"><i class="fa fa-link"></i> <span>Dashboard</span>
           </a>
         </li>
         <li class="treeview {{(Request::segment(2) == 'user') ? 'active' : '' }}">

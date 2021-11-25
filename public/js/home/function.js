@@ -84,7 +84,7 @@ function getListUsers(callback = false) {
 
     $.ajax({
         type: 'GET',
-        url: '/home/getListUsers',
+        url: getListUsersUrl,
         data: {
             _token: CSRF_TOKEN
         },
@@ -609,7 +609,7 @@ function receiveChatMessage(wrapper, data) {
 
 function addToWishlist(seminarId) {
     $.ajax({
-        url: '/home/addToWishlist',
+        url: addToWishlistUrl,
         method: 'GET',
         data: {
             seminarId: seminarId
@@ -617,6 +617,8 @@ function addToWishlist(seminarId) {
         success: function (res) {
             if (res.code == '200') {
                 $('#followSuccessModal').modal('show');
+                $('#btn-' + seminarId).prop('disabled', true);
+                $('#btn-' + seminarId).text("Đang theo dõi");
             }
         }
     });

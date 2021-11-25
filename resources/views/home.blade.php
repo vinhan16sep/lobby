@@ -4,7 +4,7 @@
 @endsection
 
 @section('title')
-	Dashboard
+	DX Summit
 @endsection
 
 @section('view')
@@ -44,11 +44,24 @@
 					<div class="card-body">
 						<ul class="nav nav-tabs" id="eventTabs" role="tablist">
 							@foreach ($eventDays as $dKey => $eventDay)
+								@php
+									$date = new DateTime($eventDay->event_date);
+									$dateTxt = $date->format('l');
+									$convertArr = [
+										'Sunday' => 'Chủ Nhật', 
+										'Monday' => 'Thứ Hai', 
+										'Tuesday' => 'Thứ Ba', 
+										'Wednesday' => 'Thứ Tư', 
+										'Thursday' => 'Thứ Năm', 
+										'Friday' => 'Thứ Sáu', 
+										'Saturday' => 'Thứ Bảy'
+									];
+								@endphp
 								<li class="nav-item" role="presentation">
 									<button class="nav-link {{ $dKey == 0 ? 'active' : '' }}" id="btnTab_{{ $dKey + 1  }}"
 											data-bs-toggle="tab" data-bs-target="#tab_{{ $dKey + 1  }}"
 											type="button" role="tab" aria-controls="tab_{{ $dKey + 1  }}" aria-selected="true">
-										{{ $eventDay->event_date  }}
+										{{ $convertArr[$dateTxt] }}, {{ date('d-m-Y', strtotime($eventDay->event_date))  }}
 									</button>
 								</li>
 							@endforeach
@@ -90,23 +103,23 @@
 		
 																	<div class="controls">
 																		@if (!empty($seminarArr) && in_array($seminar->id, $seminarArr))
-																			<button class="btn btn-outline-default"
+																			<button class="btn btn-outline-default" id="btn-{{ $seminar->id }}"
 																					type="button" disabled>
-																				Followed
+																				Đang theo dõi
 																			</button>
 																		@else
-																			<button class="btn btn-outline-default"
+																			<button class="btn btn-outline-default" id="btn-{{ $seminar->id }}"
 																					type="button"
 																					onclick="addToWishlist('{{ $seminar->id }}')">
-																				Follow
+																				Theo dõi
 																			</button>
 																		@endif
 																		<button class="btn btn-outline-default" type="button">
-																			Detail
+																			Chi tiết
 																		</button>
 																		<button class="btn btn-primary" type="button"
 																				onclick="window.open('{{ $seminar->link }}', '_blank')">
-																			Join Event
+																			Tham gia
 																		</button>
 																	</div>
 																</div>
@@ -200,7 +213,7 @@
 				<div class="modal-body">
 					<p>Bạn đã đăng ký theo dõi hội thảo thành công</p>
 				</div>
-				<div class="modal-footer">
+				<div class="modal-footer" style="text-align: center">
 					<button type="button" class="btn btn-default" data-bs-dismiss="modal">
 						Đóng
 					</button>
@@ -218,6 +231,9 @@
 @section('js')
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
 	<script>
+		var getListUsersUrl = "{{ route('home.getListUsers') }}";
+		var addToWishlistUrl = "{{ route('home.addToWishlist') }}";
+
         const SOCKET_URL = '{{ config('env.SOCKET_URL') }}';
         const currentUser = {
 			id: '{{ $userId }}',
