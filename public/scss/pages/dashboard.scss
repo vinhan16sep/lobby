@@ -106,8 +106,12 @@
 		
 							.nav-item{
 								.nav-link{
+									color: var(--text-paragraph);
+
 									&.active{
-										font-weight: 600;
+										font-weight: 700;
+
+										color: var(--primary);
 									}
 								}
 							}
@@ -138,11 +142,18 @@
 		
 									.event-content{
 										width: calc(100% - 150px);
+
+										padding-bottom: 1.5rem;
 		
 										@include d-flex(row, flex-start, flex-start);
+
+										overflow-y: hidden;
+										@include overflow-x();
+										@include overflow-hidden();
 		
 										.item-event{
 											width: 30%;
+											min-width: 320px;
 		
 											padding: 0 0.75rem;
 		
@@ -159,13 +170,13 @@
 											}
 		
 											&:hover{
-												.ratio-wrapper{
-													.overlay{
-														opacity: 1;
+												// .ratio-wrapper{
+												// 	.overlay{
+												// 		opacity: 1;
 		
-														@include transition();
-													}
-												}
+												// 		@include transition();
+												// 	}
+												// }
 											}
 		
 											.ratio-wrapper{
@@ -182,8 +193,6 @@
 													padding: 0.75rem;
 		
 													background-color: var(--bg-bw-rv-alpha-50);
-		
-													opacity: 0;
 		
 													position: absolute;
 													top: 50%;
@@ -203,7 +212,16 @@
 													}
 		
 													h6{
+														max-width: 100%;
+
 														margin-bottom: 0.5rem;
+
+														font-weight: 600;
+
+														overflow: hidden;
+														text-overflow: ellipsis;
+
+														white-space: nowrap;
 													}
 		
 													p{
