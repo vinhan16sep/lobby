@@ -32,8 +32,16 @@
                     </a>
                 </div>
 
-                <div class="header-menu">
-
+                <div class="header-menu" style="width: 80%;text-align: right;">
+                    <a href="https://dxsummit.vn/" class="btn btn-primary" target="_blank">
+                        Trang chính sự kiện
+                    </a>
+                    <a href="https://dxsummit.vn/chuong-trinh/" class="btn btn-primary">
+                        Chương trình
+                    </a>
+                    <a href="https://dxsummit.vn/lien-he/" class="btn btn-primary">
+                        Liên hệ
+                    </a>
                 </div>
 
                 <div class="header-user">
@@ -54,7 +62,7 @@
                                     </div>
             
                                     <h6 class="subtitle-md">
-                                        {{ Auth::user()->name }}
+                                        {{ Auth::user()->email }}
                                     </h6>
                                 </div>
                             </button>
