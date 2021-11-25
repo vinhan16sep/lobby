@@ -238,9 +238,7 @@
 .view-home .overlay {
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  -webkit-backdrop-filter: blur(4px);
-          backdrop-filter: blur(4px);
+  background-color: rgba(3, 122, 178, 0.5);
   position: absolute;
   top: 50%;
   left: 50%;
@@ -265,10 +263,10 @@
 .view-home .overlay .panel {
   width: 460px;
   padding: 1.5rem 1.5rem 2rem;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: var(--white);
   border-radius: 0.5rem;
-  -webkit-transform: translate(0, -4rem);
-  transform: translate(0, -4rem);
+  -webkit-transform: translate(0, -6rem);
+  transform: translate(0, -6rem);
 }
 
 .view-home .overlay .panel .panel-body form .form-group > div .btn.btn-block {

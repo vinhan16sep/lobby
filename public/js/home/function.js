@@ -51,12 +51,12 @@ $(document).ready(function () {
 
                         initChatPrivate(userInfo.userId);
 
-                        // setUserReadMessage(() => {
-                        //     userInfo.unread = 0;
+                        setUserReadMessage(userInfo.userId, () => {
+                            userInfo.unread = 0;
 
-                        //     $(_this).parent().find('.unread .circle').text(0);
-                        //     $(_this).parent().find('.unread').hide();
-                        // });
+                            $(_this).parent().find('.unread .circle').text(0);
+                            $(_this).parent().find('.unread').hide();
+                        });
                     });
 
                 $card.addClass('show');

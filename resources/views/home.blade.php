@@ -72,13 +72,9 @@
 																<div class="item-event">
 																	<div class="ratio-wrapper ratio-wrapper-4-3">
 																		<div class="overlay">
-																			<h6 class="subtitle-sm">
+																			<h6 class="subtitle-md">
 																				{{ $seminar->name }}
 																			</h6>
-		
-																			<p class="p-sm">
-																				{{ $seminar->description }}
-																			</p>
 																		</div>
 		
 																		<div class="img-mask">
@@ -92,21 +88,21 @@
 																		@if (!empty($seminarArr) && in_array($seminar->id, $seminarArr))
 																			<button class="btn btn-outline-default"
 																					type="button" disabled>
-																				Followed
+																				Đã theo dõi
 																			</button>
 																		@else
 																			<button class="btn btn-outline-default"
 																					type="button"
 																					onclick="addToWishlist('{{ $seminar->id }}')">
-																				Follow
+																				Theo dõi
 																			</button>
 																		@endif
 																		<button class="btn btn-outline-default" type="button">
-																			Detail
+																			Chi tiết
 																		</button>
 																		<button class="btn btn-primary" type="button"
 																				onclick="window.open('{{ $seminar->link }}', '_blank')">
-																			Join Event
+																			Tham gia sự kiện
 																		</button>
 																	</div>
 																</div>
@@ -137,7 +133,7 @@
 
 						<div class="card-footer">
 							<input type="text" class="form-control input-message"
-							       placeholder="Type something to send...">
+							       placeholder="Viết gì đó để trao đổi...">
 
 							<button class="btn btn-primary btn-send-message" type="button">
 								Gửi
@@ -160,7 +156,7 @@
 						</div>
 						<div class="card-footer">
 							<input type="text" class="form-control input-message"
-							       placeholder="Type something to send...">
+							       placeholder="Viết gì đó để trao đổi...">
 
 							<button class="btn btn-primary btn-send-message" type="button">
 								Gửi
