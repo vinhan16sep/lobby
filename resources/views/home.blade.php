@@ -41,6 +41,9 @@
 
 			<div class="list-events">
 				<div class="card">
+					<div class="card-header">
+						Danh sách hội thảo
+					</div>
 					<div class="card-body">
 						<ul class="nav nav-tabs" id="eventTabs" role="tablist">
 							@foreach ($eventDays as $dKey => $eventDay)
@@ -136,6 +139,9 @@
 			<div class="chat-area">
 				<div class="chat-box chat-public">
 					<div class="card">
+						<div class="card-header">
+							Trao đổi - Kết nối
+						</div>
 						<div class="card-body">
 							<div class="list-users-wrapper">
 								<div class="list-users" id="appendListUsers"></div>
@@ -146,7 +152,7 @@
 
 						<div class="card-footer">
 							<input type="text" class="form-control input-message"
-							       placeholder="Viết gì đó để trao đổi...">
+							       placeholder="Nội dung tin nhắn ...">
 
 							<button class="btn btn-primary btn-send-message" type="button">
 								Gửi
@@ -169,7 +175,7 @@
 						</div>
 						<div class="card-footer">
 							<input type="text" class="form-control input-message"
-							       placeholder="Viết gì đó để trao đổi...">
+							       placeholder="Nội dung tin nhắn ...">
 
 							<button class="btn btn-primary btn-send-message" type="button">
 								Gửi
@@ -229,6 +235,39 @@
 	<script>
 		var getListUsersUrl = "{{ route('home.getListUsers') }}";
 		var addToWishlistUrl = "{{ route('home.addToWishlist') }}";
+
+		let commonFunc = {};
+		commonFunc.buildUrl = function (url, k, v) {
+			let key = encodeURIComponent(k),
+				value = encodeURIComponent(v);
+
+			let baseUrl = url.split('?')[0],
+				newParam = key + '=' + value,
+				params = '?' + newParam;
+
+			if (url.split('?')[1] === undefined) {
+				urlQueryString = '';
+			} else {
+				urlQueryString = '?' + url.split('?')[1];
+			}
+			if (urlQueryString) {
+				let updateRegex = new RegExp('([?&])' + key + '[^&]*');
+				let removeRegex = new RegExp('([?&])' + key + '=[^&;]+[&;]?');
+
+				if (value === undefined || value === null || value === '') {
+					params = urlQueryString.replace(removeRegex, '$1');
+					params = params.replace(/[&;]$/, '');
+				} else if (urlQueryString.match(updateRegex) !== null) {
+					params = urlQueryString.replace(updateRegex, '$1' + newParam);
+				} else if (urlQueryString == '') {
+					params = '?' + newParam;
+				} else {
+					params = urlQueryString + '&' + newParam;
+				}
+			}
+			params = params === '?' ? '' : params;
+			return baseUrl + params;
+		};
 
         const SOCKET_URL = '{{ config('env.SOCKET_URL') }}';
         const currentUser = {
