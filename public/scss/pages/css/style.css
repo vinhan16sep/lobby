@@ -220,6 +220,30 @@ body {
   display: block;
 }
 
+.page .page-header header .header-menu {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.page .page-header header .header-menu a {
+  font-weight: 600;
+  color: var(--white);
+}
+
 .page .page-header header .header-user {
   margin-left: auto;
 }
