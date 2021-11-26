@@ -33,14 +33,14 @@
                 </div>
 
                 <div class="header-menu" style="width: 80%;text-align: right;">
-                    <a href="https://dxsummit.vn/" class="btn btn-primary" target="_blank">
-                        Trang chính sự kiện
+                    <a href="https://dxsummit.vn/gian-hang-trien-lam/" class="btn btn-primary" target="_blank">
+                        Triển lãm
                     </a>
-                    <a href="https://dxsummit.vn/chuong-trinh/" class="btn btn-primary">
+                    <a href="https://dxsummit.vn/dien-gia-2/" class="btn btn-primary" target="_blank">
+                        Diễn giả
+                    </a>
+                    <a href="https://dxsummit.vn/chuong-trinh/" class="btn btn-primary" target="_blank">
                         Chương trình
-                    </a>
-                    <a href="https://dxsummit.vn/lien-he/" class="btn btn-primary">
-                        Liên hệ
                     </a>
                 </div>
 
