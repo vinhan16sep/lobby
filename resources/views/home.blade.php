@@ -42,10 +42,12 @@
 			<div class="list-events">
 				<div class="card">
 					<div class="card-header">
-						Danh sách hội thảo
+						<h6 class="subtitle-md">
+							Danh sách hội thảo
+						</h6>
 					</div>
 					<div class="card-body">
-						<ul class="nav nav-tabs" id="eventTabs" role="tablist">
+						<ul class="nav nav-pills" id="eventTabs" role="tablist">
 							@foreach ($eventDays as $dKey => $eventDay)
 								@php
 									$date = new DateTime($eventDay->event_date);
@@ -91,6 +93,28 @@
 																			<h6 class="subtitle-md">
 																				{{ $seminar->name }}
 																			</h6>
+
+																			<div class="controls">
+																				@if (!empty($seminarArr) && in_array($seminar->id, $seminarArr))
+																					<button class="btn btn-outline-light" id="btn-{{ $seminar->id }}"
+																							type="button" disabled>
+																						Đã theo dõi
+																					</button>
+																				@else
+																					<button class="btn btn-outline-light" id="btn-{{ $seminar->id }}"
+																							type="button"
+																							onclick="addToWishlist('{{ $seminar->id }}')">
+																						Theo dõi
+																					</button>
+																				@endif
+																				<button class="btn btn-outline-light" type="button">
+																					Chi tiết
+																				</button>
+																				<button class="btn btn-primary" type="button"
+																						onclick="window.open('{{ $seminar->link }}', '_blank')">
+																					Tham gia sự kiện
+																				</button>
+																			</div>
 																		</div>
 		
 																		<div class="img-mask">
@@ -98,28 +122,6 @@
 																				 width="300" height="200"
 																				 alt="{{ $seminar->name }}"/>
 																		</div>
-																	</div>
-		
-																	<div class="controls">
-																		@if (!empty($seminarArr) && in_array($seminar->id, $seminarArr))
-																			<button class="btn btn-outline-default" id="btn-{{ $seminar->id }}"
-																					type="button" disabled>
-																				Đã theo dõi
-																			</button>
-																		@else
-																			<button class="btn btn-outline-default" id="btn-{{ $seminar->id }}"
-																					type="button"
-																					onclick="addToWishlist('{{ $seminar->id }}')">
-																				Theo dõi
-																			</button>
-																		@endif
-																		<button class="btn btn-outline-default" type="button">
-																			Chi tiết
-																		</button>
-																		<button class="btn btn-primary" type="button"
-																				onclick="window.open('{{ $seminar->link }}', '_blank')">
-																			Tham gia sự kiện
-																		</button>
 																	</div>
 																</div>
 															@endforeach
@@ -140,7 +142,9 @@
 				<div class="chat-box chat-public">
 					<div class="card">
 						<div class="card-header">
-							Trao đổi - Kết nối
+							<h6 class="subtitle-md">
+								Trao đổi - Kết nối
+							</h6>
 						</div>
 						<div class="card-body">
 							<div class="list-users-wrapper">
@@ -233,43 +237,7 @@
 @section('js')
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
 	<script>
-		var getListUsersUrl = "{{ route('home.getListUsers') }}";
-		var addToWishlistUrl = "{{ route('home.addToWishlist') }}";
-
-		let commonFunc = {};
-		commonFunc.buildUrl = function (url, k, v) {
-			let key = encodeURIComponent(k),
-				value = encodeURIComponent(v);
-
-			let baseUrl = url.split('?')[0],
-				newParam = key + '=' + value,
-				params = '?' + newParam;
-
-			if (url.split('?')[1] === undefined) {
-				urlQueryString = '';
-			} else {
-				urlQueryString = '?' + url.split('?')[1];
-			}
-			if (urlQueryString) {
-				let updateRegex = new RegExp('([?&])' + key + '[^&]*');
-				let removeRegex = new RegExp('([?&])' + key + '=[^&;]+[&;]?');
-
-				if (value === undefined || value === null || value === '') {
-					params = urlQueryString.replace(removeRegex, '$1');
-					params = params.replace(/[&;]$/, '');
-				} else if (urlQueryString.match(updateRegex) !== null) {
-					params = urlQueryString.replace(updateRegex, '$1' + newParam);
-				} else if (urlQueryString == '') {
-					params = '?' + newParam;
-				} else {
-					params = urlQueryString + '&' + newParam;
-				}
-			}
-			params = params === '?' ? '' : params;
-			return baseUrl + params;
-		};
-
-        const SOCKET_URL = '{{ config('env.SOCKET_URL') }}';
+		const SOCKET_URL = '{{ config('env.SOCKET_URL') }}';
         const currentUser = {
 			id: '{{ $userId }}',
 			name: '{{ $userName }}',

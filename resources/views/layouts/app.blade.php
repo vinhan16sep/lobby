@@ -32,28 +32,21 @@
                     </a>
                 </div>
 
-                <div class="header-menu" style="width: 80%;text-align: right;">
-                    <a href="https://dxsummit.vn/gian-hang-trien-lam/" class="btn btn-primary" target="_blank">
+                <div class="header-menu">
+                    <a href="https://dxsummit.vn/gian-hang-trien-lam/" class="btn" target="_blank">
                         Triển lãm
                     </a>
-                    <a href="https://dxsummit.vn/dien-gia-2/" class="btn btn-primary" target="_blank">
+                    <a href="https://dxsummit.vn/dien-gia-2/" class="btn" target="_blank">
                         Diễn giả
                     </a>
-                    <a href="https://dxsummit.vn/chuong-trinh/" class="btn btn-primary" target="_blank">
+                    <a href="https://dxsummit.vn/chuong-trinh/" class="btn" target="_blank">
                         Chương trình
                     </a>
                 </div>
 
-                <div class="header-user">
-                    @if (Auth::guest())
-                        {{-- <a href="{{ route('login') }}" class="btn">
-                            Login
-                        </a>
-
-                        <a href="{{ route('register') }}" class="btn btn-primary">
-                            Register
-                        </a> --}}
-                    @else
+                
+                @if (!Auth::guest())
+                    <div class="header-user">
                         <div class="dropdown">
                             <button class="btn dropdown-toggle" data-bs-toggle="dropdown" type="button">
                                 <div class="user-info">
@@ -77,8 +70,9 @@
                                 </form>
                             </div>
                         </div>
-                    @endif
-                </div>
+                    </div>  
+                @endif
+                
 
                 <div class="header-expand-control">
                     <button class="btn btn-expand-menu" type="button">

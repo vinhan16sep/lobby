@@ -41,6 +41,18 @@ body{
 				}
 			}
 
+			.header-menu{
+				flex: 1 1 auto;
+
+				@include d-flex(row, flex-end, center);
+
+				a{
+					font-weight: 600;
+					
+					color: var(--white);
+				}
+			}
+
 			.header-user{
 				margin-left: auto;
 
