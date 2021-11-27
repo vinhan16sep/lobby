@@ -92,7 +92,7 @@
 		}
 
 		.list-events{
-			width: 60%;
+			width: 75%;
 
 			.card{
 				height: 100%;
@@ -145,23 +145,32 @@
 							
 							.event-schedule{
 								.event-item{
-									padding: 1.5rem 0.75rem 0;
-		
-									@include d-flex(row, flex-start, flex-start);
-		
-									&:not(:last-child){
-										border-bottom: 1px solid var(--border);
-									}
+									padding: 0 0.75rem;
 		
 									.event-time{
-										width: 150px;
+										width: 100%;
 		
+										margin-bottom: 0.75rem;
 										padding: 0 0.75rem;
-		
-										h6{
-											padding: 0.25rem 0.5rem;
+
+										@include d-flex(row, space-between, center);
+
+										&:after{
+											content: '';
+
+											flex: 1 0 auto;
+											height: 2px;
 
 											background-color: var(--gray-3);
+										}
+		
+										h6{
+											max-width: 150px;
+											flex: 1 0 150px;
+
+											padding: 0.25rem 0.5rem;
+
+											border: 2px solid var(--gray-3);
 											color: var(--text-subtitle);
 											
 											font-weight: 600;
@@ -173,10 +182,9 @@
 									}
 		
 									.event-content{
-										width: calc(100% - 150px);
-
-										padding-bottom: 1.5rem;
+										width: 100%;
 		
+										flex-wrap: wrap;
 										@include d-flex(row, flex-start, flex-start);
 
 										overflow-y: hidden;
@@ -184,10 +192,10 @@
 										@include overflow-hidden();
 		
 										.item-event{
-											width: 30%;
-											min-width: 360px;
+											width: 50%;
 		
-											padding: 0 0.75rem;
+											padding: 0 1rem;
+											margin-bottom: 2rem;
 		
 											&:not(:first-child){
 												&:hover{
@@ -296,7 +304,7 @@
 		}
 
 		.chat-area{
-			width: 40%;
+			width: 25%;
 
 			&.chat-area-collapsed{
 				.chat-box{
@@ -348,7 +356,7 @@
 						@include d-flex(row, flex-start, stretch);
 
 						.list-users-wrapper{
-							width: 140px;
+							width: 120px;
 
 							border-right: 1px solid var(--gray-1);
 
