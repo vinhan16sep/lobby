@@ -14,7 +14,6 @@
 
                                 <div class="col-md-6">
                                     <input type="text" class="form-control" name="event_date" placeholder="" id="event_date" value="{{ old('event_date') }}">
-                                    {{-- <input id="event_date" type="text" class="form-control" name="event_date" value="{{ old('event_date') }}" required autofocus> --}}
 
                                     @if ($errors->has('event_date'))
                                         <span class="help-block">

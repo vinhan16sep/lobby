@@ -14,6 +14,8 @@ use File;
 
 class SeminarsController extends Controller
 {
+    private $seminarPath = '';
+
     /**
      * Create a new controller instance.
      *
@@ -21,6 +23,7 @@ class SeminarsController extends Controller
      */
     public function __construct(){
         $this->middleware('auth:admin');
+        $this->seminarPath = public_path().'/uploads/seminars/';
     }
 
     /**
@@ -59,18 +62,13 @@ class SeminarsController extends Controller
      */
     public function store(Request $request){
         $this->validateInput($request);
-        $filename = '';
+        $fn = '';
         if($request->hasFile('image')){
             $file = $request->file('image');
-            $filename = $file->getClientOriginalName();
-            $path = public_path().'/uploads/seminars/';
-            $uploaded = $file->move($path, $filename);
-
-//            $file = $request->file('image');
-//            $uploaded = $file->store('public/seminars');
+            $extension = $file->extension();
+            $fn = substr(str_shuffle('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'),1, 10) . time() . '.' . $extension;
+            $file->move($this->seminarPath, $fn);
         }
-
-
         $keys = [
             'event_day_id',
             'event_time_id',
@@ -81,7 +79,7 @@ class SeminarsController extends Controller
             'is_active'
         ];
         $input = $this->createQueryInput($keys, $request);
-        $input['image'] = $filename;
+        $input['image'] = $fn;
         $input['created_by'] = Auth::user()->id;
         $input['updated_by'] = Auth::user()->id;
 
@@ -108,9 +106,19 @@ class SeminarsController extends Controller
      */
     public function edit($id)
     {
-        $detail = BlogCategory::where(['is_deleted' => 0, 'id' => $id])->first();
+        $detail = Seminars::where(['is_deleted' => 0, 'id' => $id])->first();
+        $eventDays = DB::table('event_days')
+            ->select('*')
+            ->where('is_deleted', 0)->get();
+        $eventTimes = DB::table('event_times')
+            ->select('*')
+            ->where('is_deleted', 0)->get();
         
-        return view('admin.seminars.edit', ['detail' => $detail]);
+        return view('admin.seminars.edit', [
+            'detail' => $detail,
+            'eventDays' => $eventDays,
+            'eventTimes' => $eventTimes
+        ]);
     }
 
     /**
@@ -121,23 +129,38 @@ class SeminarsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $oldSem = Seminars::where(['id' => $id])->first();
+        $oldImg = $oldSem['image'];
+
         $this->validateInput($request);
-        $uniqueSlug = $this->buildUniqueSlug('blog_category', $id, $request->slug);
-        $keys = ['title', 'is_active', 'description'];
-        $input = $this->createQueryInput($keys, $request);
-        $input['slug'] = $uniqueSlug;
-        if($request->file('image')){
-            $path = $request->file('image')->store(($request->type == '0') ? 'advises/category' : 'news/category');
-            $input['image'] = $path;
-        };
-        $update = BlogCategory::where('id', $id)
-            ->update($input);
-        if($update){
-            if($request->is_active == 1){
-                Blog::where('category_id', $id)->update(['category_active' => 1]);
-            }else{
-                Blog::where('category_id', $id)->update(['category_active' => 0]);
+        $fn = '';
+        $isUploaded = false;
+        if($request->hasFile('image')){
+            $file = $request->file('image');
+            $extension = $file->extension();
+            $fn = substr(str_shuffle('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'),1, 10) . time() . '.' . $extension;
+            $file->move($this->seminarPath, $fn);
+            if (is_file($this->seminarPath . $fn)) {
+                $isUploaded = true;
             }
+        }
+        $keys = [
+            'event_day_id',
+            'event_time_id',
+            'is_main',
+            'name',
+            'link',
+            'description',
+            'is_active'
+        ];
+        $input = $this->createQueryInput($keys, $request);
+        $input['image'] = $fn;
+        $input['updated_by'] = Auth::user()->id;
+
+        $update = Seminars::where('id', $id)
+            ->update($input);
+        if ($update && $isUploaded && !empty($oldImg)) {
+            unlink($this->seminarPath . $oldImg);
         }
         
         return redirect()->intended('admin/seminars');

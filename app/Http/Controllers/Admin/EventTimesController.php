@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use App\EventTimes;
+use App\EventDays;
+use App\Seminars;
 use Response;
 use Session;
 use File;
@@ -99,9 +101,12 @@ class EventTimesController extends Controller
      */
     public function edit($id)
     {
-        $detail = BlogCategory::where(['is_deleted' => 0, 'id' => $id])->first();
+        $detail = EventTimes::where(['is_deleted' => 0, 'id' => $id])->first();
+        $eventDays = DB::table('event_days')
+            ->select('*')
+            ->where('is_deleted', 0)->get();
         
-        return view('admin.event-times.edit', ['detail' => $detail]);
+        return view('admin.event-times.edit', ['detail' => $detail, 'eventDays' => $eventDays]);
     }
 
     /**
@@ -113,25 +118,29 @@ class EventTimesController extends Controller
     public function update(Request $request, $id)
     {
         $this->validateInput($request);
-        $uniqueSlug = $this->buildUniqueSlug('blog_category', $id, $request->slug);
-        $keys = ['title', 'is_active', 'description'];
-        $input = $this->createQueryInput($keys, $request);
-        $input['slug'] = $uniqueSlug;
-        if($request->file('image')){
-            $path = $request->file('image')->store(($request->type == '0') ? 'advises/category' : 'news/category');
-            $input['image'] = $path;
-        };
-        $update = BlogCategory::where('id', $id)
-            ->update($input);
-        if($update){
-            if($request->is_active == 1){
-                Blog::where('category_id', $id)->update(['category_active' => 1]);
-            }else{
-                Blog::where('category_id', $id)->update(['category_active' => 0]);
+
+        DB::beginTransaction();
+        try {
+            $keys = ['event_day_id', 'start_time', 'end_time', 'is_active'];
+            $input = $this->createQueryInput($keys, $request);
+            $input['updated_by'] = Auth::user()->id;
+
+            $update = EventTimes::where('id', $id)
+                ->update($input);
+            if ($update) {
+                if ($request->is_active == 0) {
+                    Seminars::where('event_time_id', $id)->update(['is_active' => 0]);
+                }
             }
+            DB::commit();
+            return redirect()->intended('admin/event-times');
+
+        } catch (\Exception $e) {
+            echo '<pre>';
+            print_r($e->getMessage());
+            die;
+            DB::rollback();
         }
-        
-        return redirect()->intended('admin/event-times');
     }
 
     /**

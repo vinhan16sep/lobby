@@ -245,6 +245,6 @@
 			position: '{{ $userPosition }}'
 		};
 	</script>
-	<script src="{{ asset('js/home/socket_client.js') }}"></script>
-	<script src="{{ asset('js/home/function.js') }}"></script>
+	<script src="{{ asset('js/home/socket_client.js?v=').time() }}"></script>
+	<script src="{{ asset('js/home/function.js?v=').time() }}"></script>
 @endsection
