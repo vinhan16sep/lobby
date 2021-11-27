@@ -31,7 +31,7 @@
 @endsection
 
 @section('css')
-	<link rel="stylesheet" href="{{ asset('scss/pages/css/home.css') }}">
+	<link rel="stylesheet" href="{{ asset('scss/pages/css/home.css?v=').time() }}">
 @endsection
 
 @section('js')
