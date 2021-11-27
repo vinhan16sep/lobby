@@ -16,7 +16,7 @@
     </title>
 
     <link rel="stylesheet" href="{{ asset('plugins/bootstrap/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('plugins/fontawesome/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/fontawesome/css/all.min.css?v=').time() }}">
     <link rel="stylesheet" href="{{ asset('scss/css/min/app.min.css?v=').time() }}">
     <link rel="stylesheet" href="{{ asset('scss/pages/css/min/style.min.css?v=').time() }}">
 

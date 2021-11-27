@@ -13,7 +13,7 @@
                                 <label for="event_day_id" class="col-md-4 control-label">Ngày sự kiện <span style="color:red;">*</span></label>
                                 <div class="col-md-6">
                                     <select name="event_day_id"  class="form-control type">
-                                        <option value="">---------------------Chọn ngày sự kiện---------------------</option>
+                                        <option value="">Chọn ngày sự kiện</option>
                                         @foreach($eventDays as $value)
                                             <option value="{{ $value->id }}" {{ old('event_day_id') == $value->id ? 'selected' : '' }} >{{ $value->event_date }}</option>
                                         @endforeach

@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use App\EventDays;
+use App\EventTimes;
+use App\Seminars;
 use Response;
 use Session;
 use File;
@@ -19,7 +21,7 @@ class EventDaysController extends Controller
      *
      * @return void
      */
-    public function __construct(){
+    public function __construct() {
         $this->middleware('auth:admin');
     }
 
@@ -28,7 +30,7 @@ class EventDaysController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(){
+    public function index() {
         $eventDays = DB::table('event_days')
             ->select('*')
             ->where('is_deleted', 0)
@@ -41,17 +43,17 @@ class EventDaysController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(){
+    public function create() {
         return view('admin/event-days/create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request){
+    public function store(Request $request) {
         $this->validateInput($request);
 
         $keys = ['event_date', 'is_active'];
@@ -67,71 +69,71 @@ class EventDaysController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id) {
         //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        $detail = BlogCategory::where(['is_deleted' => 0, 'id' => $id])->first();
-        
+    public function edit($id) {
+        $detail = EventDays::where(['is_deleted' => 0, 'id' => $id])->first();
         return view('admin.event-days.edit', ['detail' => $detail]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         $this->validateInput($request);
-        $uniqueSlug = $this->buildUniqueSlug('blog_category', $id, $request->slug);
-        $keys = ['title', 'is_active', 'description'];
-        $input = $this->createQueryInput($keys, $request);
-        $input['slug'] = $uniqueSlug;
-        if($request->file('image')){
-            $path = $request->file('image')->store(($request->type == '0') ? 'advises/category' : 'news/category');
-            $input['image'] = $path;
-        };
-        $update = BlogCategory::where('id', $id)
-            ->update($input);
-        if($update){
-            if($request->is_active == 1){
-                Blog::where('category_id', $id)->update(['category_active' => 1]);
-            }else{
-                Blog::where('category_id', $id)->update(['category_active' => 0]);
+
+        DB::beginTransaction();
+        try {
+            $keys = ['event_date', 'is_active'];
+            $input = $this->createQueryInput($keys, $request);
+            $input['updated_by'] = Auth::user()->id;
+
+            $update = EventDays::where('id', $id)
+                ->update($input);
+            if ($update) {
+                if ($request->is_active == 0) {
+                    EventTimes::where('event_day_id', $id)->update(['is_active' => 0]);
+                    Seminars::where('event_day_id', $id)->update(['is_active' => 0]);
+                }
             }
+            DB::commit();
+            return redirect()->intended('admin/event-days');
+
+        } catch (\Exception $e) {
+            echo '<pre>';
+            print_r($e->getMessage());
+            die;
+            DB::rollback();
         }
-        
-        return redirect()->intended('admin/event-days');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id) {
         $detail = BlogCategory::where('id', $id)->first();
-        if($this->checkActive('blog', 'category_id', $detail)){
+        if ($this->checkActive('blog', 'category_id', $detail)) {
             $destroy = BlogCategory::where('id', $id)->update(['is_deleted' => 1]);
 
-            if($destroy){
+            if ($destroy) {
                 Session::flash('success', 'Xóa thành công!');
                 return redirect()->intended('admin/event-days');
             }
@@ -143,10 +145,10 @@ class EventDaysController extends Controller
     /**
      * Search state from database base on some specific constraints
      *
-     * @param  \Illuminate\Http\Request  $request
-     *  @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
      */
-    public function search(Request $request){
+    public function search(Request $request) {
         $constraints = [
             'title' => $request['name']
         ];
@@ -155,7 +157,7 @@ class EventDaysController extends Controller
         return view('admin/event-days/index', ['categories' => $categories, 'searchingVals' => $constraints]);
     }
 
-    private function doSearchingQuery($constraints){
+    private function doSearchingQuery($constraints) {
         $query = DB::table('blog_category')
             ->select('*')
             ->where('is_deleted', 0);
@@ -163,7 +165,7 @@ class EventDaysController extends Controller
         $index = 0;
         foreach ($constraints as $constraint) {
             if ($constraint != null) {
-                $query = $query->where($fields[$index], 'like', '%'.$constraint.'%');
+                $query = $query->where($fields[$index], 'like', '%' . $constraint . '%');
             }
 
             $index++;
