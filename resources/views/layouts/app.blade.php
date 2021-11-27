@@ -17,8 +17,8 @@
 
     <link rel="stylesheet" href="{{ asset('plugins/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome/css/all.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('scss/css/min/app.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('scss/pages/css/min/style.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('scss/css/min/app.min.css?v=').time() }}">
+    <link rel="stylesheet" href="{{ asset('scss/pages/css/min/style.min.css?v=').time() }}">
 
     @yield('css')
 </head>
@@ -129,7 +129,7 @@
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
 
-    <script src="{{ asset('js/function.js') }}"></script>
+    <script src="{{ asset('js/function.js?v=').time() }}"></script>
     @yield('js')
 </body>
 </html>
