@@ -61,7 +61,12 @@ class EventDaysController extends Controller
         $input['created_by'] = Auth::user()->id;
         $input['updated_by'] = Auth::user()->id;
 
-        EventDays::create($input);
+        $created = EventDays::create($input);
+        if ($created) {
+            Session::flash('success', 'Tạo mới thành công!');
+        } else {
+            Session::flash('error', 'Error');
+        }
 
         return redirect()->intended('admin/event-days');
     }
@@ -103,15 +108,27 @@ class EventDaysController extends Controller
             $input = $this->createQueryInput($keys, $request);
             $input['updated_by'] = Auth::user()->id;
 
-            $update = EventDays::where('id', $id)
-                ->update($input);
+            $update = EventDays::where('id', $id)->update($input);
+
             if ($update) {
                 if ($request->is_active == 0) {
-                    EventTimes::where('event_day_id', $id)->update(['is_active' => 0]);
-                    Seminars::where('event_day_id', $id)->update(['is_active' => 0]);
+                    $deactiveTime = EventTimes::where('event_day_id', $id)->update(['is_active' => 0]);
+                    $deactiveSem = Seminars::where('event_day_id', $id)->update(['is_active' => 0]);
+                    if ($deactiveTime && $deactiveSem) {
+                        DB::commit();
+                        Session::flash('success', 'Cập nhật thành công!');
+                    } else {
+                        DB::rollback();
+                        Session::flash('error', 'Error');
+                    }
+                } else {
+                    DB::commit();
+                    Session::flash('success', 'Cập nhật thành công!');
                 }
+            } else {
+                DB::rollback();
+                Session::flash('error', 'Error');
             }
-            DB::commit();
             return redirect()->intended('admin/event-days');
 
         } catch (\Exception $e) {
@@ -129,17 +146,27 @@ class EventDaysController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        $detail = BlogCategory::where('id', $id)->first();
-        if ($this->checkActive('blog', 'category_id', $detail)) {
-            $destroy = BlogCategory::where('id', $id)->update(['is_deleted' => 1]);
-
-            if ($destroy) {
-                Session::flash('success', 'Xóa thành công!');
-                return redirect()->intended('admin/event-days');
+        try {
+            $deactiveTime = EventTimes::where('event_day_id', $id)->get()->toArray();
+            $deactiveSem = Seminars::where('event_day_id', $id)->get()->toArray();
+            if (!empty($deactiveTime) || !empty($deactiveSem)) {
+                Session::flash('error', 'Đang được sử dụng trong khung giờ hoặc hội thảo');
+            } else {
+                $deleted = EventDays::where('id', $id)->delete();
+                if ($deleted) {
+                    Session::flash('success', 'Xóa thành công!');
+                } else {
+                    Session::flash('error', 'Error');
+                }
             }
+
+            return redirect()->intended('admin/event-days');
+        } catch (\Exception $e) {
+            echo '<pre>';
+            print_r($e->getMessage());
+            die;
+            DB::rollback();
         }
-        Session::flash('error', 'Xóa thất bại do danh mục nay tồn tại bài viết!');
-        return redirect()->intended('admin/event-days');
     }
 
     /**

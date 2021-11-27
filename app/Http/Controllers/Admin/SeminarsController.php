@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use App\Seminars;
+use App\UserSeminar;
 use Response;
 use Session;
 use File;
+use ZipStream\Exception;
 
 class SeminarsController extends Controller
 {
@@ -21,25 +24,19 @@ class SeminarsController extends Controller
      *
      * @return void
      */
-    public function __construct(){
+    public function __construct() {
         $this->middleware('auth:admin');
-        $this->seminarPath = public_path().'/uploads/seminars/';
+        $this->seminarPath = public_path() . '/uploads/seminars/';
     }
 
     /**
      * Display a listing of the resource.
      *
      */
-    public function index(){
+    public function index() {
         $seminars = Seminars::with(['eventDay', 'eventTime'])
             ->where('is_deleted', 0)
             ->paginate(10);
-//        echo '<pre>';
-//        print_r($seminars);die;
-//        $seminars = DB::table('seminars')
-//            ->select('*')
-//            ->where('is_deleted', 0)
-//            ->paginate(10);
         return view('admin/seminars/index', ['seminars' => $seminars]);
     }
 
@@ -47,10 +44,10 @@ class SeminarsController extends Controller
      * Show the form for creating a new resource.
      *
      */
-    public function create(){
+    public function create() {
         $eventDays = DB::table('event_days')
             ->select('*')
-            ->where('is_deleted', 0)->get();
+            ->where('is_active', 1)->get();
 
         return view('admin/seminars/create', ['eventDays' => $eventDays]);
     }
@@ -58,15 +55,15 @@ class SeminarsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      */
-    public function store(Request $request){
+    public function store(Request $request) {
         $this->validateInput($request);
         $fn = '';
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $file = $request->file('image');
             $extension = $file->extension();
-            $fn = substr(str_shuffle('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'),1, 10) . time() . '.' . $extension;
+            $fn = substr(str_shuffle('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'), 1, 10) . time() . '.' . $extension;
             $file->move($this->seminarPath, $fn);
         }
         $keys = [
@@ -83,7 +80,12 @@ class SeminarsController extends Controller
         $input['created_by'] = Auth::user()->id;
         $input['updated_by'] = Auth::user()->id;
 
-        Seminars::create($input);
+        $created = Seminars::create($input);
+        if ($created) {
+            Session::flash('success', 'Tạo mới thành công!');
+        } else {
+            Session::flash('error', 'Error');
+        }
 
         return redirect()->intended('admin/seminars');
     }
@@ -91,29 +93,27 @@ class SeminarsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id) {
         //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      */
-    public function edit($id)
-    {
+    public function edit($id) {
         $detail = Seminars::where(['is_deleted' => 0, 'id' => $id])->first();
         $eventDays = DB::table('event_days')
             ->select('*')
-            ->where('is_deleted', 0)->get();
+            ->where('is_active', 1)->get();
         $eventTimes = DB::table('event_times')
             ->select('*')
-            ->where('is_deleted', 0)->get();
-        
+            ->where(['is_active' => 1, 'event_day_id' => $detail['event_day_id']])->get();
+
         return view('admin.seminars.edit', [
             'detail' => $detail,
             'eventDays' => $eventDays,
@@ -124,21 +124,20 @@ class SeminarsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         $oldSem = Seminars::where(['id' => $id])->first();
         $oldImg = $oldSem['image'];
 
         $this->validateInput($request);
         $fn = '';
         $isUploaded = false;
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $file = $request->file('image');
             $extension = $file->extension();
-            $fn = substr(str_shuffle('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'),1, 10) . time() . '.' . $extension;
+            $fn = substr(str_shuffle('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'), 1, 10) . time() . '.' . $extension;
             $file->move($this->seminarPath, $fn);
             if (is_file($this->seminarPath . $fn)) {
                 $isUploaded = true;
@@ -154,44 +153,41 @@ class SeminarsController extends Controller
             'is_active'
         ];
         $input = $this->createQueryInput($keys, $request);
-        $input['image'] = $fn;
+        if ($request->hasFile('image')) {
+            $input['image'] = $fn;
+        }
         $input['updated_by'] = Auth::user()->id;
 
-        $update = Seminars::where('id', $id)
-            ->update($input);
+        $update = Seminars::where('id', $id)->update($input);
         if ($update && $isUploaded && !empty($oldImg)) {
             unlink($this->seminarPath . $oldImg);
         }
-        
+
+        Session::flash('success', 'Cập nhật thành công!');
         return redirect()->intended('admin/seminars');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      */
-    public function destroy($id)
-    {
-        $detail = BlogCategory::where('id', $id)->first();
-        if($this->checkActive('blog', 'category_id', $detail)){
-            $destroy = BlogCategory::where('id', $id)->update(['is_deleted' => 1]);
-
-            if($destroy){
-                Session::flash('success', 'Xóa thành công!');
-                return redirect()->intended('admin/seminars');
-            }
+    public function destroy($id) {
+        $deleted = Seminars::where('id', $id)->delete();
+        if ($deleted) {
+            Session::flash('success', 'Xóa thành công!');
+        } else {
+            Session::flash('error', 'Error');
         }
-        Session::flash('error', 'Xóa thất bại do danh mục nay tồn tại bài viết!');
         return redirect()->intended('admin/seminars');
     }
 
     /**
      * Search state from database base on some specific constraints
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      */
-    public function search(Request $request){
+    public function search(Request $request) {
         $constraints = [
             'title' => $request['name']
         ];
@@ -200,7 +196,7 @@ class SeminarsController extends Controller
         return view('admin/seminars/index', ['categories' => $categories, 'searchingVals' => $constraints]);
     }
 
-    private function doSearchingQuery($constraints){
+    private function doSearchingQuery($constraints) {
         $query = DB::table('blog_category')
             ->select('*')
             ->where('is_deleted', 0);
@@ -208,7 +204,7 @@ class SeminarsController extends Controller
         $index = 0;
         foreach ($constraints as $constraint) {
             if ($constraint != null) {
-                $query = $query->where($fields[$index], 'like', '%'.$constraint.'%');
+                $query = $query->where($fields[$index], 'like', '%' . $constraint . '%');
             }
 
             $index++;
@@ -226,16 +222,37 @@ class SeminarsController extends Controller
         ]);
     }
 
-    private function buildNewFolderPath($path, $fileName){
-        $newPath = $path . '/' . $fileName;
-        $newName = $fileName;
-        $counter = 1;
-        while (file_exists($newPath)) {
-            $newName = $counter . '-' . $fileName;
-            $newPath = $path . '/' . $newName;
-            $counter++;
-        }
+    public function getUserWishlist(Request $request) {
+        try {
+            $seminars = [];
+            $user = '';
+            $req = $request->all();
+            if (!empty($req['userId'])) {
+                $userSeminar = UserSeminar::with('seminar')->where(['user_id' => $req['userId']])->get();
+                if (!empty($userSeminar)) {
+                    foreach ($userSeminar as $value) {
+                        $seminars[] = [
+                            'name' => $value->seminar->name,
+                            'event_date' => date('d-m-Y', strtotime($value->seminar->eventDay->event_date)),
+                            'start_time' => $value->seminar->eventTime->start_time,
+                            'end_time' => $value->seminar->eventTime->end_time
+                        ];
+                    }
+                }
 
-        return array($newName, $newPath);
+                $user = User::find($req['userId']);
+            }
+            return response()->json([
+                'code' => '200',
+                'message' => 'OK',
+                'data' => [
+                    'seminars' => $seminars,
+                    'user' => $user->name,
+                ]
+            ]);
+
+        } catch (Exception $e) {
+            return response()->json(['code' => '400', 'message' => $e->getMessage(), 'data' => null]);
+        }
     }
 }

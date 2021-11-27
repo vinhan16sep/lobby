@@ -34,8 +34,6 @@ class EventTimesController extends Controller
         $eventTimes = EventTimes::with('eventDay')
             ->where('is_deleted', 0)
             ->paginate(10);
-//        echo '<pre>';
-//        print_r($eventTimes);die;
         return view('admin/event-times/index', ['eventTimes' => $eventTimes]);
     }
 
@@ -60,7 +58,7 @@ class EventTimesController extends Controller
     public function create(){
         $eventDays = DB::table('event_days')
             ->select('*')
-            ->where('is_deleted', 0)->get();
+            ->where('is_active', 1)->get();
 
         return view('admin/event-times/create', ['eventDays' => $eventDays]);
     }
@@ -78,7 +76,12 @@ class EventTimesController extends Controller
         $input['created_by'] = Auth::user()->id;
         $input['updated_by'] = Auth::user()->id;
 
-        EventTimes::create($input);
+        $created = EventTimes::create($input);
+        if ($created) {
+            Session::flash('success', 'Tạo mới thành công!');
+        } else {
+            Session::flash('error', 'Error');
+        }
 
         return redirect()->intended('admin/event-times');
     }
@@ -104,7 +107,7 @@ class EventTimesController extends Controller
         $detail = EventTimes::where(['is_deleted' => 0, 'id' => $id])->first();
         $eventDays = DB::table('event_days')
             ->select('*')
-            ->where('is_deleted', 0)->get();
+            ->where('is_active', 1)->get();
         
         return view('admin.event-times.edit', ['detail' => $detail, 'eventDays' => $eventDays]);
     }
@@ -125,14 +128,27 @@ class EventTimesController extends Controller
             $input = $this->createQueryInput($keys, $request);
             $input['updated_by'] = Auth::user()->id;
 
-            $update = EventTimes::where('id', $id)
-                ->update($input);
+            $update = EventTimes::where('id', $id)->update($input);
+
             if ($update) {
                 if ($request->is_active == 0) {
-                    Seminars::where('event_time_id', $id)->update(['is_active' => 0]);
+                    $deactiveSem = Seminars::where('event_time_id', $id)->update(['is_active' => 0]);
+                    if ($deactiveSem) {
+                        DB::commit();
+                        Session::flash('success', 'Cập nhật thành công!');
+                    } else {
+                        DB::rollback();
+                        Session::flash('error', 'Error');
+                    }
+                } else {
+                    DB::commit();
+                    Session::flash('success', 'Cập nhật thành công!');
                 }
+            } else {
+                DB::rollback();
+                Session::flash('error', 'Error');
             }
-            DB::commit();
+
             return redirect()->intended('admin/event-times');
 
         } catch (\Exception $e) {
@@ -150,17 +166,25 @@ class EventTimesController extends Controller
      */
     public function destroy($id)
     {
-        $detail = BlogCategory::where('id', $id)->first();
-        if($this->checkActive('blog', 'category_id', $detail)){
-            $destroy = BlogCategory::where('id', $id)->update(['is_deleted' => 1]);
-
-            if($destroy){
-                Session::flash('success', 'Xóa thành công!');
-                return redirect()->intended('admin/event-times');
+        try {
+            $deactiveSem = Seminars::where('event_day_id', $id)->get()->toArray();
+            if (!empty($deactiveSem)) {
+                Session::flash('error', 'Đang được sử dụng trong hội thảo');
+            } else {
+                $deleted = EventTimes::where('id',$id)->delete();
+                if ($deleted) {
+                    Session::flash('success', 'Xóa thành công!');
+                } else {
+                    Session::flash('error', 'Error');
+                }
             }
+            return redirect()->intended('admin/event-times');
+        } catch (\Exception $e) {
+            echo '<pre>';
+            print_r($e->getMessage());
+            die;
+            DB::rollback();
         }
-        Session::flash('error', 'Xóa thất bại do danh mục nay tồn tại bài viết!');
-        return redirect()->intended('admin/event-times');
     }
 
     /**
