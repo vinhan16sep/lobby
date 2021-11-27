@@ -88,7 +88,7 @@
 														@if ($eventTime->seminars)
 															@foreach ($eventTime->seminars as $sKey => $seminar)
 																<div class="item-event">
-																	<div class="ratio-wrapper ratio-wrapper-4-3">
+																	<div class="ratio-wrapper ratio-wrapper-16-9">
 																		<div class="overlay">
 																			<h6 class="subtitle-md">
 																				{{ $seminar->name }}

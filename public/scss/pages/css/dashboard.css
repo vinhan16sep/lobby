@@ -265,7 +265,7 @@
 }
 
 .view-dashboard .dashboard-wrapper .list-events {
-  width: 60%;
+  width: 75%;
 }
 
 .view-dashboard .dashboard-wrapper .list-events .card {
@@ -334,7 +334,13 @@
 }
 
 .view-dashboard .dashboard-wrapper .list-events .card .card-body .tab-content .tab-pane .event-schedule .event-item {
-  padding: 1.5rem 0.75rem 0;
+  padding: 0 0.75rem;
+}
+
+.view-dashboard .dashboard-wrapper .list-events .card .card-body .tab-content .tab-pane .event-schedule .event-item .event-time {
+  width: 100%;
+  margin-bottom: 0.75rem;
+  padding: 0 0.75rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -342,26 +348,30 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
-.view-dashboard .dashboard-wrapper .list-events .card .card-body .tab-content .tab-pane .event-schedule .event-item:not(:last-child) {
-  border-bottom: 1px solid var(--border);
-}
-
-.view-dashboard .dashboard-wrapper .list-events .card .card-body .tab-content .tab-pane .event-schedule .event-item .event-time {
-  width: 150px;
-  padding: 0 0.75rem;
+.view-dashboard .dashboard-wrapper .list-events .card .card-body .tab-content .tab-pane .event-schedule .event-item .event-time:after {
+  content: '';
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 auto;
+          flex: 1 0 auto;
+  height: 2px;
+  background-color: var(--gray-3);
 }
 
 .view-dashboard .dashboard-wrapper .list-events .card .card-body .tab-content .tab-pane .event-schedule .event-item .event-time h6 {
+  max-width: 150px;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 150px;
+          flex: 1 0 150px;
   padding: 0.25rem 0.5rem;
-  background-color: var(--gray-3);
+  border: 2px solid var(--gray-3);
   color: var(--text-subtitle);
   font-weight: 600;
   text-align: center;
@@ -369,8 +379,9 @@
 }
 
 .view-dashboard .dashboard-wrapper .list-events .card .card-body .tab-content .tab-pane .event-schedule .event-item .event-content {
-  width: calc(100% - 150px);
-  padding-bottom: 1.5rem;
+  width: 100%;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -417,9 +428,9 @@
 }
 
 .view-dashboard .dashboard-wrapper .list-events .card .card-body .tab-content .tab-pane .event-schedule .event-item .event-content .item-event {
-  width: 30%;
-  min-width: 360px;
-  padding: 0 0.75rem;
+  width: 50%;
+  padding: 0 1rem;
+  margin-bottom: 2rem;
 }
 
 .view-dashboard .dashboard-wrapper .list-events .card .card-body .tab-content .tab-pane .event-schedule .event-item .event-content .item-event:not(:first-child):hover .controls {
@@ -527,7 +538,7 @@
 }
 
 .view-dashboard .dashboard-wrapper .chat-area {
-  width: 40%;
+  width: 25%;
 }
 
 .view-dashboard .dashboard-wrapper .chat-area.chat-area-collapsed .chat-box {
@@ -587,7 +598,7 @@
 }
 
 .view-dashboard .dashboard-wrapper .chat-area .chat-box .card .card-body .list-users-wrapper {
-  width: 140px;
+  width: 120px;
   border-right: 1px solid var(--gray-1);
   overflow-x: hidden;
   overflow-y: overlay;
