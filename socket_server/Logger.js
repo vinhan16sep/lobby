@@ -22,8 +22,8 @@ class Logger {
                 }
             };
         });
-        // log4js.configure(path.join(path.dirname(process.execPath), "/log4js-config.json"));
-        log4js.configure("log4js-config.json");
+        log4js.configure(path.join(path.dirname(process.execPath), "/log4js-config.json"));
+        // log4js.configure("log4js-config.json");
         this.logger = log4js.getLogger("logfile");
         this.consoleLogger = log4js.getLogger("consoleout");
     }
