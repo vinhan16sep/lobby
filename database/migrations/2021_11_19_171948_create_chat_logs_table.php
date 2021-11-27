@@ -19,6 +19,7 @@ class CreateChatLogsTable extends Migration
             $table->bigInteger('to_user')->length(20);
             $table->text('message');
             $table->timestamp('created_at');
+            $table->boolean('seen')->default(false)->nullable();
         });
     }
 

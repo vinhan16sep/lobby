@@ -51,6 +51,7 @@ Route::prefix('admin')->group(function () {
         Route::get('user/import', 'UserController@import')->name('user.import');
         Route::post('user/doImport', 'UserController@doImport')->name('user.doImport');
         Route::post('user/store', 'UserController@store')->name('user.store');
+        Route::get('user/edit/{id}', 'UserController@edit')->name('user.edit');
         Route::post('user/update/{id}', 'UserController@update')->name('user.update');
         Route::get('user/destroy/{id}', 'UserController@destroy')->name('user.destroy');
         // Event days routes
@@ -78,5 +79,6 @@ Route::prefix('admin')->group(function () {
         Route::get('seminars/edit/{id}', 'SeminarsController@edit')->name('seminars.edit');
         Route::post('seminars/update/{id}', 'SeminarsController@update')->name('seminars.update');
         Route::get('seminars/destroy/{id}', 'SeminarsController@destroy')->name('seminars.destroy');
+        Route::get('seminars/getUserWishlist', 'SeminarsController@getUserWishlist')->name('seminars.getUserWishlist');
     });
 });

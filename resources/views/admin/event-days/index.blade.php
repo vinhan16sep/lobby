@@ -47,23 +47,21 @@
                 <tr role="row" class="odd">
                   <td class="sorting_1">{{ $item->event_date }}</td>
                   @if($item->is_active != 0)
-                  <td class="hidden-xs"><span class="glyphicon glyphicon-ok"></span></td>
+                  <td class="hidden-xs"><span class="glyphicon glyphicon-ok" style="color: green;"></span></td>
                   @else
                   <td class="hidden-xs"></td>
                   @endif
                   <td>
-                    <form class="row" method="POST" action="{{ route('event-days.destroy', ['id' => $item->id]) }}" onsubmit = "return confirm('Chắc chắn xoá?')">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <a href="{{ route('event-days.edit', ['id' => $item->id]) }}" class="btn btn-warning col-sm-3 col-xs-5 btn-margin">
-                        Sửa
-                        </a>
-{{--                        @if ($user->username != Auth::user()->username)--}}
-                         <button type="submit" class="btn btn-danger col-sm-3 col-xs-5 btn-margin">
-                          Xoá
-                        </button>
-                        {{--@endif--}}
-                    </form>
+                      <a href="{{ route('event-days.edit', ['id' => $item->id]) }}" class="col-sm-1 col-xs-1 btn-margin">
+                          <i class="fa fa-pencil"></i>
+                      </a>
+                      <a
+                          href="{{ route('event-days.destroy', ['id' => $item->id]) }}"
+                          class="col-sm-1 col-xs-1 btn-margin"
+                          onclick = "return confirm('Chắc chắn xoá?')"
+                      >
+                          <i class="fa fa-trash"></i>
+                      </a>
                   </td>
               </tr>
             @endforeach
