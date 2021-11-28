@@ -41,7 +41,7 @@ class HomeController extends Controller
             }, $userSeminar);
         }
 
-        $eventDays = EventDays::where('is_deleted', 0)->get();
+        $eventDays = EventDays::where('is_active', 1)->get();
         $userArr = User::all()->toJson();
 
         return view('home', [
