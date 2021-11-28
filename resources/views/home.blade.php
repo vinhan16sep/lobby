@@ -162,7 +162,7 @@
 				<div class="chat-box chat-public">
 					<div class="card">
 						<div class="card-header">
-							<div class="header-left">
+							<div class="header-left" style="padding-top:25px;">
 								<h6 class="subtitle-md">
 									Trao đổi - Kết nối
 								</h6>
