@@ -118,7 +118,8 @@
 																							</button>
 																						@endif
 																						<button class="btn btn-outline-light"
-																						        type="button">
+																						        type="button"
+																						        onclick="getSeminarDetail('{{ $seminar->id }}')">
 																							Chi tiết
 																						</button>
 																						<button class="btn btn-primary"

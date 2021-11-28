@@ -623,3 +623,18 @@ function addToWishlist(seminarId) {
         }
     });
 }
+
+function getSeminarDetail(seminarId) {
+    $.ajax({
+        url: '/home/getSeminarDetail',
+        method: 'GET',
+        data: {
+            seminarId: seminarId
+        },
+        success: function (res) {
+            if (res.code == '200') {
+                console.log(res.data);
+            }
+        }
+    });
+}

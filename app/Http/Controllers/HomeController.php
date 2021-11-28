@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Seminars;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -84,7 +85,21 @@ class HomeController extends Controller
             return response()->json(['code' => '200', 'message' => 'OK', 'data' => null]);
 
         } catch (Exception $e) {
-            return response()->json(['code' => '400', 'message' => $e->getMessage(), 'eventTimes' => []]);
+            return response()->json(['code' => '400', 'message' => $e->getMessage(), 'data' => null]);
+        }
+    }
+
+    public function getSeminarDetail(Request $request) {
+        $seminar = [];
+        try {
+            $req = $request->all();
+            if (!empty($req['seminarId'])) {
+                $seminar = Seminars::find($req['seminarId']);
+            }
+            return response()->json(['code' => '200', 'message' => 'OK', 'data' => $seminar]);
+
+        } catch (Exception $e) {
+            return response()->json(['code' => '400', 'message' => $e->getMessage(), 'data' => null]);
         }
     }
 }

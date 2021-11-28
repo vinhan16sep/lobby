@@ -35,7 +35,7 @@ class UserController extends Controller
     public function index(){
         $users = DB::table('users')
             ->select('*')
-            ->paginate(10);
+            ->paginate(100);
         return view('admin/user/index', ['users' => $users]);
     }
 
@@ -81,8 +81,8 @@ class UserController extends Controller
                             $user = User::create([
                                 'name' => $dataVal[0],
                                 'email' => $dataVal[1],
-                                'password' => bcrypt($dataVal[2]),
-                                'phone' => $dataVal[3],
+                                'password' => bcrypt(str_replace(' ', '', $dataVal[2])),
+                                'phone' => str_replace(' ', '', $dataVal[3]),
                                 'company' => $dataVal[4],
                                 'position' => $dataVal[5],
                                 'address' => $dataVal[6]
