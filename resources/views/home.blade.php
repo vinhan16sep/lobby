@@ -63,71 +63,85 @@
 									];
 								@endphp
 								<li class="nav-item" role="presentation">
-									<button class="nav-link {{ $dKey == 0 ? 'active' : '' }}" id="btnTab_{{ $dKey + 1  }}"
-											data-bs-toggle="tab" data-bs-target="#tab_{{ $dKey + 1  }}"
-											type="button" role="tab" aria-controls="tab_{{ $dKey + 1  }}" aria-selected="true">
-										{{ $convertArr[$dateTxt] }}, {{ date('d-m-Y', strtotime($eventDay->event_date))  }}
+									<button class="nav-link {{ $dKey == 0 ? 'active' : '' }}"
+									        id="btnTab_{{ $dKey + 1  }}"
+									        data-bs-toggle="tab" data-bs-target="#tab_{{ $dKey + 1  }}"
+									        type="button" role="tab" aria-controls="tab_{{ $dKey + 1  }}"
+									        aria-selected="true">
+										{{ $convertArr[$dateTxt] }}
+										, {{ date('d-m-Y', strtotime($eventDay->event_date))  }}
 									</button>
 								</li>
 							@endforeach
 						</ul>
 						<div class="tab-content" id="eventTabsContent">
 							@foreach ($eventDays as $dKey => $eventDay)
-								<div class="tab-pane fade {{ $dKey == 0 ? 'show active' : '' }}" id="tab_{{ $dKey + 1  }}"
-									 role="tabpanel" aria-labelledby="btnTab_{{ $dKey + 1  }}">
+								<div class="tab-pane fade {{ $dKey == 0 ? 'show active' : '' }}"
+								     id="tab_{{ $dKey + 1  }}"
+								     role="tabpanel" aria-labelledby="btnTab_{{ $dKey + 1  }}">
 									<div class="event-schedule">
 										@if ($eventDay->eventTimes)
 											@foreach ($eventDay->eventTimes as $tKey => $eventTime)
-												<div class="event-item">
-													<div class="event-time">
-														<h6 class="subtitle-md">
-															{{ $eventTime->start_time }} - {{ $eventTime->end_time }}
-														</h6>
-													</div>
-													<div class="event-content">
-														@if ($eventTime->seminars)
-															@foreach ($eventTime->seminars as $sKey => $seminar)
-																<div class="item-event">
-																	<div class="ratio-wrapper ratio-wrapper-16-9">
-																		<div class="overlay">
-																			<h6 class="subtitle-md">
-																				{{ $seminar->name }}
-																			</h6>
+												@if ($eventTime->is_active == 1)
+													<div class="event-item">
+														<div class="event-time">
+															<h6 class="subtitle-md">
+																{{ $eventTime->start_time }}
+																- {{ $eventTime->end_time }}
+															</h6>
+														</div>
+														<div class="event-content">
+															@if ($eventTime->seminars)
+																@foreach ($eventTime->seminars as $sKey => $seminar)
+																	@if ($seminar->is_active == 1)
+																		<div class="item-event">
+																			<div class="ratio-wrapper ratio-wrapper-16-9">
+																				<div class="overlay">
+																					<h6 class="subtitle-md">
+																						{{ $seminar->name }}
+																					</h6>
 
-																			<div class="controls">
-																				@if (!empty($seminarArr) && in_array($seminar->id, $seminarArr))
-																					<button class="btn btn-outline-light" id="btn-{{ $seminar->id }}"
-																							type="button" disabled>
-																						Đã theo dõi
-																					</button>
-																				@else
-																					<button class="btn btn-outline-light" id="btn-{{ $seminar->id }}"
-																							type="button"
-																							onclick="addToWishlist('{{ $seminar->id }}')">
-																						Theo dõi
-																					</button>
-																				@endif
-																				<button class="btn btn-outline-light" type="button">
-																					Chi tiết
-																				</button>
-																				<button class="btn btn-primary" type="button"
-																						onclick="window.open('{{ $seminar->link }}', '_blank')">
-																					Tham gia sự kiện
-																				</button>
+																					<div class="controls">
+																						@if (!empty($seminarArr) && in_array($seminar->id, $seminarArr))
+																							<button class="btn btn-outline-light"
+																							        id="btn-{{ $seminar->id }}"
+																							        type="button"
+																							        disabled>
+																								Đã theo dõi
+																							</button>
+																						@else
+																							<button class="btn btn-outline-light"
+																							        id="btn-{{ $seminar->id }}"
+																							        type="button"
+																							        onclick="addToWishlist('{{ $seminar->id }}')">
+																								Theo dõi
+																							</button>
+																						@endif
+																						<button class="btn btn-outline-light"
+																						        type="button">
+																							Chi tiết
+																						</button>
+																						<button class="btn btn-primary"
+																						        type="button"
+																						        onclick="window.open('{{ $seminar->link }}', '_blank')">
+																							Tham gia sự kiện
+																						</button>
+																					</div>
+																				</div>
+
+																				<div class="img-mask">
+																					<img src="{{ asset('uploads/seminars/' . $seminar->image) }}"
+																					     width="300" height="200"
+																					     alt="{{ $seminar->name }}"/>
+																				</div>
 																			</div>
 																		</div>
-		
-																		<div class="img-mask">
-																			<img src="{{ asset('uploads/seminars/' . $seminar->image) }}"
-																				 width="300" height="200"
-																				 alt="{{ $seminar->name }}"/>
-																		</div>
-																	</div>
-																</div>
-															@endforeach
-														@endif
+																	@endif
+																@endforeach
+															@endif
+														</div>
 													</div>
-												</div>
+												@endif
 											@endforeach
 										@endif
 									</div>
@@ -194,13 +208,13 @@
 							<div class="img-mask img-mask-circle">
 								<img src="" alt="">
 							</div>
-		
+
 							<div class="unread" style="display: none">
 								<div class="circle">
 									1
 								</div>
 							</div>
-		
+
 							<div class="status">
 								<div class="circle"></div>
 							</div>
@@ -237,13 +251,13 @@
 @section('js')
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
 	<script>
-		const SOCKET_URL = '{{ config('env.SOCKET_URL') }}';
+        const SOCKET_URL = '{{ config('env.SOCKET_URL') }}';
         const currentUser = {
-			id: '{{ $userId }}',
-			name: '{{ $userName }}',
-			company: '{{ $userCompany }}',
-			position: '{{ $userPosition }}'
-		};
+            id: '{{ $userId }}',
+            name: '{{ $userName }}',
+            company: '{{ $userCompany }}',
+            position: '{{ $userPosition }}'
+        };
 	</script>
 	<script src="{{ asset('js/home/socket_client.js?v=').time() }}"></script>
 	<script src="{{ asset('js/home/function.js?v=').time() }}"></script>
