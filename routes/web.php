@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     return view('auth.login');
-});
+})->name('default');
 
 Auth::routes();
 
@@ -55,6 +55,8 @@ Route::prefix('admin')->group(function () {
         Route::get('user/edit/{id}', 'UserController@edit')->name('user.edit');
         Route::post('user/update/{id}', 'UserController@update')->name('user.update');
         Route::get('user/destroy/{id}', 'UserController@destroy')->name('user.destroy');
+        Route::get('user/getUserInfo', 'UserController@getUserInfo')->name('user.getUserInfo');
+        Route::get('user/changePassword', 'UserController@changePassword')->name('user.changePassword');
         // Event days routes
         Route::get('event-days', 'EventDaysController@index')->name('event-days.index');
         Route::post('event-days/search', 'EventDaysController@search')->name('event-days.search');
