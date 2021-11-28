@@ -24,6 +24,7 @@ Route::prefix('home')->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/addToWishlist', 'HomeController@addToWishlist')->name('home.addToWishlist');
     Route::get('/getListUsers', 'HomeController@getListUsers')->name('home.getListUsers');;
+    Route::get('/getSeminarDetail', 'HomeController@getSeminarDetail')->name('home.getSeminarDetail');
 });
 
 Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard');
