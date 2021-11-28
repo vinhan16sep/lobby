@@ -42,9 +42,14 @@
 			<div class="list-events">
 				<div class="card">
 					<div class="card-header">
-						<h6 class="subtitle-md">
-							Danh sách hội thảo
-						</h6>
+						<div class="header-left">
+							<h6 class="subtitle-md">
+								Danh sách hội thảo
+							</h6>
+							<p class="p-sm">
+								Vui lòng chọn "THEO DÕI" để vào lịch cá nhân, "CHI TIẾT" để tìm hiểu nội dung, diễn giả và "THAM GIA" để vào phòng họp
+							</p>
+						</div>
 					</div>
 					<div class="card-body">
 						<ul class="nav nav-pills" id="eventTabs" role="tablist">
@@ -157,9 +162,14 @@
 				<div class="chat-box chat-public">
 					<div class="card">
 						<div class="card-header">
-							<h6 class="subtitle-md">
-								Trao đổi - Kết nối
-							</h6>
+							<div class="header-left">
+								<h6 class="subtitle-md">
+									Trao đổi - Kết nối
+								</h6>
+								<p class="p-sm">
+									Vui lòng nhắn tin để kết nối với tất cả Đại biểu hoặc chọn Từng đại biểu để trao đổi, giao lưu riêng
+								</p>
+							</div>
 						</div>
 						<div class="card-body">
 							<div class="list-users-wrapper">
@@ -226,21 +236,30 @@
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="modal fade" id="followSuccessModal" role="dialog">
-		<div class="modal-dialog">
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-body">
-					<p>Bạn đã đăng ký theo dõi hội thảo thành công</p>
-				</div>
-				<div class="modal-footer" style="text-align: center">
-					<button type="button" class="btn btn-default" data-bs-dismiss="modal">
-						Đóng
-					</button>
+
+		<div class="modal fade" id="followSuccessModal" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-body">
+						<p>Bạn đã đăng ký theo dõi hội thảo thành công</p>
+					</div>
+					<div class="modal-footer" style="text-align: center">
+						<button type="button" class="btn btn-default" data-bs-dismiss="modal">
+							Đóng
+						</button>
+					</div>
 				</div>
 			</div>
-
+		</div>
+	
+		<div class="modal fade" id="modalSeminarDetail" role="dialog">
+			<div class="modal-dialog modal-lg modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-body">
+	
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 @endsection

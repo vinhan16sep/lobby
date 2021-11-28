@@ -633,7 +633,11 @@ function getSeminarDetail(seminarId) {
         },
         success: function (res) {
             if (res.code == '200') {
-                console.log(res.data);
+                const $modal = $('#modalSeminarDetail');
+
+                $modal.find('.modal-body').html(res.html);
+
+                $modal.modal('show');
             }
         }
     });

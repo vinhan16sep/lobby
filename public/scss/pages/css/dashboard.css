@@ -256,28 +256,28 @@
 
 .view-dashboard .dashboard-wrapper .list-events .card .card-header,
 .view-dashboard .dashboard-wrapper .chat-area .card .card-header {
-  padding: 0.75rem;
+  height: 72px;
+  padding: 0 0.75rem;
 }
 
 .view-dashboard .dashboard-wrapper .list-events .card .card-header h6,
 .view-dashboard .dashboard-wrapper .chat-area .card .card-header h6 {
+  margin-bottom: 0.5rem;
+  color: var(--primary);
   font-weight: 700;
+  text-transform: uppercase;
 }
 
 .view-dashboard .dashboard-wrapper .list-events {
-  width: 75%;
+  width: 66.67%;
 }
 
 .view-dashboard .dashboard-wrapper .list-events .card {
   height: 100%;
 }
 
-.view-dashboard .dashboard-wrapper .list-events .card .card-header {
-  height: 45px;
-}
-
 .view-dashboard .dashboard-wrapper .list-events .card .card-body {
-  height: calc(100% - 45px);
+  height: calc(100% - 72px);
   padding: 0;
 }
 
@@ -538,7 +538,7 @@
 }
 
 .view-dashboard .dashboard-wrapper .chat-area {
-  width: 25%;
+  width: 33.33%;
 }
 
 .view-dashboard .dashboard-wrapper .chat-area.chat-area-collapsed .chat-box {
@@ -559,6 +559,14 @@
   display: none;
 }
 
+.view-dashboard .dashboard-wrapper .chat-area .chat-box.chat-private .card .card-header {
+  height: 50px;
+}
+
+.view-dashboard .dashboard-wrapper .chat-area .chat-box.chat-private .card .card-header h6 {
+  text-transform: none;
+}
+
 .view-dashboard .dashboard-wrapper .chat-area .chat-box.chat-private .card .card-body {
   height: calc(100% - 108px);
 }
@@ -567,20 +575,12 @@
   height: 100%;
 }
 
-.view-dashboard .dashboard-wrapper .chat-area .chat-box .card .card-header {
-  height: 50px;
-}
-
-.view-dashboard .dashboard-wrapper .chat-area .chat-box .card .card-header h6 {
-  font-weight: 600;
-}
-
 .view-dashboard .dashboard-wrapper .chat-area .chat-box .card .card-header .btn.btn-close-chat {
   padding: 0;
 }
 
 .view-dashboard .dashboard-wrapper .chat-area .chat-box .card .card-body {
-  height: calc(100% - 58px);
+  height: calc(100% - 130px);
   padding: 0;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -598,7 +598,7 @@
 }
 
 .view-dashboard .dashboard-wrapper .chat-area .chat-box .card .card-body .list-users-wrapper {
-  width: 120px;
+  width: 140px;
   border-right: 1px solid var(--gray-1);
   overflow-x: hidden;
   overflow-y: overlay;
@@ -899,5 +899,76 @@
 
 .view-dashboard .dashboard-wrapper .chat-area .chat-box .card .card-footer .btn {
   min-width: 100px;
+}
+
+.view-dashboard .modal#modalSeminarDetail .modal-dialog .modal-content .modal-body {
+  padding: 0;
+}
+
+.view-dashboard .modal#modalSeminarDetail .modal-dialog .modal-content .modal-body .seminar-cover {
+  margin-bottom: 1.5rem;
+}
+
+.view-dashboard .modal#modalSeminarDetail .modal-dialog .modal-content .modal-body .seminar-cover .ratio-wrapper .img-mask {
+  border-radius: 0.5rem;
+}
+
+.view-dashboard .modal#modalSeminarDetail .modal-dialog .modal-content .modal-body .seminar-cover .ratio-wrapper .overlay {
+  width: 100%;
+  height: 100%;
+  padding: 1.5rem;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0)), to(rgba(0, 0, 0, 0.5)));
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5));
+  background-image: -o-linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5));
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.view-dashboard .modal#modalSeminarDetail .modal-dialog .modal-content .modal-body .seminar-cover .ratio-wrapper .overlay h6 {
+  color: var(--white);
+  text-transform: uppercase;
+}
+
+.view-dashboard .modal#modalSeminarDetail .modal-dialog .modal-content .modal-body .seminar-desc {
+  padding: 0 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.view-dashboard .modal#modalSeminarDetail .modal-dialog .modal-content .modal-body .seminar-desc p:not(:last-child) {
+  margin-bottom: 0.75rem;
+}
+
+.view-dashboard .modal#modalSeminarDetail .modal-dialog .modal-content .modal-body .seminar-buttons {
+  height: 60px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 /*# sourceMappingURL=dashboard.css.map */
