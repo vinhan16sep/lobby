@@ -16,6 +16,7 @@ use Session;
 use File;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use ZipStream\Exception;
 
 class UserController extends Controller
 {
@@ -243,5 +244,47 @@ class UserController extends Controller
         $this->validate($request, [
             'event_date' => 'required',
         ]);
+    }
+
+    public function getUserInfo(Request $request) {
+        try {
+            $user = '';
+            $req = $request->all();
+            if (!empty($req['userId'])) {
+                $user = User::find($req['userId']);
+            }
+            return response()->json([
+                'code' => '200',
+                'message' => 'OK',
+                'data' => [
+                    'user' => $user
+                ]
+            ]);
+
+        } catch (Exception $e) {
+            return response()->json(['code' => '400', 'message' => $e->getMessage(), 'data' => null]);
+        }
+    }
+
+    public function changePassword(Request $request) {
+        try {
+            $req = $request->all();
+            if (!empty($req['userId']) && !empty($req['pwd'])) {
+                $input = [
+                    'password' => bcrypt($req['pwd'])
+                ];
+                $update = User::where('id', $req['userId'])->update($input);
+            }
+            return response()->json([
+                'code' => '200',
+                'message' => 'OK',
+                'data' => [
+                    'new_password' => $req['pwd']
+                ]
+            ]);
+
+        } catch (Exception $e) {
+            return response()->json(['code' => '400', 'message' => $e->getMessage(), 'data' => null]);
+        }
     }
 }

@@ -42,6 +42,17 @@
                     <a href="https://dxsummit.vn/chuong-trinh/" class="btn" target="_blank">
                         Chương trình
                     </a>
+                    @if (!Auth::user())
+                        @if (last(request()->segments()) == 'register')
+                            <a href="{{ route('default') }}" class="btn btn-primary">
+                                Đăng nhập
+                            </a>
+                        @else
+                            <a href="{{ route('register') }}" class="btn btn-primary">
+                                Đăng ký
+                            </a>
+                        @endif
+                    @endif
                 </div>
 
                 

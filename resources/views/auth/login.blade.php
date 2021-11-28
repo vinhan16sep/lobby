@@ -12,6 +12,14 @@
         <div class="overlay">
             <div class="form-login">
                 <div class="panel panel-default">
+                    <div class="row">
+                        @if(Session::has('error'))
+                            <p class="alert {{ Session::get('alert-class', 'alert-warning') }}">{{ Session::get('error') }}<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></p>
+                        @endif
+                        @if(Session::has('success'))
+                            <p class="alert {{ Session::get('alert-class', 'alert-success') }}">{{ Session::get('success') }}<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></p>
+                        @endif
+                    </div>
                     <div class="panel-heading">Đăng nhập</div>
                     <div class="panel-body">
                         <form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}">
