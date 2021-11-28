@@ -96,7 +96,9 @@ class HomeController extends Controller
             if (!empty($req['seminarId'])) {
                 $seminar = Seminars::find($req['seminarId']);
             }
-            return response()->json(['code' => '200', 'message' => 'OK', 'data' => $seminar]);
+
+            $html = view('home._ajax._seminar_detail', compact('seminar'))->render();
+            return response()->json(['code' => '200', 'message' => 'OK', 'html' => $html]);
 
         } catch (Exception $e) {
             return response()->json(['code' => '400', 'message' => $e->getMessage(), 'data' => null]);
