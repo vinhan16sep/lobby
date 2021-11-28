@@ -63,7 +63,6 @@ class UserController extends Controller
             $path = $request->file('file')->getRealPath();
             $spreadsheet = IOFactory::load($path);
             $data = $spreadsheet->getActiveSheet()->toArray();
-
             if (count($data) > 1) {
                 DB::beginTransaction();
                 try {
@@ -71,28 +70,37 @@ class UserController extends Controller
                         if ($dataKey == 0) {
                             continue;
                         }
-                        $user = User::create([
-                            'name' => $dataVal[0],
-                            'email' => $dataVal[1],
-                            'password' => bcrypt($dataVal[2]),
-                            'phone' => $dataVal[3],
-                            'company' => $dataVal[4],
-                            'position' => $dataVal[5],
-                            'address' => $dataVal[6]
-                        ]);
-                        if ($user) {
-                            $events = explode(',', $dataVal[7]);
-                            $relateData = [];
-                            if (!empty($events)) {
-                                foreach ($events as $key => $value) {
-                                    $relateData[$key] = [
-                                        'user_id' => $user->id,
-                                        'seminar_id' => $value,
-                                        'created_by' => Auth::user()->id,
-                                        'updated_by' => Auth::user()->id
-                                    ];
+                        $emptyRow = true;
+                        foreach ($dataVal as $val) {
+                            if (!empty($val)) {
+                                $emptyRow = false;
+                                break;
+                            }
+                        }
+                        if (!$emptyRow) {
+                            $user = User::create([
+                                'name' => $dataVal[0],
+                                'email' => $dataVal[1],
+                                'password' => bcrypt($dataVal[2]),
+                                'phone' => $dataVal[3],
+                                'company' => $dataVal[4],
+                                'position' => $dataVal[5],
+                                'address' => $dataVal[6]
+                            ]);
+                            if ($user) {
+                                $events = explode(',', $dataVal[7]);
+                                $relateData = [];
+                                if (!empty($events)) {
+                                    foreach ($events as $key => $value) {
+                                        $relateData[$key] = [
+                                            'user_id' => $user->id,
+                                            'seminar_id' => $value,
+                                            'created_by' => Auth::user()->id,
+                                            'updated_by' => Auth::user()->id
+                                        ];
+                                    }
+                                    UserSeminar::insert($relateData);
                                 }
-                                UserSeminar::insert($relateData);
                             }
                         }
                     }
