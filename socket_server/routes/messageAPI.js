@@ -74,7 +74,7 @@ module.exports = function (dbWrapper, usersWrapper, logger) {
         }
         // authorized
         let userPartner = req.query.userPartner;
-        dbWrapper.setReadMessage(paramUserId, userPartner);
+        dbWrapper.setReadMessage(userPartner, paramUserId);
         res.send({ response: "Success" }).status(200);
     });
     router.get("/countUnread", async function (req, res) {
