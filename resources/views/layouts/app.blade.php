@@ -72,6 +72,9 @@
                             </button>
 
                             <div class="dropdown-menu dropdown-menu-end">
+                                <a href="{{ route('detail') }}" class="dropdown-item">
+                                    <i class="fas fa-user"></i> Thông tin cá nhân
+                                </a>
                                 <a href="#" class="dropdown-item btn-logout">
                                     <i class="fas fa-sign-out-alt"></i> Đăng xuất
                                 </a>

@@ -28,6 +28,7 @@ Route::prefix('home')->group(function () {
 });
 
 Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard');
+Route::get('/detail', 'DetailController@index')->name('detail');
 Route::get('/users/logout', 'Auth\LoginController@userLogout')->name('user.logout');
 
 Route::prefix('admin')->group(function () {
