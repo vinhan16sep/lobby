@@ -16,7 +16,7 @@
 			box-shadow: none;
 		}
 	</style>
-	<div class="view-home" style="background-image: url('{{ asset("public/img/Wallpaper.jpg") }}')">
+	<div class="view-home" style="background-image: url('{{ asset("img/Wallpaper.jpg") }}')">
 		<div class="overlay">
 			<div class="form-login" style="width: 60%;">
 				<div class="panel panel-default" style="width: 100%;">
@@ -135,7 +135,7 @@
 @endsection
 
 @section('css')
-	<link rel="stylesheet" href="{{ asset('scss/pages/css/home.css') }}">
+	<link rel="stylesheet" href="{{ asset('scss/pages/css/signup.css') }}">
 @endsection
 
 @section('js')

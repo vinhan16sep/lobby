@@ -2,6 +2,13 @@ let users = [];
 // getListUsers();
 
 $(document).ready(function () {
+    // SCROLL TO LIVE EVENT
+    $('.tab-pane.active')
+        .stop()
+        .animate({
+            scrollTop: $('.event-item.live').offset().top - $('.tab-pane.active').offset().top
+        });
+
     $(document)
         .on('click', function (e) {
             if ($(e.target).parents('.user-info-wrapper').length == 0) {
@@ -44,19 +51,15 @@ $(document).ready(function () {
                         $chatBox.data('user-id', userInfo.userId);
                         $chatBox.find('h6').text(userInfo.name);
 
-                        $chatBox.parent().addClass('chat-area-collapsed');
+                        $chatBox.parents('.chat-area').addClass('chat-area-collapsed');
 
                         $chatBox.find('.append-message').empty();
                         $chatBox.show();
 
+                        $(_this).parent().find('.unread .circle').text(0);
+                        $(_this).parent().find('.unread').hide();
+
                         initChatPrivate(userInfo.userId);
-
-                        setUserReadMessage(userInfo.userId, () => {
-                            userInfo.unread = 0;
-
-                            $(_this).parent().find('.unread .circle').text(0);
-                            $(_this).parent().find('.unread').hide();
-                        });
                     });
 
                 $card.addClass('show');
@@ -72,11 +75,12 @@ $(document).ready(function () {
 
     $('.btn-close-chat').on('click', function () {
         $('.chat-private').removeData('user-id');
-        $('.chat-private').parent().removeClass('chat-area-collapsed');
+        $('.chat-private').parents('.chat-area').removeClass('chat-area-collapsed');
         $('.chat-private').hide();
     });
 
-    // initChatBox('.chat-public');
+    initChatBox('.chat-public');
+    initChatBox('.chat-private');
 });
 
 function getListUsers(callback = false) {
@@ -283,14 +287,24 @@ function initChatPublic() {
 
 function initChatPrivate(userId) {
     getChatLogs(CHATLOG.PRIVATE, userId);
+
+    setUserReadMessage(userId, () => {
+        let userInfo = users.find((usr) => {
+            return usr.userId == userId;
+        });
+
+        if (userInfo) {
+            userInfo.unread = 0;
+        }
+    });
 }
+
+let chatlogPerResponse = 12,
+    limitStart,
+    limitEnd;
 
 function loadChatDialog(type, data, prepend = false) {
     let $wrapper, $append;
-
-    if (!prepend) {
-        data = data.reverse();
-    }
 
     if (type == 0) {
         $wrapper = $('.chat-public');
@@ -303,7 +317,20 @@ function loadChatDialog(type, data, prepend = false) {
     $append.find('.chat-loading').remove();
 
     if (data.length > 0) {
-        data.forEach((msg, index) => {
+        data = data.reverse();
+        limitStart = data.length - chatlogPerResponse;
+        limitEnd = data.length - 1;
+
+        if (limitStart < 0) {
+            limitStart = 0;
+        }
+
+        console.log(limitStart, limitEnd);
+
+        for (let i = limitStart; i <= limitEnd; i++) {
+            let msg = data[i];
+            let index = i;
+
             let fromUser = users.find((usr) => {
                 return usr.userId == msg.fromUser;
             });
@@ -331,7 +358,7 @@ function loadChatDialog(type, data, prepend = false) {
             `);
 
             $chatWrap.data('sender-id', fromUser.userId);
-            $chatWrap.data('time', msg.time);
+            // $chatWrap.data('time', msg.time);
 
             if (type == CHATLOG.PRIVATE) {
                 $chatWrap.find('.item-avatar').remove();
@@ -353,7 +380,7 @@ function loadChatDialog(type, data, prepend = false) {
             }
 
             if (prepend) {
-                if (fromUser.userId != data[prevIndex].fromUser) {
+                if ($box.length == 0 || fromUser.userId != data[prevIndex].fromUser) {
                     $append.prepend($chatWrap);
                 }
             } else {
@@ -363,27 +390,97 @@ function loadChatDialog(type, data, prepend = false) {
             }
 
             let $span = $(`<p>${msg.content}</p>`);
+            $span.data('time', msg.time);
+            $span.attr('time', msg.time);
 
             if (prepend) {
                 $span.appendTo($append.find('.chat-item:first-child').find('.content-chat'));
-                $append.scrollTop(0);
+                $append.scrollTop(100);
             } else {
                 $span.appendTo($append.find('.chat-item:last-child').find('.content-chat'));
                 $append.scrollTop($wrapper.find('.append-message')[0].scrollHeight);
             }
-        });
+        }
+
+        // data.forEach((msg, index) => {
+        //     let fromUser = users.find((usr) => {
+        //         return usr.userId == msg.fromUser;
+        //     });
+
+        //     let $box = $append.find('.chat-item:last-child');
+
+        //     let userAvatar = fromUser.avatar != null ? fromUser.avatar : `https://ui-avatars.com/api/?name=${fromUser.name}`;
+
+        //     let $chatWrap = $(`
+        //         <div class="chat-item">
+        //             <div class="item-avatar">
+        //                 <div class="img-mask img-mask-circle">
+        //                     <img src="${userAvatar}" alt="Avatar of ${fromUser.name}">
+        //                 </div>
+        //             </div>
+
+        //             <div class="item-content">
+        //                 <p class="p-name">
+        //                     ${fromUser.name}
+        //                 </p>
+
+        //                 <div class="content-chat"></div>
+        //             </div>
+        //         </div>
+        //     `);
+
+        //     $chatWrap.data('sender-id', fromUser.userId);
+        //     $chatWrap.data('time', msg.time);
+
+        //     if (type == CHATLOG.PRIVATE) {
+        //         $chatWrap.find('.item-avatar').remove();
+        //         $chatWrap.find('.p-name').remove();
+        //     }
+
+        //     if (type == CHATLOG.PUBLIC && msg.fromUser == currentUser.id) {
+        //         $chatWrap.find('.item-avatar').remove();
+        //         $chatWrap.find('.p-name').text('Me');
+        //     }
+
+        //     if (msg.fromUser == currentUser.id) {
+        //         $chatWrap.addClass('chat-item-mine');
+        //     }
+
+        //     let prevIndex = 0;
+        //     if (index > 0) {
+        //         prevIndex = index - 1;
+        //     }
+
+        //     if (prepend) {
+        //         if (fromUser.userId != data[prevIndex].fromUser) {
+        //             $append.prepend($chatWrap);
+        //         }
+        //     } else {
+        //         if ($box.length == 0 || fromUser.userId != data[prevIndex].fromUser) {
+        //             $append.append($chatWrap);
+        //         }
+        //     }
+
+        //     let $span = $(`<p>${msg.content}</p>`);
+
+        //     if (prepend) {
+        //         $span.appendTo($append.find('.chat-item:first-child').find('.content-chat'));
+        //         $append.scrollTop(0);
+        //     } else {
+        //         $span.appendTo($append.find('.chat-item:last-child').find('.content-chat'));
+        //         $append.scrollTop($wrapper.find('.append-message')[0].scrollHeight);
+        //     }
+        // });
     }
 
-    if (type == CHATLOG.PUBLIC) {
-        initChatBox('.chat-public');
-    } else if (type == CHATLOG.PRIVATE) {
-        initChatBox('.chat-private');
-    }
+    // if (type == CHATLOG.PUBLIC) {
+    //     initChatBox('.chat-public');
+    // } else if (type == CHATLOG.PRIVATE) {
+    //     initChatBox('.chat-private');
+    // }
 }
 
 function initChatBox(wrapper) {
-    // $(wrapper).find('.append-message').empty();
-
     $(wrapper)
         .find('.input-message')
         .on('keyup', function (e) {
@@ -398,25 +495,27 @@ function initChatBox(wrapper) {
             sendChatMessage(wrapper);
         });
 
+    let timeoutLoadmore;
+
     $(wrapper)
         .find('.append-message')
         .on('scroll', function () {
             if ($(wrapper).find('.append-message').scrollTop() == 0) {
-                // $(wrapper).find('.append-message').find('.chat-loading').remove();
-                // $(wrapper).find('.append-message').prepend('<p class="p-overline chat-loading">Loading...</p>');
+                clearTimeout(timeoutLoadmore);
+                timeoutLoadmore = setTimeout(() => {
+                    let time = $(wrapper).find('.append-message .chat-item:first-child .content-chat p:first-child').data('time');
+                    let type, id;
 
-                let time = $(wrapper).find('.append-message .chat-item:first-child').data('time');
-                let type, id;
+                    if (wrapper == '.chat-public') {
+                        type = CHATLOG.PUBLIC;
+                        id = currentUser.id;
+                    } else if (wrapper == '.chat-private') {
+                        type = CHATLOG.PRIVATE;
+                        id = $(wrapper).data('user-id');
+                    }
 
-                if (wrapper == '.chat-public') {
-                    type = CHATLOG.PUBLIC;
-                    id = currentUser.id;
-                } else if (wrapper == '.chat-private') {
-                    type = CHATLOG.PRIVATE;
-                    id = $(wrapper).data('user-id');
-                }
-
-                getChatLogs(type, id, time);
+                    getChatLogs(type, id, time);
+                }, 500);
             }
         });
 }
@@ -561,11 +660,10 @@ function receiveChatMessage(wrapper, data) {
             } else {
                 $(wrapper).find('h6').text(user.name);
                 $(wrapper).data('user-id', data.id);
-                $(wrapper).parent().addClass('chat-area-collapsed');
+                $(wrapper).parents('.chat-area').addClass('chat-area-collapsed');
                 $(wrapper).show();
 
                 initChatPrivate(userId);
-                // initChatBox('.chat-private');
             }
         }
 
@@ -641,4 +739,12 @@ function getSeminarDetail(seminarId) {
             }
         }
     });
+}
+
+function blockChatBox(block = true) {
+    $('.chat-area .card').find('.card-block').removeClass('show');
+
+    if (block) {
+        $('.chat-area .card').find('.card-block').addClass('show');
+    }
 }

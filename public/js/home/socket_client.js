@@ -25,6 +25,14 @@ $().ready(() => {
             company: currentUser.company,
             position: currentUser.position
         });
+
+        blockChatBox(false);
+    });
+
+    socket.on('disconnect', () => {
+        console.log('disconnect');
+
+        blockChatBox();
     });
 
     socket.on(SocketMessageType.JOIN, (data) => {

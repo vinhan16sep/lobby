@@ -42,6 +42,28 @@
                     <a href="https://dxsummit.vn/chuong-trinh/" class="btn" target="_blank">
                         Chương trình
                     </a>
+
+                    <div class="dropdown">
+                        <button class="btn dropdown-toggle" data-bs-toggle="dropdown" type="button">
+                            Kết nối
+                        </button>
+
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <a href="#" class="dropdown-item">
+                                Đăng ký hội viên VINASA 
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                Danhbaict.vn
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                VINASA Connect
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                Kết nối với Invest Hong Kong và Gặp gỡ DN Đài Loan
+                            </a>
+                        </div>
+                    </div>
+
                     @if (!Auth::user())
                         @if (last(request()->segments()) == 'register')
                             <a href="{{ route('default') }}" class="btn btn-primary">
@@ -58,6 +80,10 @@
                 
                 @if (!Auth::guest())
                     <div class="header-user">
+                        <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
+                        </form>
+
                         <div class="dropdown">
                             <button class="btn dropdown-toggle" data-bs-toggle="dropdown" type="button">
                                 <div class="user-info">
@@ -75,10 +101,6 @@
                                 <a href="#" class="dropdown-item btn-logout">
                                     <i class="fas fa-sign-out-alt"></i> Đăng xuất
                                 </a>
-
-                                <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                    {{ csrf_field() }}
-                                </form>
                             </div>
                         </div>
                     </div>  
@@ -98,7 +120,7 @@
         </div>
 
         <div class="page-footer">
-            <footer>
+            {{-- <footer>
                 <h6 class="subtitle-sm">
                     © HIỆP HỘI PHẦN MỀM & DỊCH VỤ CNTT VIỆT NAM (VINASA)
                 </h6>
@@ -132,7 +154,7 @@
                     <br>
                     Điện thoại: (028) 3821 2001
                 </p>
-            </footer>
+            </footer> --}}
         </div>
     </div>
 

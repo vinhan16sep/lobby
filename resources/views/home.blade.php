@@ -88,12 +88,18 @@
 										@if ($eventDay->eventTimes)
 											@foreach ($eventDay->eventTimes as $tKey => $eventTime)
 												@if ($eventTime->is_active == 1)
-													<div class="event-item">
+													<div class="event-item {{ $tKey == 2 ? 'live' : ''}}">
 														<div class="event-time">
 															<h6 class="subtitle-md">
 																{{ $eventTime->start_time }}
 																- {{ $eventTime->end_time }}
 															</h6>
+
+															<div class="line"></div>
+
+															<span class="badge badge-success">
+																<i class="fas fa-circle"></i> Trực tiếp
+															</span>
 														</div>
 														<div class="event-content">
 															@if ($eventTime->seminars)
@@ -136,9 +142,7 @@
 																				</div>
 
 																				<div class="img-mask">
-																					<img src="{{ asset('uploads/seminars/' . $seminar->image) }}"
-																					     width="300" height="200"
-																					     alt="{{ $seminar->name }}"/>
+																					<img src="{{ asset('uploads/seminars/' . $seminar->image) }}" alt="{{ $seminar->name }}"/>
 																				</div>
 																			</div>
 																		</div>
@@ -159,57 +163,66 @@
 			</div>
 
 			<div class="chat-area">
-				<div class="chat-box chat-public">
-					<div class="card">
-						<div class="card-header">
-							<div class="header-left" style="padding-top:25px;">
-								<h6 class="subtitle-md">
-									Trao đổi - Kết nối
-								</h6>
-								<p class="p-sm">
-									Vui lòng nhắn tin để kết nối với tất cả Đại biểu hoặc chọn Từng đại biểu để trao đổi, giao lưu riêng
-								</p>
-							</div>
-						</div>
-						<div class="card-body">
-							<div class="list-users-wrapper">
-								<div class="list-users" id="appendListUsers"></div>
-							</div>
+				<div class="card">
+					<div class="card-block">
+						<p class="p-overline">
+							Mất kết nối!
+							<br>
+							Đang kết nối lại...
+						</p>
+					</div>
 
-							<div class="chat-append append-message"></div>
-						</div>
-
-						<div class="card-footer">
-							<input type="text" class="form-control input-message"
-							       placeholder="Nội dung tin nhắn ...">
-
-							<button class="btn btn-primary btn-send-message" type="button">
-								Gửi
-							</button>
+					<div class="card-header">
+						<div class="header-left">
+							<h6 class="subtitle-md">
+								Trao đổi - Kết nối
+							</h6>
+							<p class="p-sm">
+								Vui lòng nhắn tin để kết nối với tất cả Đại biểu hoặc chọn Từng đại biểu để trao đổi, giao lưu riêng
+							</p>
 						</div>
 					</div>
-				</div>
 
-				<div class="chat-box chat-private">
-					<div class="card">
-						<div class="card-header">
-							<h6 class="subtitle-md"></h6>
+					<div class="list-users-wrapper">
+						<div class="list-users" id="appendListUsers"></div>
+					</div>
 
-							<button class="btn btn-close-chat" type="button">
-								<i class="fas fa-times"></i>
-							</button>
+					<div class="card-body">
+						<div class="chat-box chat-public">
+							<div class="chat-box-body">
+								<div class="chat-append append-message"></div>
+							</div>
+		
+							<div class="chat-box-footer">
+								<input type="text" class="form-control input-message" placeholder="Nội dung tin nhắn ...">
+		
+								<button class="btn btn-primary btn-send-message" type="button">
+									Gửi
+								</button>
+							</div>
 						</div>
-						<div class="card-body">
-							<div class="chat-append append-message"></div>
-						</div>
-						<div class="card-footer">
-							<input type="text" class="form-control input-message"
-							       placeholder="Nội dung tin nhắn ...">
-
-							<button class="btn btn-primary btn-send-message" type="button">
-								Gửi
-							</button>
-						</div>
+		
+						<div class="chat-box chat-private">
+							<div class="chat-box-header">
+								<h6 class="subtitle-md"></h6>
+		
+								<button class="btn btn-close-chat" type="button">
+									<i class="fas fa-times"></i>
+								</button>
+							</div>
+		
+							<div class="chat-box-body">
+								<div class="chat-append append-message"></div>
+							</div>
+		
+							<div class="chat-box-footer">
+								<input type="text" class="form-control input-message" placeholder="Nội dung tin nhắn ...">
+		
+								<button class="btn btn-primary btn-send-message" type="button">
+									Gửi
+								</button>
+							</div>
+						</div>	
 					</div>
 				</div>
 

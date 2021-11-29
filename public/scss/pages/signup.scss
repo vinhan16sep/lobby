@@ -14,14 +14,6 @@
 		z-index: 1030;
 
 		header{
-			.header-menu{
-				a{
-					&:not(.btn-primary){
-						color: var(--text-subtitle);
-					}
-				}
-			}
-
 			.header-user{
 				> a {
 					font-weight: 600;
@@ -82,41 +74,45 @@
 .view-home{
 	height: 100%;
 
-	> .row{
+	position: relative;
+
+	background-position: center center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	
+	.overlay{
+		width: 100%;
 		height: 100%;
 
-		> div {
-			height: 100%;
+		background-color: rgba(3,122,178,0.5);
 
-			.img-mask{
-				width: 100%;
-				height: 100%;
-			}
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		z-index: 1;
 
-			.form-login{
-				width: 100%;
-				height: 100%;
+		@include translate(-50%, -50%);
 
-				@include d-flex(column, center, center);
+		@include d-flex(column, center, center);
 
-				.panel{
-					width: 90%;
-		
-					padding: 1.5rem 1.5rem 2rem;
-		
-					background-color: var(--white);
-		
-					@include borderRadius();
-		
-					.panel-body{
-						form{
-							.form-group{
-								> div {
-									.btn{
-										&.btn-block{
-											width: 100%;
-										}
-									}
+		.panel{
+			width: 460px;
+
+			padding: 1.5rem 1.5rem 2rem;
+
+			background-color: var(--white);
+
+			@include borderRadius();
+
+			@include translate(0, -6rem);
+
+			.panel-body{
+				form{
+					.form-group{
+						> div {
+							.btn{
+								&.btn-block{
+									width: 100%;
 								}
 							}
 						}
@@ -125,20 +121,4 @@
 			}
 		}
 	}
-	
-	// .overlay{
-	// 	width: 100%;
-	// 	height: 100%;
-
-	// 	background-color: rgba(3,122,178,0.5);
-
-	// 	position: absolute;
-	// 	top: 50%;
-	// 	left: 50%;
-	// 	z-index: 1;
-
-	// 	@include translate(-50%, -50%);
-
-	// 	@include d-flex(column, center, center);
-	// }
 }
