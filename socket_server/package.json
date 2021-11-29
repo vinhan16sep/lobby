@@ -5,6 +5,7 @@
   "main": "index.js",
   "bin": "index.js",
   "scripts": {
+    "build-linux": "pkg . --targets linux --out-path ./dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
