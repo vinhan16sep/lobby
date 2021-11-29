@@ -221,7 +221,7 @@
 							</div>
 
 							<div class="unread" style="display: none">
-								<div class="circle">
+								<div class="circle" style="color: red; font-weight: bold;">
 									1
 								</div>
 							</div>
