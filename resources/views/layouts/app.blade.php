@@ -44,7 +44,7 @@
                     </a>
 
                     <div class="dropdown">
-                        <button class="btn dropdown-toggle" data-bs-toggle="dropdown" type="button">
+                        <button class="btn dropdown-toggle" data-bs-toggle="dropdown" type="button" style="{{ (last(request()->segments()) != 'home') ? 'color: var(--text-subtitle);' : '' }}">
                             Kết nối
                         </button>
 
