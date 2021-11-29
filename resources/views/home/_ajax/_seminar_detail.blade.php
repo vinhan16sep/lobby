@@ -24,6 +24,9 @@
 	<a href="javascript:;" class="btn btn-primary" onclick="window.open('{{ $seminar->link }}', '_blank')" role="button">
 		Tham gia sự kiện
 	</a>
+	<button type="button" class="btn btn-default" data-bs-dismiss="modal" style="margin-left: 10px;">
+		Đóng
+	</button>
 </div>
 
 
