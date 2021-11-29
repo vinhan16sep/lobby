@@ -46,10 +46,23 @@ body{
 
 				@include d-flex(row, flex-end, center);
 
-				a{
+				> a {
 					font-weight: 600;
 					
 					color: var(--white);
+				}
+
+				.dropdown{
+					.btn{
+						&.dropdown-toggle{
+							font-weight: 600;
+							color: var(--white);
+
+							&:after{
+								border-top-color: var(--white);
+							}
+						}
+					}
 				}
 			}
 

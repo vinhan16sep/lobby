@@ -239,9 +239,18 @@ body {
           align-items: center;
 }
 
-.page .page-header header .header-menu a {
+.page .page-header header .header-menu > a {
   font-weight: 600;
   color: var(--white);
+}
+
+.page .page-header header .header-menu .dropdown .btn.dropdown-toggle {
+  font-weight: 600;
+  color: var(--white);
+}
+
+.page .page-header header .header-menu .dropdown .btn.dropdown-toggle:after {
+  border-top-color: var(--white);
 }
 
 .page .page-header header .header-user {
