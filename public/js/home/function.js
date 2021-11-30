@@ -299,9 +299,7 @@ function initChatPrivate(userId) {
     });
 }
 
-let chatlogPerResponse = 12,
-    limitStart,
-    limitEnd;
+let chatlogPerResponse = 14;
 
 function loadChatDialog(type, data, prepend = false) {
     let $wrapper, $append;
@@ -316,49 +314,46 @@ function loadChatDialog(type, data, prepend = false) {
 
     $append.find('.chat-loading').remove();
 
-    if (data.length > 0) {
-        data = data.reverse();
-        limitStart = data.length - chatlogPerResponse;
-        limitEnd = data.length - 1;
+    let limitStart, limitEnd;
 
-        if (limitStart < 0) {
-            limitStart = 0;
+    let $chatWrapPrepare = $(`
+        <div class="chat-item">
+            <div class="item-avatar">
+                <div class="img-mask img-mask-circle">
+                    <img src="" alt="">
+                </div>
+            </div>
+
+            <div class="item-content">
+                <p class="p-name"></p>
+
+                <div class="content-chat"></div>
+            </div>
+        </div>
+    `);
+
+    if (prepend) {
+        limitStart = 0;
+        limitEnd = limitStart + chatlogPerResponse;
+
+        if (limitEnd > data.length - 1) {
+            limitEnd = data.length - 1;
         }
 
-        console.log(limitStart, limitEnd);
-
-        for (let i = limitStart; i <= limitEnd; i++) {
+        for (let i = limitStart; i < limitEnd; i++) {
             let msg = data[i];
-            let index = i;
 
             let fromUser = users.find((usr) => {
                 return usr.userId == msg.fromUser;
             });
 
-            let $box = $append.find('.chat-item:last-child');
+            let $chatWrap = $chatWrapPrepare.clone();
 
-            let userAvatar = fromUser.avatar != null ? fromUser.avatar : `https://ui-avatars.com/api/?name=${fromUser.name}`;
+            $chatWrap.find('.img-mask img').attr('src', fromUser.avatar != null ? fromUser.avatar : `https://ui-avatars.com/api/?name=${fromUser.name}`);
+            $chatWrap.find('.img-mask img').attr('alt', `Avatart of ${fromUser.name}`);
 
-            let $chatWrap = $(`
-                <div class="chat-item">
-                    <div class="item-avatar">
-                        <div class="img-mask img-mask-circle">
-                            <img src="${userAvatar}" alt="Avatar of ${fromUser.name}">
-                        </div>
-                    </div>
-    
-                    <div class="item-content">
-                        <p class="p-name">
-                            ${fromUser.name}
-                        </p>
-    
-                        <div class="content-chat"></div>
-                    </div>
-                </div>
-            `);
-
-            $chatWrap.data('sender-id', fromUser.userId);
-            // $chatWrap.data('time', msg.time);
+            $chatWrap.find('.p-name').text(fromUser.name);
+            $chatWrap.data('user-id', fromUser.id);
 
             if (type == CHATLOG.PRIVATE) {
                 $chatWrap.find('.item-avatar').remove();
@@ -374,110 +369,78 @@ function loadChatDialog(type, data, prepend = false) {
                 $chatWrap.addClass('chat-item-mine');
             }
 
-            let prevIndex = 0;
-            if (index > 0) {
-                prevIndex = index - 1;
+            let a = i;
+            let b = i + 1;
+            if (b > limitEnd) {
+                b = limitEnd;
             }
 
-            if (prepend) {
-                if ($box.length == 0 || fromUser.userId != data[prevIndex].fromUser) {
-                    $append.prepend($chatWrap);
-                }
-            } else {
-                if ($box.length == 0 || fromUser.userId != data[prevIndex].fromUser) {
-                    $append.append($chatWrap);
-                }
+            if (data[a].fromUser != data[b].fromUser || data[b].fromUser != $append.find('.chat-item:first-child').data('user-id')) {
+                $append.prepend($chatWrap);
             }
 
-            let $span = $(`<p>${msg.content}</p>`);
-            $span.data('time', msg.time);
-            $span.attr('time', msg.time);
+            let $message = $(`<p>${msg.content}</p>`);
+            $message.data('time', msg.time);
 
-            if (prepend) {
-                $span.appendTo($append.find('.chat-item:first-child').find('.content-chat'));
-                $append.scrollTop(100);
-            } else {
-                $span.appendTo($append.find('.chat-item:last-child').find('.content-chat'));
-                $append.scrollTop($wrapper.find('.append-message')[0].scrollHeight);
-            }
+            $message.prependTo($append.find('.chat-item:first-child').find('.content-chat'));
+            $append.scrollTop(150);
+        }
+    } else {
+        data = data.reverse();
+        limitStart = data.length - chatlogPerResponse;
+        limitEnd = data.length - 1;
+
+        if (limitStart < 0) {
+            limitStart = 0;
         }
 
-        // data.forEach((msg, index) => {
-        //     let fromUser = users.find((usr) => {
-        //         return usr.userId == msg.fromUser;
-        //     });
+        for (let i = limitStart; i <= limitEnd; i++) {
+            let msg = data[i];
 
-        //     let $box = $append.find('.chat-item:last-child');
+            let fromUser = users.find((usr) => {
+                return usr.userId == msg.fromUser;
+            });
 
-        //     let userAvatar = fromUser.avatar != null ? fromUser.avatar : `https://ui-avatars.com/api/?name=${fromUser.name}`;
+            let $chatWrap = $chatWrapPrepare.clone();
 
-        //     let $chatWrap = $(`
-        //         <div class="chat-item">
-        //             <div class="item-avatar">
-        //                 <div class="img-mask img-mask-circle">
-        //                     <img src="${userAvatar}" alt="Avatar of ${fromUser.name}">
-        //                 </div>
-        //             </div>
+            $chatWrap.find('.img-mask img').attr('src', fromUser.avatar != null ? fromUser.avatar : `https://ui-avatars.com/api/?name=${fromUser.name}`);
+            $chatWrap.find('.img-mask img').attr('alt', `Avatart of ${fromUser.name}`);
 
-        //             <div class="item-content">
-        //                 <p class="p-name">
-        //                     ${fromUser.name}
-        //                 </p>
+            $chatWrap.find('.p-name').text(fromUser.name);
 
-        //                 <div class="content-chat"></div>
-        //             </div>
-        //         </div>
-        //     `);
+            $chatWrap.data('user-id', fromUser.id);
 
-        //     $chatWrap.data('sender-id', fromUser.userId);
-        //     $chatWrap.data('time', msg.time);
+            if (type == CHATLOG.PRIVATE) {
+                $chatWrap.find('.item-avatar').remove();
+                $chatWrap.find('.p-name').remove();
+            }
 
-        //     if (type == CHATLOG.PRIVATE) {
-        //         $chatWrap.find('.item-avatar').remove();
-        //         $chatWrap.find('.p-name').remove();
-        //     }
+            if (type == CHATLOG.PUBLIC && msg.fromUser == currentUser.id) {
+                $chatWrap.find('.item-avatar').remove();
+                $chatWrap.find('.p-name').text('Me');
+            }
 
-        //     if (type == CHATLOG.PUBLIC && msg.fromUser == currentUser.id) {
-        //         $chatWrap.find('.item-avatar').remove();
-        //         $chatWrap.find('.p-name').text('Me');
-        //     }
+            if (msg.fromUser == currentUser.id) {
+                $chatWrap.addClass('chat-item-mine');
+            }
 
-        //     if (msg.fromUser == currentUser.id) {
-        //         $chatWrap.addClass('chat-item-mine');
-        //     }
+            let a = i - 1;
+            let b = i;
+            if (a < limitStart) {
+                a = limitStart;
+            }
 
-        //     let prevIndex = 0;
-        //     if (index > 0) {
-        //         prevIndex = index - 1;
-        //     }
+            if (data[a].fromUser != data[b].fromUser) {
+                $append.append($chatWrap);
+            }
 
-        //     if (prepend) {
-        //         if (fromUser.userId != data[prevIndex].fromUser) {
-        //             $append.prepend($chatWrap);
-        //         }
-        //     } else {
-        //         if ($box.length == 0 || fromUser.userId != data[prevIndex].fromUser) {
-        //             $append.append($chatWrap);
-        //         }
-        //     }
+            let $message = $(`<p>${msg.content}</p>`);
+            $message.data('time', msg.time);
 
-        //     let $span = $(`<p>${msg.content}</p>`);
-
-        //     if (prepend) {
-        //         $span.appendTo($append.find('.chat-item:first-child').find('.content-chat'));
-        //         $append.scrollTop(0);
-        //     } else {
-        //         $span.appendTo($append.find('.chat-item:last-child').find('.content-chat'));
-        //         $append.scrollTop($wrapper.find('.append-message')[0].scrollHeight);
-        //     }
-        // });
+            $message.appendTo($append.find('.chat-item:last-child').find('.content-chat'));
+            $append.scrollTop($wrapper.find('.append-message')[0].scrollHeight);
+        }
     }
-
-    // if (type == CHATLOG.PUBLIC) {
-    //     initChatBox('.chat-public');
-    // } else if (type == CHATLOG.PRIVATE) {
-    //     initChatBox('.chat-private');
-    // }
 }
 
 function initChatBox(wrapper) {
@@ -501,21 +464,18 @@ function initChatBox(wrapper) {
         .find('.append-message')
         .on('scroll', function () {
             if ($(wrapper).find('.append-message').scrollTop() == 0) {
-                clearTimeout(timeoutLoadmore);
-                timeoutLoadmore = setTimeout(() => {
-                    let time = $(wrapper).find('.append-message .chat-item:first-child .content-chat p:first-child').data('time');
-                    let type, id;
+                let time = $(wrapper).find('.append-message .chat-item:first-child .content-chat p:first-child').data('time');
+                let type, id;
 
-                    if (wrapper == '.chat-public') {
-                        type = CHATLOG.PUBLIC;
-                        id = currentUser.id;
-                    } else if (wrapper == '.chat-private') {
-                        type = CHATLOG.PRIVATE;
-                        id = $(wrapper).data('user-id');
-                    }
+                if (wrapper == '.chat-public') {
+                    type = CHATLOG.PUBLIC;
+                    id = currentUser.id;
+                } else if (wrapper == '.chat-private') {
+                    type = CHATLOG.PRIVATE;
+                    id = $(wrapper).data('user-id');
+                }
 
-                    getChatLogs(type, id, time);
-                }, 500);
+                getChatLogs(type, id, time);
             }
         });
 }

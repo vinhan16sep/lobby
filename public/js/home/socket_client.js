@@ -30,19 +30,19 @@ $().ready(() => {
     });
 
     socket.on('disconnect', () => {
-        console.log('disconnect');
+        // console.log('disconnect');
 
         blockChatBox();
     });
 
     socket.on(SocketMessageType.JOIN, (data) => {
-        console.log('join', data);
+        // console.log('join', data);
 
         recvListUser(data);
     });
 
     socket.on(SocketMessageType.RECV_MESSAGE, (data) => {
-        console.log('recv', data);
+        // console.log('recv', data);
 
         let message = {
             id: parseInt(data.sender),
@@ -59,13 +59,13 @@ $().ready(() => {
     });
 
     socket.on(SocketMessageType.USER_LEAVE, (data) => {
-        console.log('user leave', data);
+        // console.log('user leave', data);
 
         removeUser(data);
     });
 
     socket.on(SocketMessageType.USER_JOIN, (data) => {
-        console.log('user join', data);
+        // console.log('user join', data);
 
         addUser(data);
     });
