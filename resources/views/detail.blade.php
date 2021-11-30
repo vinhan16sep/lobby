@@ -108,7 +108,7 @@
 										<div class="row">
 											<label class="col-form-label"><i class="fa fa-address-book" aria-hidden="true"></i> Địa chỉ</label>
 											<div class="col-sm-8">
-												<input type="text" class="form-control" value="{{ Auth::user()->position }}" disabled>
+												<input type="text" class="form-control" value="{{ Auth::user()->address }}" disabled>
 											</div>
 										</div>
 									</div>
