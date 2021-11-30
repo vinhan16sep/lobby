@@ -41,6 +41,13 @@ $(document).ready(function () {
                 $card.find('.user-company').text(userInfo.company);
 
                 $card
+                    .find('.btn-close-call')
+                    .unbind()
+                    .on('click', function () {
+                        $card.remove();
+                    });
+
+                $card
                     .find('.btn-call-chat')
                     .unbind()
                     .on('click', function () {
@@ -51,7 +58,7 @@ $(document).ready(function () {
                         $chatBox.data('user-id', userInfo.userId);
                         $chatBox.find('h6').text(userInfo.name);
 
-                        $chatBox.parents('.chat-area').addClass('chat-area-collapsed');
+                        $chatBox.parents('.card').addClass('chat-area-collapsed');
 
                         $chatBox.find('.append-message').empty();
                         $chatBox.show();
@@ -75,7 +82,7 @@ $(document).ready(function () {
 
     $('.btn-close-chat').on('click', function () {
         $('.chat-private').removeData('user-id');
-        $('.chat-private').parents('.chat-area').removeClass('chat-area-collapsed');
+        $('.chat-private').parents('.card').removeClass('chat-area-collapsed');
         $('.chat-private').hide();
     });
 
@@ -620,7 +627,7 @@ function receiveChatMessage(wrapper, data) {
             } else {
                 $(wrapper).find('h6').text(user.name);
                 $(wrapper).data('user-id', data.id);
-                $(wrapper).parents('.chat-area').addClass('chat-area-collapsed');
+                $(wrapper).parents('.card').addClass('chat-area-collapsed');
                 $(wrapper).show();
 
                 initChatPrivate(userId);

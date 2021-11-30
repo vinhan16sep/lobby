@@ -19,9 +19,15 @@
 							</div>
 
 							<div class="text">
-								<h6 class="subtitle-md user-name">
-									User name
-								</h6>
+								<div class="heading">
+									<h6 class="subtitle-md user-name">
+										User name
+									</h6>
+
+									<button class="btn btn-sm btn-close-call" type="button">
+										<i class="fas fa-times"></i>
+									</button>
+								</div>
 
 								<p class="p-sm user-position">
 									User Position
@@ -51,6 +57,9 @@
 							</p>
 						</div>
 					</div>
+				</div>
+
+				<div class="card">
 					<div class="card-body">
 						<ul class="nav nav-pills" id="eventTabs" role="tablist">
 							@foreach ($eventDays as $dKey => $eventDay)
@@ -182,14 +191,6 @@
 
 			<div class="chat-area">
 				<div class="card">
-					<div class="card-block">
-						<p class="p-overline">
-							Mất kết nối!
-							<br>
-							Đang kết nối lại...
-						</p>
-					</div>
-
 					<div class="card-header">
 						<div class="header-left">
 							<h6 class="subtitle-md">
@@ -201,8 +202,20 @@
 						</div>
 					</div>
 
-					<div class="list-users-wrapper">
-						<div class="list-users" id="appendListUsers"></div>
+					<div class="card-body">
+						<div class="list-users-wrapper">
+							<div class="list-users" id="appendListUsers"></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="card">
+					<div class="card-block">
+						<p class="p-overline">
+							Mất kết nối!
+							<br>
+							Đang kết nối lại...
+						</p>
 					</div>
 
 					<div class="card-body">
@@ -243,29 +256,29 @@
 						</div>
 					</div>
 				</div>
-
-				<div class="select-user-item select-user-prepare" style="display: none">
-					<a href="#" class="select-user">
-						<div class="img-mask-wrapper">
-							<div class="img-mask img-mask-circle">
-								<img src="" alt="">
-							</div>
-
-							<div class="unread" style="display: none">
-								<div class="circle" style="color: red; font-weight: bold;">
-									1
-								</div>
-							</div>
-
-							<div class="status">
-								<div class="circle"></div>
-							</div>
-						</div>
-
-						<h6 class="subtitle-sm"></h6>
-					</a>
-				</div>
 			</div>
+		</div>
+
+		<div class="select-user-item select-user-prepare" style="display: none">
+			<a href="#" class="select-user">
+				<div class="img-mask-wrapper">
+					<div class="img-mask img-mask-circle">
+						<img src="" alt="">
+					</div>
+
+					<div class="unread" style="display: none">
+						<div class="circle" style="color: red; font-weight: bold;">
+							1
+						</div>
+					</div>
+
+					<div class="status">
+						<div class="circle"></div>
+					</div>
+				</div>
+
+				<h6 class="subtitle-sm"></h6>
+			</a>
 		</div>
 
 		<div class="modal fade" id="followSuccessModal" role="dialog">

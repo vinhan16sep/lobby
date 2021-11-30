@@ -3,7 +3,7 @@
 
 .page{
 	.page-header{
-		background-color: var(--primary);
+		background-color: var(--secondary);
 	}
 
 	.page-body{
@@ -12,7 +12,7 @@
 }
 
 .user-info-wrapper{
-	min-width: 200px;
+	min-width: 330px;
 
 	position: absolute;
 	z-index: 1030;
@@ -30,16 +30,25 @@
 				}
 
 				.text{
-					h6{
-						max-width: 200px;
+					width: calc(100% - 40px - 0.5rem);
+
+					.heading{
+						width: 100%;
 
 						margin-bottom: 0.375rem;
-						font-weight: 600;
 
-						overflow: hidden;
-						text-overflow: ellipsis;
+						@include d-flex(row, space-between, center);
 
-						white-space: nowrap;
+						h6{
+							max-width: calc(100% - 40px);
+							
+							font-weight: 600;
+	
+							overflow: hidden;
+							text-overflow: ellipsis;
+	
+							white-space: nowrap;
+						}
 					}
 
 					p{
@@ -53,7 +62,7 @@
 						}
 					}
 
-					.btn{
+					> .btn{
 						width: 100px;
 					}
 				}
@@ -108,230 +117,244 @@
 			width: 75%;
 
 			.card{
-				height: 100%;
+				&:first-child{
+					height: 80px;
 
-				.card-body{
-					height: calc(100% - 72px);
+					margin-bottom: 0.75rem;
 
-					padding: 0;
+					.card-header{
+						@include borderRadiusCustom(bottom, left);
+						@include borderRadiusCustom(bottom, right);
+					}
+				}
 
-					.nav {
-						&.nav-pills{
-							height: 40px;
+				&:last-child{
+					height: calc(100% - 80px - 0.75rem);
 
-							padding: 0 1.5rem;
-
-							background-color: var(--bg-bw);
-		
-							@include positionSticky(top, 0, 10);
-		
-							.nav-item{
-								&:not(:last-child){
-									margin-right: 0.5rem;
-								}
-
-								.nav-link{
-									padding: 0.375rem 0.75rem;
-
-									border: 2px solid var(--text-paragraph);
-									color: var(--text-paragraph);
-
-									@include borderRadius(2rem);
-
-									&.active{
-										font-weight: 700;
-
-										background-color: var(--primary);
-										border-color: var(--primary);
-										color: var(--white);
+					.card-body{
+						height: 100%;
+	
+						padding: 0;
+						padding-top: 0.75rem;
+	
+						.nav {
+							&.nav-pills{
+								height: 60px;
+	
+								padding: 0 1.5rem;
+	
+								background-color: var(--bg-bw);
+			
+								@include positionSticky(top, 0, 10);
+			
+								.nav-item{
+									&:not(:last-child){
+										margin-right: 0.5rem;
+									}
+	
+									.nav-link{
+										padding: 0.375rem 0.75rem;
+	
+										border: 2px solid var(--text-paragraph);
+										color: var(--text-paragraph);
+	
+										@include borderRadius(2rem);
+	
+										&.active{
+											font-weight: 700;
+	
+											background-color: var(--primary);
+											border-color: var(--primary);
+											color: var(--white);
+										}
 									}
 								}
 							}
 						}
-					}
-		
-					.tab-content{
-						height: calc(100% - 40px);
-						
-						.tab-pane{
-							height: 100%;
-
-							padding-top: 1.5rem;
-
-							overflow-x: hidden;
-							@include overflow-y();
+			
+						.tab-content{
+							height: calc(100% - 60px);
 							
-							.event-schedule{
-								.event-item{
-									padding: 0 0.75rem;
-
-									&.live{
+							.tab-pane{
+								height: 100%;
+	
+								padding-top: 1.5rem;
+	
+								overflow-x: hidden;
+								@include overflow-y();
+								
+								.event-schedule{
+									.event-item{
+										padding: 0 0.75rem;
+	
+										&.live{
+											.event-time{
+												.badge{
+													&.badge-success{
+														display: block;
+													}
+												}
+											}
+										}
+			
 										.event-time{
+											width: 100%;
+			
+											margin-bottom: 0.75rem;
+											padding: 0 0.75rem;
+	
+											@include d-flex(row, space-between, center);
+			
+											h6{
+												max-width: 150px;
+												flex: 1 0 150px;
+	
+												padding: 0.25rem 0.5rem;
+	
+												border: 2px solid var(--gray-3);
+												color: var(--text-subtitle);
+												
+												font-weight: 600;
+	
+												text-align: center;
+	
+												@include borderRadius(2rem);
+											}
+	
+											.line{
+												flex: 1 0 auto;
+												height: 2px;
+	
+												margin: 0 0.75rem 0 1.5rem;
+	
+												background-color: var(--gray-3);
+											}
+	
 											.badge{
 												&.badge-success{
-													display: block;
+													display: none;
+	
+													@include borderRadius(1.5rem);
+													
+													i{
+														color: var(--danger);
+	
+														@include animationBlink(500ms);
+													}
 												}
 											}
 										}
-									}
-		
-									.event-time{
-										width: 100%;
-		
-										margin-bottom: 0.75rem;
-										padding: 0 0.75rem;
-
-										@include d-flex(row, space-between, center);
-		
-										h6{
-											max-width: 150px;
-											flex: 1 0 150px;
-
-											padding: 0.25rem 0.5rem;
-
-											border: 2px solid var(--gray-3);
-											color: var(--text-subtitle);
-											
-											font-weight: 600;
-
-											text-align: center;
-
-											@include borderRadius(2rem);
-										}
-
-										.line{
-											flex: 1 0 auto;
-											height: 2px;
-
-											margin: 0 0.75rem 0 1.5rem;
-
-											background-color: var(--gray-3);
-										}
-
-										.badge{
-											&.badge-success{
-												display: none;
-
-												@include borderRadius(1.5rem);
-												
-												i{
-													color: var(--danger);
-
-													@include animationBlink(500ms);
+			
+										.event-content{
+											width: 100%;
+			
+											flex-wrap: wrap;
+											@include d-flex(row, flex-start, flex-start);
+	
+											overflow-y: hidden;
+											@include overflow-x();
+											@include overflow-hidden();
+			
+											.item-event{
+												width: 50%;
+			
+												padding: 0 1rem;
+												margin-bottom: 2rem;
+	
+												&:hover{
+													.ratio-wrapper{
+														.img-mask{
+															img{
+																@include scale(1.1, 1.1);
+																@include transition();
+															}
+														}
+	
+														.overlay{
+															h6{
+																@include translate(0, 0);
+																@include transition();
+															}
+	
+															.controls{
+																opacity: 1;
+	
+																@include translate(0, 0);
+																@include transition();
+															}
+														}
+													}
 												}
-											}
-										}
-									}
-		
-									.event-content{
-										width: 100%;
-		
-										flex-wrap: wrap;
-										@include d-flex(row, flex-start, flex-start);
-
-										overflow-y: hidden;
-										@include overflow-x();
-										@include overflow-hidden();
-		
-										.item-event{
-											width: 50%;
-		
-											padding: 0 1rem;
-											margin-bottom: 2rem;
-
-											&:hover{
+			
 												.ratio-wrapper{
+													overflow: hidden;
+			
 													.img-mask{
+														@include borderRadius();
+	
 														img{
-															@include scale(1.1, 1.1);
 															@include transition();
 														}
 													}
-
+			
 													.overlay{
-														h6{
-															@include translate(0, 0);
-															@include transition();
-														}
-
-														.controls{
-															opacity: 1;
-
-															@include translate(0, 0);
-															@include transition();
-														}
-													}
-												}
-											}
-		
-											.ratio-wrapper{
-												overflow: hidden;
-		
-												.img-mask{
-													@include borderRadius();
-
-													img{
-														@include transition();
-													}
-												}
-		
-												.overlay{
-													width: 100%;
-													height: 40%;
-		
-													padding: 0.75rem;
-
-													@include gradientLinearBackground(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.35));
-		
-													position: absolute;
-													bottom: 0;
-													left: 50%;
-													z-index: 2;
-		
-													@include borderRadius();
-		
-													@include translate(-50%, 0);
-													@include d-flex(column, flex-end, flex-start);
-		
-													h6{
-														max-width: 100%;
-
-														margin-bottom: 0.5rem;
-
-														font-weight: 600;
-														color: var(--white);
-
-														overflow: hidden;
-														text-overflow: ellipsis;
-
-														white-space: nowrap;
-
-														@include translate(0, 100%);
-														@include transition();
-													}
-
-													.controls{
 														width: 100%;
-
-														opacity: 0;
-
-														@include translate(0, 100%);
-														@include transition();
-
-														@include d-flex(row, flex-start, center);
-				
-														.btn{
-															flex: 1 0 auto;
-				
-															padding: 0.375rem 0.5rem;
-
-															border-width: 2px;
-
-															font-size: 0.75rem;
+														height: 40%;
+			
+														padding: 0.75rem;
+	
+														@include gradientLinearBackground(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.35));
+			
+														position: absolute;
+														bottom: 0;
+														left: 50%;
+														z-index: 2;
+			
+														@include borderRadius();
+			
+														@include translate(-50%, 0);
+														@include d-flex(column, flex-end, flex-start);
+			
+														h6{
+															max-width: 100%;
+	
+															margin-bottom: 0.5rem;
+	
 															font-weight: 600;
-				
-															&:not(:last-child){
-																margin-right: 0.5rem;
+															color: var(--white);
+	
+															overflow: hidden;
+															text-overflow: ellipsis;
+	
+															white-space: nowrap;
+	
+															@include translate(0, 100%);
+															@include transition();
+														}
+	
+														.controls{
+															width: 100%;
+	
+															opacity: 0;
+	
+															@include translate(0, 100%);
+															@include transition();
+	
+															@include d-flex(row, flex-start, center);
+					
+															.btn{
+																flex: 1 0 auto;
+					
+																padding: 0.375rem 0.5rem;
+	
+																border-width: 2px;
+	
+																font-size: 0.75rem;
+																font-weight: 600;
+					
+																&:not(:last-child){
+																	margin-right: 0.5rem;
+																}
 															}
 														}
 													}
@@ -344,285 +367,301 @@
 						}
 					}
 				}
+
+				
 			}
 		}
 
 		.chat-area{
 			width: 25%;
 
-			&.chat-area-collapsed{
-				.card{
-					.card-body{
-						.chat-box{
-							height: 50%;
-						}
-					}
-				}
-			}
-
 			.card{
-				height: 100%;
+				&:first-child{
+					height: calc(33.33% - 0.75rem);
 
-				.card-block{
-					width: 100%;
-					height: 100%;
-					display: none;
+					margin-bottom: 0.75rem;
 
-					background-color: rgba(0,0,0,0.25);
-					backdrop-filter: blur(2px);
-					@include borderRadius();
-
-					position: absolute;
-					top: 50%;
-					left: 50%;
-					z-index: 1030;
-
-					@include translate(-50%, -50%);
-
-					&.show{
-						@include d-flex(column, center, center);
-
-						p{
-							color: var(--white);
-
-							text-align: center;
-						}
+					.card-header{
+						height: 80px;
 					}
-				}
 
-				.card-header{
-					height: 80px;
-				}
+					.card-body{
+						height: calc(100% - 80px);
 
-				.list-users-wrapper{
-					width: 100%;
-					height: calc(33.33% - 80px);
+						padding: 0 0 0.75rem;
 
-					border-bottom: 1px solid var(--gray-1);
-
-					overflow-x: hidden;
-					@include overflow-y();
-
-					@include overflow-hidden();
-
-					.list-users{
-						.select-user-item{
-							a{
-								&.select-user{
-									padding: 0.5rem;
-
-									@include d-flex(row, flex-start, center);
-
-									.img-mask-wrapper{
-										width: 32px;
-										height: 32px;
-
-										margin-right: 0.5rem;
-
-										position: relative;
-
-										.img-mask{
-											width: 100%;
-											height: 100%;
-
-											border: 1px solid var(--border);
-										}
-
-										.unread,
-										.status {
-											.circle{
-												width: 12px;
-												height: 12px;
-
-												background-color: var(--gray-4);
-
-												@include borderRadius(50%);
+						.list-users-wrapper{
+							width: 100%;
+							height: 100%;
+		
+							border-bottom: 1px solid var(--gray-1);
+		
+							overflow-x: hidden;
+							@include overflow-y();
+		
+							@include overflow-hidden();
+		
+							.list-users{
+								.select-user-item{
+									a{
+										&.select-user{
+											padding: 0.5rem;
+		
+											@include d-flex(row, flex-start, center);
+		
+											.img-mask-wrapper{
+												width: 32px;
+												height: 32px;
+		
+												margin-right: 0.5rem;
+		
+												position: relative;
+		
+												.img-mask{
+													width: 100%;
+													height: 100%;
+		
+													border: 1px solid var(--border);
+												}
+		
+												.unread,
+												.status {
+													.circle{
+														width: 12px;
+														height: 12px;
+		
+														background-color: var(--gray-4);
+		
+														@include borderRadius(50%);
+													}
+												}
+		
+												.unread{
+													position: absolute;
+													top: -6px;
+													right: -4px;
+													z-index: 1;
+		
+													// display: none;
+		
+													.circle{
+														width: 16px;
+														height: 16px;
+		
+														background-color: var(--gray-2);
+														border: 1px solid var(--white);
+													}
+		
+													.circle{
+														font-size: 0.625rem;
+														color: var(--text-paragraph);
+		
+														@include d-flex(row, center, center);
+													}
+												}
+		
+												.status{
+													position: absolute;
+													bottom: -2px;
+													right: -2px;
+													z-index: 1;
+												}
+											}
+		
+											h6{
+												width: calc(100% - 32px - 0.5rem);
+		
+												overflow: hidden;
+												text-overflow: ellipsis;
+		
+												white-space: nowrap;
 											}
 										}
-
-										.unread{
-											position: absolute;
-											top: -6px;
-											right: -4px;
-											z-index: 1;
-
-											// display: none;
-
-											.circle{
-												width: 16px;
-												height: 16px;
-
-												background-color: var(--gray-2);
-												border: 1px solid var(--white);
-											}
-
-											.circle{
-												font-size: 0.625rem;
-												color: var(--text-paragraph);
-
-												@include d-flex(row, center, center);
-											}
-										}
-
-										.status{
-											position: absolute;
-											bottom: -2px;
-											right: -2px;
-											z-index: 1;
-										}
-									}
-
-									h6{
-										width: calc(100% - 32px - 0.5rem);
-
-										overflow: hidden;
-										text-overflow: ellipsis;
-
-										white-space: nowrap;
-									}
+									}	
 								}
-							}	
+							}
 						}
 					}
 				}
 
-				.card-body{
+				&:last-child{
 					height: 66.67%;
 
-					padding: 0;
+					position: relative;
 
-					.chat-box{
+					&.chat-area-collapsed{
+						.card-body{
+							.chat-box{
+								height: 50%;
+							}
+						}
+					}
+
+					.card-block{
 						width: 100%;
 						height: 100%;
+						display: none;
+	
+						background-color: rgba(0,0,0,0.25);
+						backdrop-filter: blur(2px);
+						@include borderRadius();
+	
+						position: absolute;
+						top: 50%;
+						left: 50%;
+						z-index: 1030;
+	
+						@include translate(-50%, -50%);
+	
+						&.show{
+							@include d-flex(column, center, center);
+	
+							p{
+								color: var(--white);
+	
+								text-align: center;
+							}
+						}
+					}
 
-						&.chat-private{
-							display: none;
-
-							border-top: 1px solid var(--border);
-
-							.chat-box-header{
-								height: 48px;
-
-								padding: 0 0.75rem;
-
-								@include d-flex(row, space-between, center);
-
-								h6{
-									font-weight: 600;
+					.card-body{
+						height: 100%;
+	
+						padding: 0;
+	
+						.chat-box{
+							width: 100%;
+							height: 100%;
+	
+							&.chat-private{
+								display: none;
+	
+								border-top: 1px solid var(--border);
+	
+								.chat-box-header{
+									height: 48px;
+	
+									padding: 0 0.75rem;
+	
+									@include d-flex(row, space-between, center);
+	
+									h6{
+										font-weight: 600;
+									}
+								}
+	
+								.chat-box-body{
+									height: calc(100% - 96px);
 								}
 							}
-
+	
 							.chat-box-body{
-								height: calc(100% - 96px);
-							}
-						}
-
-						.chat-box-body{
-							height: calc(100% - 48px);
-
-							.chat-append{
-								width: 100%;
-								height: 100%;
+								height: calc(100% - 48px);
 	
-								padding: 0.875rem;
-	
-								overflow-x: hidden;
-								@include overflow-y();
-	
-								.chat-delay{
-									margin: 0.5rem 0;
-			
-									display: block;
-									text-align: center;
-								}
-			
-								.chat-item{
-									&:not(:last-child){
-										margin-bottom: 0.5rem;
+								.chat-append{
+									width: 100%;
+									height: 100%;
+		
+									padding: 0.875rem;
+		
+									overflow-x: hidden;
+									@include overflow-y();
+		
+									.chat-delay{
+										margin: 0.5rem 0;
+				
+										display: block;
+										text-align: center;
 									}
-			
-									@include d-flex(row, flex-start, flex-start);
-			
-									&.chat-item-mine{
-										@include d-flex(row-reverse, flex-start, flex-start);
-			
-										.item-content{
-											width: 90%;
-			
-											@include d-flex(column, flex-start, flex-end);
-			
-											.content-chat{
+				
+									.chat-item{
+										&:not(:last-child){
+											margin-bottom: 0.5rem;
+										}
+				
+										@include d-flex(row, flex-start, flex-start);
+				
+										&.chat-item-mine{
+											@include d-flex(row-reverse, flex-start, flex-start);
+				
+											.item-content{
+												width: 90%;
+				
 												@include d-flex(column, flex-start, flex-end);
-			
-												p{
-													background-color: var(--primary);
-													color: var(--white);
+				
+												.content-chat{
+													@include d-flex(column, flex-start, flex-end);
+				
+													p{
+														background-color: var(--primary);
+														color: var(--white);
+													}
 												}
 											}
 										}
-									}
-			
-									.item-avatar{
-										width: 32px;
-										height: 32px;
-			
-										margin-right: 0.5rem;
-			
-										.img-mask{
-											width: 100%;
-											height: 100%;
-										}
-									}
-			
-									.item-content{
-										width: calc(100% - 32px - 0.5rem);
-			
-										@include d-flex(column, flex-start, flex-start);
-			
-										> p {
-											&.p-name{
-												margin-bottom: 0.25rem;
-			
-												font-size: 0.75rem;
+				
+										.item-avatar{
+											width: 32px;
+											height: 32px;
+				
+											margin-right: 0.5rem;
+				
+											.img-mask{
+												width: 100%;
+												height: 100%;
 											}
 										}
-			
-										.content-chat{
-											max-width: 90%;
-			
+				
+										.item-content{
+											width: calc(100% - 32px - 0.5rem);
+				
 											@include d-flex(column, flex-start, flex-start);
-			
-											p{
-												padding: 0.375rem;
-			
-												background-color: var(--gray-1);
-												font-size: 0.875rem;
-			
-												@include borderRadius(0.5rem);
-			
-												&:not(:last-child){
+				
+											> p {
+												&.p-name{
 													margin-bottom: 0.25rem;
+				
+													font-size: 0.75rem;
+												}
+											}
+				
+											.content-chat{
+												max-width: 90%;
+				
+												@include d-flex(column, flex-start, flex-start);
+				
+												p{
+													padding: 0.375rem;
+				
+													background-color: var(--gray-1);
+													font-size: 0.875rem;
+				
+													@include borderRadius(0.5rem);
+				
+													&:not(:last-child){
+														margin-bottom: 0.25rem;
+													}
 												}
 											}
 										}
 									}
 								}
 							}
-						}
-
-						.chat-box-footer{
-							height: 48px;
-
-							padding: 0 0.75rem;
-
-							@include d-flex(row, flex-start, center);
-
-							.form-control{
-								margin-right: 0.75rem;
-							}
-
-							.btn{
-								min-width: 100px;
+	
+							.chat-box-footer{
+								height: 48px;
+	
+								padding: 0 0.75rem;
+	
+								@include d-flex(row, flex-start, center);
+	
+								.form-control{
+									margin-right: 0.75rem;
+								}
+	
+								.btn{
+									min-width: 100px;
+								}
 							}
 						}
 					}

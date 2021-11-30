@@ -1,32 +1,32 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap");
 :root {
-  --brand:                                        #037ab2;
-  --primary:                                      #037ab2;
-  --secondary:                                    #363435;
+  --brand:                                        #ff3c00;
+  --primary:                                      #ff3c00;
+  --secondary:                                    #003349;
   --black:                                        #000;
   --white:                                        #fff;
   --success:                                      #42AB44;
   --warning:                                      #FFAB1B;
   --danger:                                       #FA6767;
   --link:                                         #007DFF;
-  --primary-alpha-10:                             rgba(3, 122, 178, 0.1);
-  --primary-alpha-20:                             rgba(3, 122, 178, 0.2);
-  --primary-alpha-30:                             rgba(3, 122, 178, 0.3);
-  --primary-alpha-40:                             rgba(3, 122, 178, 0.4);
-  --primary-alpha-50:                             rgba(3, 122, 178, 0.5);
-  --primary-alpha-60:                             rgba(3, 122, 178, 0.6);
-  --primary-alpha-70:                             rgba(3, 122, 178, 0.7);
-  --primary-alpha-80:                             rgba(3, 122, 178, 0.8);
-  --primary-alpha-90:                             rgba(3, 122, 178, 0.9);
-  --secondary-alpha-10:                           rgba(54, 52, 53, 0.1);
-  --secondary-alpha-20:                           rgba(54, 52, 53, 0.2);
-  --secondary-alpha-30:                           rgba(54, 52, 53, 0.3);
-  --secondary-alpha-40:                           rgba(54, 52, 53, 0.4);
-  --secondary-alpha-50:                           rgba(54, 52, 53, 0.5);
-  --secondary-alpha-60:                           rgba(54, 52, 53, 0.6);
-  --secondary-alpha-70:                           rgba(54, 52, 53, 0.7);
-  --secondary-alpha-80:                           rgba(54, 52, 53, 0.8);
-  --secondary-alpha-90:                           rgba(54, 52, 53, 0.9);
+  --primary-alpha-10:                             rgba(255, 60, 0, 0.1);
+  --primary-alpha-20:                             rgba(255, 60, 0, 0.2);
+  --primary-alpha-30:                             rgba(255, 60, 0, 0.3);
+  --primary-alpha-40:                             rgba(255, 60, 0, 0.4);
+  --primary-alpha-50:                             rgba(255, 60, 0, 0.5);
+  --primary-alpha-60:                             rgba(255, 60, 0, 0.6);
+  --primary-alpha-70:                             rgba(255, 60, 0, 0.7);
+  --primary-alpha-80:                             rgba(255, 60, 0, 0.8);
+  --primary-alpha-90:                             rgba(255, 60, 0, 0.9);
+  --secondary-alpha-10:                           rgba(0, 51, 73, 0.1);
+  --secondary-alpha-20:                           rgba(0, 51, 73, 0.2);
+  --secondary-alpha-30:                           rgba(0, 51, 73, 0.3);
+  --secondary-alpha-40:                           rgba(0, 51, 73, 0.4);
+  --secondary-alpha-50:                           rgba(0, 51, 73, 0.5);
+  --secondary-alpha-60:                           rgba(0, 51, 73, 0.6);
+  --secondary-alpha-70:                           rgba(0, 51, 73, 0.7);
+  --secondary-alpha-80:                           rgba(0, 51, 73, 0.8);
+  --secondary-alpha-90:                           rgba(0, 51, 73, 0.9);
   --success-alpha-10:                             rgba(66, 171, 68, 0.1);
   --success-alpha-20:                             rgba(66, 171, 68, 0.2);
   --success-alpha-30:                             rgba(66, 171, 68, 0.3);
@@ -1262,7 +1262,7 @@ ul {
 }
 
 .calendar .calendar-body .calendar-table .calendar-table-body .calendar-table-row .calendar-table-col a.calendar-table-day.calendar-table-day-active {
-  background-color: rgba(54, 52, 53, 0.1);
+  background-color: rgba(0, 51, 73, 0.1);
 }
 
 .calendar .calendar-body .calendar-table .calendar-table-body .calendar-table-row .calendar-table-col a.calendar-table-day span.day-text {
@@ -1821,12 +1821,12 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 }
 
 .badge.badge-primary {
-  background-color: #037ab2;
+  background-color: #ff3c00;
   color: #fff;
 }
 
 .badge.badge-secondary {
-  background-color: #363435;
+  background-color: #003349;
   color: #fff;
 }
 
@@ -1846,7 +1846,7 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 }
 
 .badge.badge-link {
-  background-color: #037ab2;
+  background-color: #ff3c00;
   color: #fff;
 }
 
@@ -1868,14 +1868,14 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 
 .badge.badge-outline-primary {
   background-color: transparent;
-  border: 2px solid #037ab2;
-  color: #037ab2;
+  border: 2px solid #ff3c00;
+  color: #ff3c00;
 }
 
 .badge.badge-outline-secondary {
   background-color: transparent;
-  border: 2px solid #363435;
-  color: #363435;
+  border: 2px solid #003349;
+  color: #003349;
 }
 
 .badge.badge-outline-success {
@@ -1898,8 +1898,8 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 
 .badge.badge-outline-link {
   background-color: transparent;
-  border: 2px solid #037ab2;
-  color: #037ab2;
+  border: 2px solid #ff3c00;
+  color: #ff3c00;
 }
 
 .badge.badge-outline-light {
@@ -1953,11 +1953,11 @@ a.badge.badge-primary {
 }
 
 a.badge.badge-primary:hover {
-  background-color: #049ce4;
+  background-color: #ff6333;
 }
 
 a.badge.badge-primary:focus {
-  background-color: #049ce4;
+  background-color: #ff6333;
   -webkit-box-shadow: none;
           box-shadow: none;
 }
@@ -1967,11 +1967,11 @@ a.badge.badge-secondary {
 }
 
 a.badge.badge-secondary:hover {
-  background-color: #504d4f;
+  background-color: #00577c;
 }
 
 a.badge.badge-secondary:focus {
-  background-color: #504d4f;
+  background-color: #00577c;
   -webkit-box-shadow: none;
           box-shadow: none;
 }
@@ -2023,11 +2023,11 @@ a.badge.badge-link {
 }
 
 a.badge.badge-link:hover {
-  background-color: #049ce4;
+  background-color: #ff6333;
 }
 
 a.badge.badge-link:focus {
-  background-color: #049ce4;
+  background-color: #ff6333;
   -webkit-box-shadow: none;
           box-shadow: none;
 }
@@ -4997,7 +4997,7 @@ svg.svg-alert-icon.svg-alert-icon-success circle {
 }
 
 .notifications .noti-item .noti-container .noti-icon.noti-warning {
-  background-color: #363435;
+  background-color: #003349;
 }
 
 .notifications .noti-item .noti-container .noti-icon.noti-danger {
@@ -6162,7 +6162,7 @@ body .tooltip.tooltip-toolbar .tooltip-inner, html .tooltip.tooltip-toolbar .too
 }
 
 .datepicker table tr td.day.today:hover {
-  background-color: #049ce4;
+  background-color: #ff6333;
   color: var(--white);
 }
 
@@ -6173,7 +6173,7 @@ body .tooltip.tooltip-toolbar .tooltip-inner, html .tooltip.tooltip-toolbar .too
 }
 
 .datepicker table tr td.day.active:hover {
-  background-color: #504d4f;
+  background-color: #00577c;
   color: var(--white);
 }
 
@@ -6184,7 +6184,7 @@ body .tooltip.tooltip-toolbar .tooltip-inner, html .tooltip.tooltip-toolbar .too
 }
 
 .datepicker table tr td span.month.active:hover {
-  background-color: #504d4f;
+  background-color: #00577c;
   color: var(--white);
 }
 
@@ -7063,33 +7063,33 @@ body .tooltip.tooltip-toolbar .tooltip-inner, html .tooltip.tooltip-toolbar .too
 }
 
 :root {
-  --brand:                                        #037ab2;
-  --primary:                                      #037ab2;
-  --secondary:                                    #363435;
+  --brand:                                        #ff3c00;
+  --primary:                                      #ff3c00;
+  --secondary:                                    #003349;
   --black:                                        #000;
   --white:                                        #fff;
   --success:                                      #42AB44;
   --warning:                                      #FFAB1B;
   --danger:                                       #FA6767;
   --link:                                         #007DFF;
-  --primary-alpha-10:                             rgba(3, 122, 178, 0.1);
-  --primary-alpha-20:                             rgba(3, 122, 178, 0.2);
-  --primary-alpha-30:                             rgba(3, 122, 178, 0.3);
-  --primary-alpha-40:                             rgba(3, 122, 178, 0.4);
-  --primary-alpha-50:                             rgba(3, 122, 178, 0.5);
-  --primary-alpha-60:                             rgba(3, 122, 178, 0.6);
-  --primary-alpha-70:                             rgba(3, 122, 178, 0.7);
-  --primary-alpha-80:                             rgba(3, 122, 178, 0.8);
-  --primary-alpha-90:                             rgba(3, 122, 178, 0.9);
-  --secondary-alpha-10:                           rgba(54, 52, 53, 0.1);
-  --secondary-alpha-20:                           rgba(54, 52, 53, 0.2);
-  --secondary-alpha-30:                           rgba(54, 52, 53, 0.3);
-  --secondary-alpha-40:                           rgba(54, 52, 53, 0.4);
-  --secondary-alpha-50:                           rgba(54, 52, 53, 0.5);
-  --secondary-alpha-60:                           rgba(54, 52, 53, 0.6);
-  --secondary-alpha-70:                           rgba(54, 52, 53, 0.7);
-  --secondary-alpha-80:                           rgba(54, 52, 53, 0.8);
-  --secondary-alpha-90:                           rgba(54, 52, 53, 0.9);
+  --primary-alpha-10:                             rgba(255, 60, 0, 0.1);
+  --primary-alpha-20:                             rgba(255, 60, 0, 0.2);
+  --primary-alpha-30:                             rgba(255, 60, 0, 0.3);
+  --primary-alpha-40:                             rgba(255, 60, 0, 0.4);
+  --primary-alpha-50:                             rgba(255, 60, 0, 0.5);
+  --primary-alpha-60:                             rgba(255, 60, 0, 0.6);
+  --primary-alpha-70:                             rgba(255, 60, 0, 0.7);
+  --primary-alpha-80:                             rgba(255, 60, 0, 0.8);
+  --primary-alpha-90:                             rgba(255, 60, 0, 0.9);
+  --secondary-alpha-10:                           rgba(0, 51, 73, 0.1);
+  --secondary-alpha-20:                           rgba(0, 51, 73, 0.2);
+  --secondary-alpha-30:                           rgba(0, 51, 73, 0.3);
+  --secondary-alpha-40:                           rgba(0, 51, 73, 0.4);
+  --secondary-alpha-50:                           rgba(0, 51, 73, 0.5);
+  --secondary-alpha-60:                           rgba(0, 51, 73, 0.6);
+  --secondary-alpha-70:                           rgba(0, 51, 73, 0.7);
+  --secondary-alpha-80:                           rgba(0, 51, 73, 0.8);
+  --secondary-alpha-90:                           rgba(0, 51, 73, 0.9);
   --success-alpha-10:                             rgba(66, 171, 68, 0.1);
   --success-alpha-20:                             rgba(66, 171, 68, 0.2);
   --success-alpha-30:                             rgba(66, 171, 68, 0.3);
