@@ -51,17 +51,26 @@
 						</button>
 
 						<div class="dropdown-menu dropdown-menu-end">
-							<a href="#" class="dropdown-item">
+							<a href="https://vinasa.org.vn/vinasa/4/3074/4336/dang-ky-hoi-vien-vinasa/" class="dropdown-item" target="_blank">
 								Đăng ký hội viên VINASA
 							</a>
-							<a href="#" class="dropdown-item">
+							<a href="https://danhbaict.vn/" class="dropdown-item" target="_blank">
 								Danhbaict.vn
 							</a>
-							<a href="#" class="dropdown-item">
+							<a href="https://connect.vinasa.org.vn/" class="dropdown-item" target="_blank">
 								VINASA Connect
 							</a>
-							<a href="#" class="dropdown-item">
-								Kết nối với Invest Hong Kong và Gặp gỡ DN Đài Loan
+							<a href="https://docs.google.com/forms/d/e/1FAIpQLSfzVp3HCOUeCi3miyWReONCTKhbOMdFLGZWXGd9KHLnI3T20g/viewform" class="dropdown-item" target="_blank">
+								Kết nối với Invest Hong Kong
+							</a>
+							<a href="https://docs.google.com/forms/d/e/1FAIpQLScBXjD9SZ4R4Hu_gAMxRvnkTK9wdPd6uWyqAGRah85W1-Kdow/viewform" class="dropdown-item" target="_blank">
+								Gặp gỡ DN Đài Loan
+							</a>
+							<a href="https://academy.vinasa.org.vn/dang-ky/" class="dropdown-item" target="_blank">
+								Đào tạo CN mới và CĐS
+							</a>
+							<a href="https://mdx.vinasa.org.vn/tu-van/" class="dropdown-item" target="_blank">
+								Tư vấn Khung CĐS sản xuất
 							</a>
 						</div>
 					</div>
