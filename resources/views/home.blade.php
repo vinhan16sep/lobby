@@ -108,9 +108,9 @@
 																		<div class="item-event">
 																			<div class="ratio-wrapper ratio-wrapper-16-9">
 																				<div class="overlay">
-																					<h6 class="subtitle-md">
-																						{{ $seminar->name }}
-																					</h6>
+{{--																					<h6 class="subtitle-md">--}}
+{{--																						{{ $seminar->name }}--}}
+{{--																					</h6>--}}
 
 																					<div class="controls">
 																						@if (!empty($seminarArr) && in_array($seminar->id, $seminarArr))

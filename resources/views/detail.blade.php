@@ -45,6 +45,13 @@
 	<div class="view-dashboard">
 		<div class="dashboard-wrapper">
 			<div class="list-events" style="width:100%;">
+				<div class="card" style="height:50px;">
+					<div class="card-header" style="height:50px;">
+						<div class="header-left" style="width:100%;text-align: right;">
+							<a href="{{ route('home') }}" class="btn btn-primary">Quay lại sảnh sự kiện</a>
+						</div>
+					</div>
+				</div>
 				<div class="card">
 					<div class="card-header" style="height:300px;">
 						<div class="header-left">
@@ -106,41 +113,7 @@
 										</div>
 									</div>
 								</div>
-{{--								<div class="row mb-3">--}}
-{{--									<label class="col-sm-1 col-form-label"><i class="fa fa-user" aria-hidden="true"></i></label>--}}
-{{--									<div class="col-sm-8">--}}
-{{--										<input type="text" class="form-control" value="{{ Auth::user()->name }}" disabled>--}}
-{{--									</div>--}}
-{{--								</div>--}}
-{{--								<div class="row mb-3">--}}
-{{--									<label class="col-sm-1 col-form-label"><i class="fa fa-mail-bulk" aria-hidden="true"></i></label>--}}
-{{--									<div class="col-sm-8">--}}
-{{--										<input type="text" class="form-control" value="{{ Auth::user()->email }}" disabled>--}}
-{{--									</div>--}}
-{{--								</div>--}}
 							</form>
-{{--							<div class="form-group">--}}
-{{--								<label><i class="fa fa-user" aria-hidden="true"></i></label>--}}
-{{--								<input class="form-control" value="{{ Auth::user()->name }}" disabled />--}}
-{{--							</div>--}}
-{{--							<p class="p-sm per-info">--}}
-{{--								<i class="fa fa-user" aria-hidden="true"></i> {{ Auth::user()->name }}--}}
-{{--							</p>--}}
-{{--							<p class="p-sm per-info">--}}
-{{--								<i class="fa fa-mail-bulk" aria-hidden="true"></i> {{ Auth::user()->email }}--}}
-{{--							</p>--}}
-{{--							<p class="p-sm per-info">--}}
-{{--								<i class="fa fa-phone" aria-hidden="true"></i> </span> {{ Auth::user()->phone }}--}}
-{{--							</p>--}}
-{{--							<p class="p-sm per-info">--}}
-{{--								<span style="color: black;">Đơn vị:</span> {{ Auth::user()->company }}--}}
-{{--							</p>--}}
-{{--							<p class="p-sm per-info">--}}
-{{--								<span style="color: black;">Chức danh:</span> {{ Auth::user()->position }}--}}
-{{--							</p>--}}
-{{--							<p class="p-sm per-info">--}}
-{{--								<span style="color: black;">Địa chỉ:</span> {{ Auth::user()->address }}--}}
-{{--							</p>--}}
 						</div>
 					</div>
 					<div class="card-header" style="height: 500px;">
