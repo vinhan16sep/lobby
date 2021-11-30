@@ -4,7 +4,7 @@ var fs = require('fs');
 class Config {
     constructor() {
         var settingData = fs.readFileSync(path.join(path.dirname(process.execPath), '/Setting'), 'utf8');
-        // var settingData = fs.readFileSync("Setting", "utf8");
+        // var settingData = fs.readFileSync('Setting', 'utf8');
         var json = JSON.parse(settingData);
         this.ssl = json.SSL == 'true' ? true : false;
         this.debug = json.DEBUG == 'true' ? true : false;
