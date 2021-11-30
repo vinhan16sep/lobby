@@ -58,12 +58,12 @@
 									$date = new DateTime($eventDay->event_date);
 									$dateTxt = $date->format('l');
 									$convertArr = [
-										'Sunday' => 'Chủ Nhật', 
-										'Monday' => 'Thứ Hai', 
-										'Tuesday' => 'Thứ Ba', 
-										'Wednesday' => 'Thứ Tư', 
-										'Thursday' => 'Thứ Năm', 
-										'Friday' => 'Thứ Sáu', 
+										'Sunday' => 'Chủ Nhật',
+										'Monday' => 'Thứ Hai',
+										'Tuesday' => 'Thứ Ba',
+										'Wednesday' => 'Thứ Tư',
+										'Thursday' => 'Thứ Năm',
+										'Friday' => 'Thứ Sáu',
 										'Saturday' => 'Thứ Bảy'
 									];
 								@endphp
@@ -88,6 +88,20 @@
 										@if ($eventDay->eventTimes)
 											@foreach ($eventDay->eventTimes as $tKey => $eventTime)
 												@if ($eventTime->is_active == 1)
+													@php
+														$timezone = 'Asia/Ho_Chi_Minh';
+														$rawDate = $eventDay->event_date;
+														$tFrom = new DateTime($rawDate . ' ' . $eventTime->start_time . ':00', new DateTimeZone($timezone));
+														$tFromInt = $tFrom->format('U');
+														$tTo = new DateTime($rawDate . ' ' . $eventTime->end_time . ':00', new DateTimeZone($timezone));
+														$tToInt = $tTo->format('U');
+														$currentTime = time();
+
+														$isShowTime = false;
+														if ($tFromInt <= $currentTime && $currentTime <= $tToInt) {
+														    $isShowTime = true;
+														}
+													@endphp
 													<div class="event-item {{ $tKey == 2 ? 'live' : ''}}">
 														<div class="event-time">
 															<h6 class="subtitle-md">
@@ -97,9 +111,11 @@
 
 															<div class="line"></div>
 
-															<span class="badge badge-success">
-																<i class="fas fa-circle"></i> Trực tiếp
-															</span>
+															@if ($isShowTime)
+																<span class="badge badge-success">
+																	<i class="fas fa-circle"></i> Đang diễn ra
+																</span>
+															@endif
 														</div>
 														<div class="event-content">
 															@if ($eventTime->seminars)
@@ -108,9 +124,9 @@
 																		<div class="item-event">
 																			<div class="ratio-wrapper ratio-wrapper-16-9">
 																				<div class="overlay">
-{{--																					<h6 class="subtitle-md">--}}
-{{--																						{{ $seminar->name }}--}}
-{{--																					</h6>--}}
+																					{{--																					<h6 class="subtitle-md">--}}
+																					{{--																						{{ $seminar->name }}--}}
+																					{{--																					</h6>--}}
 
 																					<div class="controls">
 																						@if (!empty($seminarArr) && in_array($seminar->id, $seminarArr))
@@ -133,11 +149,13 @@
 																						        onclick="getSeminarDetail('{{ $seminar->id }}')">
 																							Chi tiết
 																						</button>
-																						<button class="btn btn-primary"
-																						        type="button"
-																						        onclick="window.open('{{ $seminar->link }}', '_blank')">
-																							Tham gia sự kiện
-																						</button>
+																						@if ($isShowTime)
+																							<button class="btn btn-danger" type="button" onclick="window.open('{{ $seminar->link }}', '_blank')">Đang diễn ra <i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+																						@elseif ($currentTime < $tFromInt)
+																							<button class="btn btn-primary" type="button" onclick="window.open('{{ $seminar->link }}', '_blank')">Chưa diễn ra</button>
+																						@elseif ($tToInt < $currentTime)
+																							<button class="btn btn-default" type="button" disabled>Đã kết thúc</button>
+																						@endif
 																					</div>
 																				</div>
 
@@ -192,37 +210,37 @@
 							<div class="chat-box-body">
 								<div class="chat-append append-message"></div>
 							</div>
-		
+
 							<div class="chat-box-footer">
 								<input type="text" class="form-control input-message" placeholder="Nội dung tin nhắn ...">
-		
+
 								<button class="btn btn-primary btn-send-message" type="button">
 									Gửi
 								</button>
 							</div>
 						</div>
-		
+
 						<div class="chat-box chat-private">
 							<div class="chat-box-header">
 								<h6 class="subtitle-md"></h6>
-		
+
 								<button class="btn btn-close-chat" type="button">
 									<i class="fas fa-times"></i>
 								</button>
 							</div>
-		
+
 							<div class="chat-box-body">
 								<div class="chat-append append-message"></div>
 							</div>
-		
+
 							<div class="chat-box-footer">
 								<input type="text" class="form-control input-message" placeholder="Nội dung tin nhắn ...">
-		
+
 								<button class="btn btn-primary btn-send-message" type="button">
 									Gửi
 								</button>
 							</div>
-						</div>	
+						</div>
 					</div>
 				</div>
 
@@ -264,12 +282,12 @@
 				</div>
 			</div>
 		</div>
-	
+
 		<div class="modal fade" id="modalSeminarDetail" role="dialog">
 			<div class="modal-dialog modal-lg modal-dialog-centered">
 				<div class="modal-content">
 					<div class="modal-body">
-	
+
 					</div>
 				</div>
 			</div>
