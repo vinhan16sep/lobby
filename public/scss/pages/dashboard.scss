@@ -383,6 +383,17 @@
 
 					.card-header{
 						height: 80px;
+
+						@include d-flex(column, center, flex-start);
+
+						.input-group{
+							width: 100%;
+
+							.form-control{
+								@include borderRadiusCustom(top, left);
+								@include borderRadiusCustom(bottom, left);
+							}
+						}
 					}
 
 					.card-body{
