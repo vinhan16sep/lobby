@@ -745,7 +745,27 @@
 .view-dashboard .dashboard-wrapper .chat-area .card:first-child .card-body .list-users-wrapper .list-users .select-user-item a.select-user .img-mask-wrapper .img-mask {
   width: 100%;
   height: 100%;
+  background-color: var(--gray-1);
   border: 1px solid var(--border);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.view-dashboard .dashboard-wrapper .chat-area .card:first-child .card-body .list-users-wrapper .list-users .select-user-item a.select-user .img-mask-wrapper .img-mask p {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
 .view-dashboard .dashboard-wrapper .chat-area .card:first-child .card-body .list-users-wrapper .list-users .select-user-item a.select-user .img-mask-wrapper .unread .circle,
@@ -1010,6 +1030,27 @@
 .view-dashboard .dashboard-wrapper .chat-area .card:last-child .card-body .chat-box .chat-box-body .chat-append .chat-item .item-avatar .img-mask {
   width: 100%;
   height: 100%;
+  background-color: var(--gray-1);
+  border: 1px solid var(--border);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.view-dashboard .dashboard-wrapper .chat-area .card:last-child .card-body .chat-box .chat-box-body .chat-append .chat-item .item-avatar .img-mask p {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
 .view-dashboard .dashboard-wrapper .chat-area .card:last-child .card-body .chat-box .chat-box-body .chat-append .chat-item .item-content {
