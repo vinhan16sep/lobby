@@ -263,8 +263,14 @@ function renderListUsers() {
 
             $item.find('.select-user').data('user-id', user.userId);
 
-            $item.find('img').attr('src', user.avatar != null ? user.avatar : `https://ui-avatars.com/api/?name=${user.name}`);
-            $item.find('img').attr('alt', `Avatar of ${user.name}`);
+            if (user.avatar != null) {
+                $item.find('img').attr('src', user.avatar);
+                $item.find('img').attr('alt', `Avatar of ${user.name}`);
+            } else {
+                $item.find('img').replaceWith(`
+                    <p>${user.name.substring(0, 2)}</p>
+                `);
+            }
 
             $item.find('h6').text(user.name);
 
@@ -380,8 +386,14 @@ function loadChatDialog(type, data, prepend = false) {
 
             let $chatWrap = $chatWrapPrepare.clone();
 
-            $chatWrap.find('.img-mask img').attr('src', fromUser.avatar != null ? fromUser.avatar : `https://ui-avatars.com/api/?name=${fromUser.name}`);
-            $chatWrap.find('.img-mask img').attr('alt', `Avatart of ${fromUser.name}`);
+            if (fromUser.avatar != null) {
+                $chatWrap.find('.img-mask img').attr('src', fromUser.avatar);
+                $chatWrap.find('.img-mask img').attr('alt', `Avatar of ${user.name}`);
+            } else {
+                $chatWrap.find('.img-mask img').replaceWith(`
+                    <p>${fromUser.name.substring(0, 2)}</p>
+                `);
+            }
 
             $chatWrap.find('.p-name').text(fromUser.name);
             $chatWrap.data('user-id', fromUser.id);
@@ -428,8 +440,14 @@ function loadChatDialog(type, data, prepend = false) {
 
             let $chatWrap = $chatWrapPrepare.clone();
 
-            $chatWrap.find('.img-mask img').attr('src', fromUser.avatar != null ? fromUser.avatar : `https://ui-avatars.com/api/?name=${fromUser.name}`);
-            $chatWrap.find('.img-mask img').attr('alt', `Avatart of ${fromUser.name}`);
+            if (fromUser.avatar != null) {
+                $chatWrap.find('.img-mask img').attr('src', fromUser.avatar);
+                $chatWrap.find('.img-mask img').attr('alt', `Avatar of ${user.name}`);
+            } else {
+                $chatWrap.find('.img-mask img').replaceWith(`
+                    <p>${fromUser.name.substring(0, 2)}</p>
+                `);
+            }
 
             $chatWrap.find('.p-name').text(fromUser.name);
 
@@ -473,8 +491,14 @@ function loadChatDialog(type, data, prepend = false) {
 
                 let $chatWrap = $chatWrapPrepare.clone();
 
-                $chatWrap.find('.img-mask img').attr('src', fromUser.avatar != null ? fromUser.avatar : `https://ui-avatars.com/api/?name=${fromUser.name}`);
-                $chatWrap.find('.img-mask img').attr('alt', `Avatart of ${fromUser.name}`);
+                if (fromUser.avatar != null) {
+                    $chatWrap.find('.img-mask img').attr('src', fromUser.avatar);
+                    $chatWrap.find('.img-mask img').attr('alt', `Avatar of ${user.name}`);
+                } else {
+                    $chatWrap.find('.img-mask img').replaceWith(`
+                        <p>${fromUser.name.substring(0, 2)}</p>
+                    `);
+                }
 
                 $chatWrap.find('.p-name').text(fromUser.name);
 
@@ -700,13 +724,22 @@ function receiveChatMessage(wrapper, data) {
             }
         }
 
-        let userAvatar = user.avatar != null ? user.avatar : `https://ui-avatars.com/api/?name=${user.name}`;
-
         let $chatWrap = $(`
             <div class="chat-item" data-sender-id="${userId}">
                 <div class="item-avatar">
                     <div class="img-mask img-mask-circle">
-                        <img src="${userAvatar}" alt="Avatar of ${user.name}">
+                        ${(() => {
+                            if (user.avatar != null) {
+                                return `
+                                    <img src="${user.avatar}" alt="Avatar of ${user.name}">
+                                `;
+                            } else {
+                                return `
+                                    <p>${user.name.substring(0, 2)}</p>
+                                `;
+                            }
+                        })()}
+                        
                     </div>
                 </div>
 
