@@ -3,7 +3,7 @@ let users = [];
 
 $(document).ready(function () {
     // SCROLL TO LIVE EVENT
-    if (typeof $('.event-item.live').offset() !== "undefined" && $('.tab-pane.active').offset() !== undefined) {
+    if (typeof $('.event-item.live').offset() !== 'undefined' && $('.tab-pane.active').offset() !== undefined) {
         $('.tab-pane.active')
             .stop()
             .animate({
@@ -281,8 +281,30 @@ function renderListUsers() {
             }
 
             $wrapper.append($item);
+
+            initSearchUsers();
         });
     }
+}
+
+function initSearchUsers() {
+    $('#btnSearchUser')
+        .unbind()
+        .on('click', function () {
+            $('#inputSearchUser').trigger('search');
+        });
+
+    $('#inputSearchUser')
+        .unbind()
+        .on('search', function () {
+            let search = $(this).val().trim();
+
+            $('#appendListUsers')
+                .find('.select-user-item')
+                .filter(function () {
+                    $(this).toggle(commonFunc.convertToLatin($(this).find('.user-name').text()).toLowerCase().indexOf(commonFunc.convertToLatin(search)) > -1);
+                });
+        });
 }
 
 const CHATLOG = {
@@ -392,19 +414,13 @@ function loadChatDialog(type, data, prepend = false) {
             $message.data('time', msg.time);
 
             $message.prependTo($append.find('.chat-item:first-child').find('.content-chat'));
-            $append.scrollTop(150);
+            $append.scrollTop(50);
         }
     } else {
         data = data.reverse();
-        limitStart = data.length - chatlogPerResponse;
-        limitEnd = data.length - 1;
 
-        if (limitStart < 0) {
-            limitStart = 0;
-        }
-
-        for (let i = limitStart; i <= limitEnd; i++) {
-            let msg = data[i];
+        if (data.length == 1) {
+            let msg = data[0];
 
             let fromUser = users.find((usr) => {
                 return usr.userId == msg.fromUser;
@@ -433,21 +449,67 @@ function loadChatDialog(type, data, prepend = false) {
                 $chatWrap.addClass('chat-item-mine');
             }
 
-            let a = i - 1;
-            let b = i;
-            if (a < limitStart) {
-                a = limitStart;
-            }
-
-            if (data[a].fromUser != data[b].fromUser) {
-                $append.append($chatWrap);
-            }
+            $append.append($chatWrap);
 
             let $message = $(`<p>${msg.content}</p>`);
             $message.data('time', msg.time);
 
             $message.appendTo($append.find('.chat-item:last-child').find('.content-chat'));
             $append.scrollTop($wrapper.find('.append-message')[0].scrollHeight);
+        } else {
+            limitStart = data.length - chatlogPerResponse;
+            limitEnd = data.length - 1;
+
+            if (limitStart < 0) {
+                limitStart = 0;
+            }
+
+            for (let i = limitStart; i <= limitEnd; i++) {
+                let msg = data[i];
+
+                let fromUser = users.find((usr) => {
+                    return usr.userId == msg.fromUser;
+                });
+
+                let $chatWrap = $chatWrapPrepare.clone();
+
+                $chatWrap.find('.img-mask img').attr('src', fromUser.avatar != null ? fromUser.avatar : `https://ui-avatars.com/api/?name=${fromUser.name}`);
+                $chatWrap.find('.img-mask img').attr('alt', `Avatart of ${fromUser.name}`);
+
+                $chatWrap.find('.p-name').text(fromUser.name);
+
+                $chatWrap.data('user-id', fromUser.id);
+
+                if (type == CHATLOG.PRIVATE) {
+                    $chatWrap.find('.item-avatar').remove();
+                    $chatWrap.find('.p-name').remove();
+                }
+
+                if (type == CHATLOG.PUBLIC && msg.fromUser == currentUser.id) {
+                    $chatWrap.find('.item-avatar').remove();
+                    $chatWrap.find('.p-name').text('Me');
+                }
+
+                if (msg.fromUser == currentUser.id) {
+                    $chatWrap.addClass('chat-item-mine');
+                }
+
+                let a = i - 1;
+                let b = i;
+                if (a < limitStart) {
+                    a = limitStart;
+                }
+
+                if (data[a].fromUser != data[b].fromUser) {
+                    $append.append($chatWrap);
+                }
+
+                let $message = $(`<p>${msg.content}</p>`);
+                $message.data('time', msg.time);
+
+                $message.appendTo($append.find('.chat-item:last-child').find('.content-chat'));
+                $append.scrollTop($wrapper.find('.append-message')[0].scrollHeight);
+            }
         }
     }
 }
@@ -466,8 +528,6 @@ function initChatBox(wrapper) {
         .on('click', function () {
             sendChatMessage(wrapper);
         });
-
-    let timeoutLoadmore;
 
     $(wrapper)
         .find('.append-message')
@@ -614,25 +674,29 @@ function receiveChatMessage(wrapper, data) {
 
     if (user) {
         if (wrapper == '.chat-private') {
-            if ($(wrapper).is(':visible') && $(wrapper).data('user-id') != userId) {
-                $('#appendListUsers')
-                    .find('.select-user-item')
-                    .each(function () {
-                        if ($(this).find('a.select-user').data('user-id') == userId) {
-                            user.unread++;
-
-                            $(this).find('.unread .circle').text(user.unread);
-                            $(this).find('.unread').show();
-                        }
-                    });
-                return;
-            } else {
+            if (!$(wrapper).is(':visible')) {
                 $(wrapper).find('h6').text(user.name);
                 $(wrapper).data('user-id', data.id);
                 $(wrapper).parents('.card').addClass('chat-area-collapsed');
                 $(wrapper).show();
 
                 initChatPrivate(userId);
+
+                return;
+            } else {
+                if ($(wrapper).data('user-id') != userId) {
+                    $('#appendListUsers')
+                        .find('.select-user-item')
+                        .each(function () {
+                            if ($(this).find('a.select-user').data('user-id') == userId) {
+                                user.unread++;
+
+                                $(this).find('.unread .circle').text(user.unread);
+                                $(this).find('.unread').show();
+                            }
+                        });
+                    return;
+                }
             }
         }
 

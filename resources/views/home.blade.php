@@ -201,10 +201,15 @@
 			<div class="chat-area">
 				<div class="card">
 					<div class="card-header" style="height:50px;">
-						<div class="header-left">
-							<h6 class="subtitle-md">
-								Trao đổi - Kết nối
-							</h6>
+						<h6 class="subtitle-md" style="display: none">
+							Trao đổi - Kết nối
+						</h6>
+
+						<div class="input-group input-group-sm">
+							<input type="search" class="form-control" id="inputSearchUser" placeholder="Tìm kiếm đối tác...">
+							<button class="btn btn-outline-default" id="btnSearchUser" type="button">
+								<i class="fas fa-search"></i>
+							</button>
 						</div>
 					</div>
 
@@ -283,7 +288,7 @@
 					</div>
 				</div>
 
-				<h6 class="subtitle-sm"></h6>
+				<h6 class="subtitle-sm user-name"></h6>
 			</a>
 		</div>
 
