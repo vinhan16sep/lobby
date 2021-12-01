@@ -11,9 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-})->name('default');
+//Route::get('/', function () {
+//    return view('auth.login');
+//})->name('default');
+
+Route::get('/', 'Auth\LoginController@index')->name('default');
 
 Auth::routes();
 
