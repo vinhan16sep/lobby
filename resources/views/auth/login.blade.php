@@ -12,7 +12,7 @@
         <div class="row g-0">
             <div class="col-md-8">
                 <div class="img-mask">
-                    <img src="{{ asset("img/banner_login.jpg") }}" alt="Banner of Login">
+                    <img src="{{ asset("img/banner_login.jpg?v=").time() }}" alt="Banner of Login">
                 </div>
             </div>
 

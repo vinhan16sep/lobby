@@ -3,11 +3,13 @@ let users = [];
 
 $(document).ready(function () {
     // SCROLL TO LIVE EVENT
-    $('.tab-pane.active')
-        .stop()
-        .animate({
-            scrollTop: $('.event-item.live').offset().top - $('.tab-pane.active').offset().top
-        });
+    if (typeof $('.event-item.live').offset() !== "undefined" && $('.tab-pane.active').offset() !== undefined) {
+        $('.tab-pane.active')
+            .stop()
+            .animate({
+                scrollTop: $('.event-item.live').offset().top - $('.tab-pane.active').offset().top
+            });
+    }
 
     $(document)
         .on('click', function (e) {

@@ -64,8 +64,11 @@
 						<ul class="nav nav-pills" id="eventTabs" role="tablist">
 							@foreach ($eventDays as $dKey => $eventDay)
 								@php
-									$date = new DateTime($eventDay->event_date);
+									$timezone = 'Asia/Ho_Chi_Minh';
+									$date = new DateTime($eventDay->event_date, new DateTimeZone($timezone));
 									$dateTxt = $date->format('l');
+									$currentDate = new DateTime('now', new DateTimeZone($timezone));
+									$isEventDate = ($date->format('d-m-Y') == $currentDate->format('d-m-Y')) ? true : false;
 									$convertArr = [
 										'Sunday' => 'Chủ Nhật',
 										'Monday' => 'Thứ Hai',
@@ -77,7 +80,7 @@
 									];
 								@endphp
 								<li class="nav-item" role="presentation">
-									<button class="nav-link {{ $dKey == 0 ? 'active' : '' }}"
+									<button class="nav-link {{ $isEventDate ? 'active' : '' }}"
 									        id="btnTab_{{ $dKey + 1  }}"
 									        data-bs-toggle="tab" data-bs-target="#tab_{{ $dKey + 1  }}"
 									        type="button" role="tab" aria-controls="tab_{{ $dKey + 1  }}"
@@ -90,7 +93,14 @@
 						</ul>
 						<div class="tab-content" id="eventTabsContent">
 							@foreach ($eventDays as $dKey => $eventDay)
-								<div class="tab-pane fade {{ $dKey == 0 ? 'show active' : '' }}"
+								@php
+									$timezone = 'Asia/Ho_Chi_Minh';
+									$date = new DateTime($eventDay->event_date, new DateTimeZone($timezone));
+									$dateTxt = $date->format('l');
+									$currentDate = new DateTime('now', new DateTimeZone($timezone));
+									$isEventDate = ($date->format('d-m-Y') == $currentDate->format('d-m-Y')) ? true : false;
+								@endphp
+								<div class="tab-pane fade {{ $isEventDate ? 'show active' : '' }}"
 								     id="tab_{{ $dKey + 1  }}"
 								     role="tabpanel" aria-labelledby="btnTab_{{ $dKey + 1  }}">
 									<div class="event-schedule">
@@ -98,33 +108,32 @@
 											@foreach ($eventDay->eventTimes as $tKey => $eventTime)
 												@if ($eventTime->is_active == 1)
 													@php
-														$timezone = 'Asia/Ho_Chi_Minh';
 														$rawDate = $eventDay->event_date;
 														$tFrom = new DateTime($rawDate . ' ' . $eventTime->start_time . ':00', new DateTimeZone($timezone));
 														$tFromInt = $tFrom->format('U');
+														$tFromInt15MinBefore = $tFromInt - (60 * 15);
 														$tTo = new DateTime($rawDate . ' ' . $eventTime->end_time . ':00', new DateTimeZone($timezone));
 														$tToInt = $tTo->format('U');
 														$currentTime = time();
 
 														$isShowTime = false;
-														if ($tFromInt <= $currentTime && $currentTime <= $tToInt) {
+														if ($tFromInt15MinBefore <= $currentTime && $currentTime <= $tToInt) {
 														    $isShowTime = true;
 														}
 													@endphp
-													<div class="event-item {{ $tKey == 2 ? 'live' : ''}}">
+													<div class="event-item {{ $isShowTime == 2 ? 'live' : ''}}">
 														<div class="event-time">
 															<h6 class="subtitle-md">
 																{{ $eventTime->start_time }}
 																- {{ $eventTime->end_time }}
 															</h6>
 
-															<div class="line"></div>
-
 															@if ($isShowTime)
-																<span class="badge badge-success">
+																<span class="badge badge-success" style="font-size: 1em !important;">
 																	<i class="fas fa-circle"></i> Đang diễn ra
 																</span>
 															@endif
+															<div class="line"></div>
 														</div>
 														<div class="event-content">
 															@if ($eventTime->seminars)
@@ -159,7 +168,7 @@
 																							Chi tiết
 																						</button>
 																						@if ($isShowTime)
-																							<button class="btn btn-danger" type="button" onclick="window.open('{{ $seminar->link }}', '_blank')">Đang diễn ra <i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+																							<button class="btn btn-danger" type="button" onclick="window.open('{{ $seminar->link }}', '_blank')">Tham gia <i class="fa fa-arrow-right" aria-hidden="true"></i></button>
 																						@elseif ($currentTime < $tFromInt)
 																							<button class="btn btn-primary" type="button" onclick="window.open('{{ $seminar->link }}', '_blank')">Chưa diễn ra</button>
 																						@elseif ($tToInt < $currentTime)
@@ -191,14 +200,11 @@
 
 			<div class="chat-area">
 				<div class="card">
-					<div class="card-header">
+					<div class="card-header" style="height:50px;">
 						<div class="header-left">
 							<h6 class="subtitle-md">
 								Trao đổi - Kết nối
 							</h6>
-							<p class="p-sm">
-								Vui lòng nhắn tin để kết nối với tất cả Đại biểu hoặc chọn Từng đại biểu để trao đổi, giao lưu riêng
-							</p>
 						</div>
 					</div>
 
