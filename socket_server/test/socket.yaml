@@ -1,0 +1,19 @@
+config:
+  target: "http://localhost:3000"
+  phases:
+    - duration: 10
+      arrivalRate: 2000
+      maxVusers: 50
+  timeout: 30
+scenarios:
+  - name: My first scenario
+    engine: socketio
+    flow:
+      - emit:
+          channel: "JOIN"
+          data: {userId: "{{$randomNumber(1,10000)}}"}
+      - think:
+          1
+      - emit:
+          channel: "SEND_MESSAGE"
+          data: {content: "{{ $randomString() }}"}

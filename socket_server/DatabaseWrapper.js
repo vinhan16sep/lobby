@@ -32,7 +32,7 @@ class DatabaseWrapper {
      * }
      * @param {Object} message
      */
-    addMessage(message) {
+    async addMessage(message) {
         try {
             this.temporaryLogs.push(message);
 
@@ -47,16 +47,21 @@ class DatabaseWrapper {
                     }
                     insertArr.push([parseInt(item.fromUser), toUser, item.content, item.time, item.read]);
                 });
+                this.temporaryLogs = [];
                 let query = `INSERT INTO chat_logs(from_user, to_user, message, created_at, seen)  VALUES ? `;
                 // execute the insert statment
-                this.dbConnection.query(query, [insertArr], (err, results) => {
-                    if (err) {
-                        return console.error(err.message);
-                    }
-                    this.temporaryLogs = [];
-                    logger.info("SERVICE", "MYSQL", "", "Row inserted " + results.affectedRows);
+                await new Promise((resolve) => {
+                    this.dbConnection.query(query, [insertArr], (err, results) => {
+                        if (err) {
+                            this.logger.error("EXCEPTION", "MYSQL::DatabaseWrapper::addMessage", "", err.toString());
+                            resolve();
+                            return;
+                        }
+
+                        this.logger.info("SERVICE", "MYSQL", "", "Row inserted " + results.affectedRows);
+                        resolve();
+                    });
                 });
-                // connection.end();
             }
         } catch (error) {
             this.logger.error("EXCEPTION", "DatabaseWrapper::addMessage", "", error.toString());
