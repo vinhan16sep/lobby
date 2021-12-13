@@ -545,6 +545,7 @@
 }
 
 .view-dashboard .dashboard-wrapper .list-events .card:last-child .card-body .tab-content .tab-pane .event-schedule .event-item .event-content .item-event .ratio-wrapper {
+  margin-bottom: 0.75rem;
   overflow: hidden;
 }
 
@@ -634,6 +635,10 @@
 
 .view-dashboard .dashboard-wrapper .list-events .card:last-child .card-body .tab-content .tab-pane .event-schedule .event-item .event-content .item-event .ratio-wrapper .overlay .controls .btn:not(:last-child) {
   margin-right: 0.5rem;
+}
+
+.view-dashboard .dashboard-wrapper .list-events .card:last-child .card-body .tab-content .tab-pane .event-schedule .event-item .event-content .item-event > h6 {
+  font-weight: 600;
 }
 
 .view-dashboard .dashboard-wrapper .chat-area {
