@@ -18,6 +18,7 @@
 					<div class="col-sm-4">
 						<a class="btn btn-primary" href="javascript:void(0);" disabled="disabled">Thêm mới user</a>
 						<a class="btn btn-primary" href="{{ route('user.import') }}">Import user</a>
+						<a class="btn btn-warning" href="{{ route('user.export') }}">Export user</a>
 					</div>
 				</div>
 			</div>
@@ -195,7 +196,7 @@
 						<input id="userId" type="hidden" name="user_id">
 						<div class="form-group">
 							<label for="password" class="control-label">Mật khẩu mới</label>
-							<input id="password" type="text" class="form-control" name="password" readonly>
+							<input id="password" type="text" class="form-control" name="password">
 						</div>
 					</div>
 					<div class="modal-footer" style="text-align: center">
