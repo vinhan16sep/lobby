@@ -172,7 +172,7 @@
 																						@elseif ($currentTime < $tFromInt)
 																							<button class="btn btn-primary" type="button" onclick="window.open('{{ $seminar->link }}', '_blank')">Chưa diễn ra</button>
 																						@elseif ($tToInt < $currentTime)
-																							<button class="btn btn-default" type="button" disabled>Đã kết thúc</button>
+																							<button class="btn btn-default" type="button" onclick="window.open('{{ $seminar->link }}', '_blank')">Xem lại</button>
 																						@endif
 																					</div>
 																				</div>
