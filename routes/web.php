@@ -53,6 +53,7 @@ Route::prefix('admin')->group(function () {
         Route::get('user', 'UserController@index')->name('user.index');
         Route::post('user/search', 'UserController@search')->name('user.search');
         Route::get('user/import', 'UserController@import')->name('user.import');
+        Route::get('user/export', 'UserController@export')->name('user.export');
         Route::post('user/doImport', 'UserController@doImport')->name('user.doImport');
         Route::post('user/store', 'UserController@store')->name('user.store');
         Route::get('user/edit/{id}', 'UserController@edit')->name('user.edit');

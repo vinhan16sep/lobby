@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Input;
 use App\EventDays;
 use App\User;
 use App\Blog;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Response;
 use Session;
 use File;
@@ -40,12 +41,52 @@ class UserController extends Controller
         return view('admin/user/index', ['users' => $users]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     */
     public function import(){
         return view('admin/user/import');
+    }
+
+    public function export(){
+        $fileName = 'Danh_sach_user_' . time() . '.xlsx';
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $headers = [
+            'Họ tên',
+            'Email',
+            'Số điện thoại',
+            'Đơn vị',
+            'Chức danh',
+            'Địa chỉ'
+        ];
+        for ($i = 0; $i < count($headers); $i++) {
+            $sheet->setCellValueByColumnAndRow($i + 1, 1, $headers[$i]);
+        }
+
+        $users = DB::table('users')->get()->toArray();
+        for ($i = 0; $i < count($users); $i++) {
+            if ($users[$i]) {
+                $data = (array) $users[$i];
+                $user = [
+                    $data['name'],
+                    $data['email'],
+                    $data['phone'],
+                    $data['company'],
+                    $data['position'],
+                    $data['address']
+                ];
+
+                $j = 0;
+                foreach($user as $key => $val) {
+                    $sheet->setCellValueByColumnAndRow($j + 1, ($i + 1 + 1), $val);
+                    $j++;
+                }
+            }
+        }
+
+        $writer = new Xlsx($spreadsheet);
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="'. urlencode($fileName).'"');
+        $writer->save('php://output');
     }
 
     /**
