@@ -23,45 +23,36 @@
 	@yield('css')
 </head>
 <body>
-	{{-- <div id="fb-root"></div>
-	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v12.0&appId=395331708002882&autoLogAppEvents=1" nonce="FlNjZkkw"></script>
+	<!-- Messenger Plugin chat Code -->
+    <div id="fb-root"></div>
 
-	<div class="fb-page" data-href="https://www.facebook.com/vinasavn/" data-tabs="timeline" data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/vinasavn/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/vinasavn/">VINASA</a></blockquote></div> --}}
-
-	<!-- FACEBOOK CHAT START -->
-	<!--
-	<div id="fb-root"></div>
-    <script>
-		window.fbAsyncInit = function() {
-		FB.init({
-			xfbml            : true,
-			version          : 'v8.0'
-		});
-		};
-
-		(function(d, s, id) {
-		var js, fjs = d.getElementsByTagName(s)[0];
-		if (d.getElementById(id)) return;
-		js = d.createElement(s); js.id = id;
-		js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
-		fjs.parentNode.insertBefore(js, fjs);
-	}(document, 'script', 'facebook-jssdk'));</script>
-
-	<script>(function(d, s, id) {
-		var js, fjs = d.getElementsByTagName(s)[0];
-		if (d.getElementById(id)) return;
-		js = d.createElement(s); js.id = id;
-		js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
-		fjs.parentNode.insertBefore(js, fjs);
-		}(document, 'script', 'facebook-jssdk'));</script>
-
-	<div class="fb-customerchat"
-        attribution=setup_tool
-        page_id="395331708002882"
-        theme_color="#ff3c00">
+    <!-- Your Plugin chat code -->
+    <div id="fb-customer-chat" class="fb-customerchat">
     </div>
-	-->
-	<!-- FACEBOOK CHAT END -->
+
+    <script>
+      var chatbox = document.getElementById('fb-customer-chat');
+      chatbox.setAttribute("page_id", "281491382864");
+      chatbox.setAttribute("attribution", "biz_inbox");
+    </script>
+
+    <!-- Your SDK code -->
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          xfbml            : true,
+          version          : 'v12.0'
+        });
+      };
+
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
 
 	<div class="page">
 		<div class="page-header">
