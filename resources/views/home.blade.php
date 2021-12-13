@@ -181,6 +181,10 @@
 																					<img src="{{ asset('uploads/seminars/' . $seminar->image) }}" alt="{{ $seminar->name }}"/>
 																				</div>
 																			</div>
+
+																			<h6 class="subtitle-md">
+																				{{ $seminar->name }}
+																			</h6>
 																		</div>
 																	@endif
 																@endforeach

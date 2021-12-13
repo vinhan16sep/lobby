@@ -287,6 +287,8 @@
 												}
 			
 												.ratio-wrapper{
+													margin-bottom: 0.75rem;
+
 													overflow: hidden;
 			
 													.img-mask{
@@ -358,6 +360,10 @@
 															}
 														}
 													}
+												}
+
+												> h6 {
+													font-weight: 600;
 												}
 											}
 										}
