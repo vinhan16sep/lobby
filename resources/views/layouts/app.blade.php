@@ -74,6 +74,9 @@
 						<a href="https://dxsummit.vn/chuong-trinh/" class="btn" target="_blank">
 							Chương trình
 						</a>
+						<a href="https://edtvn-my.sharepoint.com/:f:/g/personal/vinasa_edt_com_vn/EitvM51fED5PprReOMuko-4Bn-83M6tYMbhm2OrKp4bQUg?e=T3QXWi" class="btn" target="_blank">
+							Download
+						</a>
 
 						<div class="dropdown">
 							<button class="btn dropdown-toggle" data-bs-toggle="dropdown" type="button"
